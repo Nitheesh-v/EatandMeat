@@ -1,0 +1,795 @@
+@import "tailwindcss";
+
+
+/* ── Google Font fallback (already preloaded in index.html) ── */
+@layer base {
+  html { scroll-behavior: smooth; }
+
+  body {
+    
+    font-family: 'Poppins', sans-serif;
+
+    background-color: #0a0202;
+    color: #fff;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: rgba(239,68,68,0.35);
+    color: #fff;
+  }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #0a0202; }
+  ::-webkit-scrollbar-thumb { background: #ef4444; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #b91c1c; }
+}
+
+/* ────────────────────────────────────────────────────────────
+   GLASSMORPHISM UTILITIES
+   (Tailwind can't express backdrop-filter combos cleanly)
+──────────────────────────────────────────────────────────── */
+@layer utilities {
+  .glass {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .glass-dark {
+    background: rgba(10,2,2,0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(239,68,68,0.18);
+  }
+
+  .glass-red {
+    background: rgba(143, 137, 137, 0.12);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(239,68,68,0.25);
+  }
+
+  .text-gradient-red {
+    background: linear-gradient(135deg, #fff 0%, #fca5a5 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-fire {
+    background: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .bg-gradient-fire {
+    background: linear-gradient(135deg, #ef4444, #b91c1c);
+  }
+}
+
+/* ────────────────────────────────────────────────────────────
+   HERO – background pan animation (needs CSS, not Tailwind)
+──────────────────────────────────────────────────────────── */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  animation: heroZoom 20s ease-in-out infinite alternate;
+}
+
+@keyframes heroZoom {
+  from { transform: scale(1.05); }
+  to   { transform: scale(1.13); }
+}
+
+/* ────────────────────────────────────────────────────────────
+   FLOATING PARTICLES
+──────────────────────────────────────────────────────────── */
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(239,68,68,0.35), transparent 70%);
+  pointer-events: none;
+  animation: floatParticle 8s ease-in-out infinite;
+}
+
+@keyframes floatParticle {
+  0%,100% { transform: translateY(0) scale(1);   opacity: 0.12; }
+  33%     { transform: translateY(-22px) scale(1.1); opacity: 0.22; }
+  66%     { transform: translateY(10px) scale(0.95);  opacity: 0.08; }
+}
+
+/* ────────────────────────────────────────────────────────────
+   CARD IMAGE ZOOM ON HOVER (group-hover via CSS because
+   Tailwind group-hover on child bg is not straightforward)
+──────────────────────────────────────────────────────────── */
+.card-img-zoom {
+  transition: transform 0.7s cubic-bezier(0.16,1,0.3,1);
+}
+.group:hover .card-img-zoom {
+  transform: scale(1.1);
+}
+
+/* Category card BG image */
+.cat-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.7s cubic-bezier(0.16,1,0.3,1);
+}
+.group:hover .cat-bg {
+  transform: scale(1.08);
+}
+
+/* ────────────────────────────────────────────────────────────
+   BOTTOM ACCENT SLIDE (animated underline on feature cards)
+──────────────────────────────────────────────────────────── */
+.accent-line {
+  position: absolute;
+  bottom: 0; left: 0;
+  height: 3px;
+  width: 0;
+  border-radius: 0 3px 3px 0;
+  transition: width 0.5s cubic-bezier(0.16,1,0.3,1);
+}
+.group:hover .accent-line { width: 100%; }
+
+/* ────────────────────────────────────────────────────────────
+   NAVBAR LINK UNDERLINE SLIDE
+──────────────────────────────────────────────────────────── */
+.nav-underline {
+  position: absolute;
+  bottom: -3px; left: 0;
+  height: 2px;
+  width: 0;
+  background: linear-gradient(90deg, #ef4444, #f97316);
+  border-radius: 2px;
+  transition: width 0.35s cubic-bezier(0.16,1,0.3,1);
+}
+.nav-link:hover .nav-underline,
+.nav-link.active .nav-underline { width: 100%; }
+
+/* ────────────────────────────────────────────────────────────
+   STAGGERED FADE-UP (used with inline animation-delay)
+──────────────────────────────────────────────────────────── */
+.fade-up {
+  animation: fadeUp 0.65s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ────────────────────────────────────────────────────────────
+   PULSING ICON RING
+──────────────────────────────────────────────────────────── */
+.pulse-ring {
+  animation: pulseRing 3s ease-in-out infinite;
+}
+
+@keyframes pulseRing {
+  0%,100% { transform: scale(1);    opacity: 0.3; }
+  50%      { transform: scale(1.18); opacity: 0.75; }
+}
+
+/* ────────────────────────────────────────────────────────────
+   CART BADGE PULSE
+──────────────────────────────────────────────────────────── */
+.badge-pulse {
+  animation: badgePulse 2s ease-in-out infinite;
+}
+@keyframes badgePulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(239,68,68,0.55); }
+  50%      { box-shadow: 0 0 0 6px rgba(239,68,68,0); }
+}
+
+/* ────────────────────────────────────────────────────────────
+   MOBILE MENU HEIGHT ANIMATION
+──────────────────────────────────────────────────────────── */
+.mobile-menu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.45s cubic-bezier(0.16,1,0.3,1),
+              padding 0.3s ease;
+}
+.mobile-menu.open { max-height: 320px; }
+
+/* ────────────────────────────────────────────────────────────
+   FLICKER ANIMATION (logo flame icon)
+──────────────────────────────────────────────────────────── */
+.flicker {
+  animation: flicker 3s ease-in-out infinite;
+}
+@keyframes flicker {
+  0%,100% { opacity: 1; }
+  50%      { opacity: 0.65; }
+}
+
+/* ────────────────────────────────────────────────────────────
+   SCROLL CUE
+──────────────────────────────────────────────────────────── */
+.scroll-dot {
+  animation: scrollBounce 2s ease-in-out infinite;
+}
+@keyframes scrollBounce {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(8px); }
+}
+ /* ============================================
+   MeatHub Women Empowerment - Advanced Animated Background
+   Dark red/maroon theme with particles, hex grid, light rays
+   ============================================ */
+
+/* ===== SECTION BASE ===== */
+.women-section {
+  background: #0d0000;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* ===== ANIMATED MESH GRADIENT ===== */
+.bg-mesh-gradient {
+  background:
+    radial-gradient(ellipse at 10% 20%, rgba(185, 28, 28, 0.3) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 80%, rgba(234, 88, 12, 0.2) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(127, 29, 29, 0.4) 0%, transparent 70%),
+    linear-gradient(135deg, #1a0000 0%, #2d0a0a 50%, #1a0505 100%);
+  animation: meshMove 20s ease-in-out infinite;
+}
+
+@keyframes meshMove {
+  0%, 100% {
+    background-position: 0% 0%;
+    filter: hue-rotate(0deg);
+  }
+  25% {
+    background-position: 100% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+    filter: hue-rotate(10deg);
+  }
+  75% {
+    background-position: 0% 100%;
+  }
+}
+
+/* ===== BACKGROUND IMAGE LAYER (Optional) ===== */
+.bg-img-layer {
+  /* Replace url() with your background image */
+  /* background: url('../assets/bg.jpg') center/cover no-repeat; */
+  opacity: 0.15;
+  mix-blend-mode: luminosity;
+  animation: bgPan 30s ease-in-out infinite alternate;
+}
+
+@keyframes bgPan {
+  0% { transform: scale(1) translate(0, 0); }
+  100% { transform: scale(1.1) translate(-2%, -2%); }
+}
+
+/* ===== HEXAGONAL GRID ===== */
+.hex-grid {
+  background-image:
+    linear-gradient(30deg, rgba(220, 38, 38, 0.06) 12%, transparent 12.5%, transparent 87%, rgba(220, 38, 38, 0.06) 87.5%, rgba(220, 38, 38, 0.06)),
+    linear-gradient(150deg, rgba(220, 38, 38, 0.06) 12%, transparent 12.5%, transparent 87%, rgba(220, 38, 38, 0.06) 87.5%, rgba(220, 38, 38, 0.06)),
+    linear-gradient(30deg, rgba(220, 38, 38, 0.06) 12%, transparent 12.5%, transparent 87%, rgba(220, 38, 38, 0.06) 87.5%, rgba(220, 38, 38, 0.06)),
+    linear-gradient(150deg, rgba(220, 38, 38, 0.06) 12%, transparent 12.5%, transparent 87%, rgba(220, 38, 38, 0.06) 87.5%, rgba(220, 38, 38, 0.06)),
+    linear-gradient(60deg, rgba(234, 88, 12, 0.04) 25%, transparent 25.5%, transparent 75%, rgba(234, 88, 12, 0.04) 75%, rgba(234, 88, 12, 0.04)),
+    linear-gradient(60deg, rgba(234, 88, 12, 0.04) 25%, transparent 25.5%, transparent 75%, rgba(234, 88, 12, 0.04) 75%, rgba(234, 88, 12, 0.04));
+  background-size: 80px 140px;
+  background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+  animation: hexScroll 25s linear infinite;
+  opacity: 0.6;
+}
+
+@keyframes hexScroll {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(40px, 70px); }
+}
+
+/* ===== FLOATING PARTICLES ===== */
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  animation: particleFloat linear infinite;
+}
+
+.particle-1 {
+  width: 4px; height: 4px;
+  background: radial-gradient(circle, #ef4444, transparent);
+  left: 10%; bottom: -10px;
+  animation-duration: 12s; animation-delay: 0s;
+}
+.particle-2 {
+  width: 6px; height: 6px;
+  background: radial-gradient(circle, #f97316, transparent);
+  left: 20%; bottom: -10px;
+  animation-duration: 15s; animation-delay: 2s;
+}
+.particle-3 {
+  width: 3px; height: 3px;
+  background: radial-gradient(circle, #ef4444, transparent);
+  left: 35%; bottom: -10px;
+  animation-duration: 10s; animation-delay: 4s;
+}
+.particle-4 {
+  width: 5px; height: 5px;
+  background: radial-gradient(circle, #fbbf24, transparent);
+  left: 50%; bottom: -10px;
+  animation-duration: 14s; animation-delay: 1s;
+}
+.particle-5 {
+  width: 4px; height: 4px;
+  background: radial-gradient(circle, #ef4444, transparent);
+  left: 65%; bottom: -10px;
+  animation-duration: 11s; animation-delay: 3s;
+}
+.particle-6 {
+  width: 7px; height: 7px;
+  background: radial-gradient(circle, #f97316, transparent);
+  left: 75%; bottom: -10px;
+  animation-duration: 16s; animation-delay: 5s;
+}
+.particle-7 {
+  width: 3px; height: 3px;
+  background: radial-gradient(circle, #ef4444, transparent);
+  left: 85%; bottom: -10px;
+  animation-duration: 13s; animation-delay: 2.5s;
+}
+.particle-8 {
+  width: 5px; height: 5px;
+  background: radial-gradient(circle, #fbbf24, transparent);
+  left: 45%; bottom: -10px;
+  animation-duration: 17s; animation-delay: 6s;
+}
+.particle-9 {
+  width: 4px; height: 4px;
+  background: radial-gradient(circle, #ef4444, transparent);
+  left: 90%; bottom: -10px;
+  animation-duration: 12s; animation-delay: 1.5s;
+}
+.particle-10 {
+  width: 6px; height: 6px;
+  background: radial-gradient(circle, #f97316, transparent);
+  left: 5%; bottom: -10px;
+  animation-duration: 18s; animation-delay: 4.5s;
+}
+
+@keyframes particleFloat {
+  0% {
+    transform: translateY(0) translateX(0) scale(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(-10vh) translateX(10px) scale(1);
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-110vh) translateX(-20px) scale(0.3);
+    opacity: 0;
+  }
+}
+
+/* ===== LIGHT RAYS ===== */
+.light-rays {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.ray {
+  position: absolute;
+  width: 2px;
+  height: 200%;
+  top: -50%;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(220, 38, 38, 0.3),
+    rgba(249, 115, 22, 0.2),
+    transparent
+  );
+  filter: blur(1px);
+  animation: raySweep 8s ease-in-out infinite;
+}
+
+.ray-1 {
+  left: 15%;
+  transform: rotate(25deg);
+  animation-delay: 0s;
+}
+.ray-2 {
+  left: 50%;
+  transform: rotate(-15deg);
+  animation-delay: 3s;
+  width: 3px;
+}
+.ray-3 {
+  left: 80%;
+  transform: rotate(35deg);
+  animation-delay: 6s;
+}
+
+@keyframes raySweep {
+  0%, 100% {
+    opacity: 0;
+    transform: translateX(-100px) rotate(var(--rotation, 25deg));
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateX(100px) rotate(var(--rotation, 25deg));
+  }
+}
+
+.ray-1 { --rotation: 25deg; }
+.ray-2 { --rotation: -15deg; }
+.ray-3 { --rotation: 35deg; }
+
+/* ===== GEOMETRIC SHAPES ===== */
+.geo-shape {
+  position: absolute;
+  pointer-events: none;
+}
+
+.geo-diamond-1 {
+  width: 60px; height: 60px;
+  border: 2px solid rgba(220, 38, 38, 0.2);
+  top: 15%; left: 8%;
+  transform: rotate(45deg);
+  animation: diamondSpin 12s linear infinite, diamondFloat 8s ease-in-out infinite;
+}
+
+.geo-diamond-2 {
+  width: 40px; height: 40px;
+  border: 1px solid rgba(234, 88, 12, 0.15);
+  top: 60%; right: 12%;
+  transform: rotate(45deg);
+  animation: diamondSpin 15s linear infinite reverse, diamondFloat 10s ease-in-out infinite;
+  animation-delay: -3s;
+}
+
+@keyframes diamondSpin {
+  0% { transform: rotate(45deg); }
+  100% { transform: rotate(405deg); }
+}
+
+@keyframes diamondFloat {
+  0%, 100% { transform: translateY(0) rotate(45deg); }
+  50% { transform: translateY(-20px) rotate(45deg); }
+}
+
+.geo-circle-1 {
+  width: 120px; height: 120px;
+  border: 1px solid rgba(220, 38, 38, 0.1);
+  border-radius: 50%;
+  top: 70%; left: 5%;
+  animation: circleExpand 6s ease-in-out infinite;
+}
+
+.geo-circle-2 {
+  width: 80px; height: 80px;
+  border: 1px solid rgba(249, 115, 22, 0.1);
+  border-radius: 50%;
+  top: 20%; right: 8%;
+  animation: circleExpand 8s ease-in-out infinite;
+  animation-delay: -4s;
+}
+
+@keyframes circleExpand {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.3); opacity: 0.2; }
+}
+
+.geo-ring-1 {
+  width: 200px; height: 200px;
+  border: 1px dashed rgba(220, 38, 38, 0.08);
+  border-radius: 50%;
+  top: 30%; right: 20%;
+  animation: ringRotate 30s linear infinite;
+}
+
+.geo-ring-2 {
+  width: 150px; height: 150px;
+  border: 1px dashed rgba(234, 88, 12, 0.06);
+  border-radius: 50%;
+  bottom: 10%; left: 30%;
+  animation: ringRotate 25s linear infinite reverse;
+}
+
+@keyframes ringRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ===== GLOWING ORBS ===== */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+.orb-1 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(220, 38, 38, 0.25), transparent 70%);
+  top: -10%; left: -5%;
+  animation: orbMove1 15s ease-in-out infinite;
+}
+
+.orb-2 {
+  width: 350px; height: 350px;
+  background: radial-gradient(circle, rgba(234, 88, 12, 0.2), transparent 70%);
+  bottom: -10%; right: -5%;
+  animation: orbMove2 18s ease-in-out infinite;
+}
+
+.orb-3 {
+  width: 250px; height: 250px;
+  background: radial-gradient(circle, rgba(185, 28, 28, 0.15), transparent 70%);
+  top: 40%; left: 40%;
+  animation: orbMove3 12s ease-in-out infinite;
+}
+
+@keyframes orbMove1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(100px, 80px) scale(1.2); }
+  66% { transform: translate(-50px, 120px) scale(0.9); }
+}
+
+@keyframes orbMove2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-80px, -60px) scale(1.15); }
+  66% { transform: translate(60px, -100px) scale(0.85); }
+}
+
+@keyframes orbMove3 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+  50% { transform: translate(-100px, 50px) scale(1.4); opacity: 0.8; }
+}
+
+/* ===== DIAGONAL LINES ===== */
+.diagonal-lines {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.diag-line {
+  position: absolute;
+  width: 1px;
+  height: 150%;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(220, 38, 38, 0.15),
+    rgba(249, 115, 22, 0.1),
+    transparent
+  );
+  transform-origin: top center;
+  transform: rotate(35deg);
+  animation: diagSweep 10s ease-in-out infinite;
+}
+
+.diag-line-1 { left: 10%; animation-delay: 0s; }
+.diag-line-2 { left: 30%; animation-delay: 2s; opacity: 0.7; }
+.diag-line-3 { left: 50%; animation-delay: 4s; }
+.diag-line-4 { left: 70%; animation-delay: 6s; opacity: 0.5; }
+.diag-line-5 { left: 90%; animation-delay: 8s; }
+
+@keyframes diagSweep {
+  0%, 100% {
+    transform: rotate(35deg) translateY(-100%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  50% {
+    transform: rotate(35deg) translateY(0%);
+  }
+}
+
+/* ===== VIGNETTE OVERLAY ===== */
+.vignette-overlay {
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(0, 0, 0, 0.6) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ===== GLASSMORPHISM CARD ===== */
+.glassmorphism-card {
+  background: linear-gradient(135deg, rgba(127, 29, 29, 0.3) 0%, rgba(69, 10, 10, 0.5) 100%);
+  border: 1px solid rgba(220, 38, 38, 0.25);
+  border-radius: 16px;
+  padding: 1.25rem;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.glassmorphism-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(220, 38, 38, 0.15), transparent);
+  transition: left 0.6s ease;
+}
+
+.glassmorphism-card:hover::before {
+  left: 100%;
+}
+
+.glassmorphism-card:hover {
+  border-color: rgba(220, 38, 38, 0.6);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(220, 38, 38, 0.3);
+}
+
+/* ===== GLASSMORPHISM BADGE ===== */
+.glassmorphism-badge {
+  background: linear-gradient(135deg, rgba(127, 29, 29, 0.4) 0%, rgba(69, 10, 10, 0.6) 100%);
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* ===== CTA BUTTON ===== */
+.meathub-cta {
+  background: linear-gradient(135deg, #dc2626 0%, #ea580c 100%);
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(220, 38, 38, 0.4);
+  transition: all 0.3s ease;
+}
+
+.meathub-cta::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 60%);
+  transform: scale(0);
+  transition: transform 0.5s ease;
+}
+
+.meathub-cta:hover::after {
+  transform: scale(1);
+}
+
+.meathub-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(220, 38, 38, 0.6);
+}
+
+/* ===== TEXT SHIMMER ===== */
+.animate-text-shimmer {
+  background-size: 200% auto;
+  animation: textShimmer 3s linear infinite;
+}
+
+@keyframes textShimmer {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+/* ===== IMAGE EFFECTS ===== */
+.image-card-shadow {
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(220, 38, 38, 0.2),
+    inset 0 0 30px rgba(127, 29, 29, 0.3);
+}
+
+.image-glow {
+  animation: glowPulse 4s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* ===== ENTRY ANIMATIONS ===== */
+.fade-in-left {
+  animation: fadeInLeft 1s ease-out forwards;
+}
+
+.fade-in-right {
+  animation: fadeInRight 1s ease-out 0.3s both;
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ===== BADGE BOUNCE ===== */
+.animate-bounce-slow {
+  animation: bounceSlow 3s ease-in-out infinite;
+}
+
+@keyframes bounceSlow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* ===== MOUSE FOLLOW GLOW (add via JS) ===== */
+.mouse-glow {
+  position: fixed;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(220, 38, 38, 0.15), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  transition: transform 0.3s ease-out;
+  transform: translate(-50%, -50%);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .women-section {
+    padding: 3rem 1.5rem;
+  }
+  .women-section h2 {
+    font-size: 2rem !important;
+  }
+  .orb { display: none; }
+  .geo-shape { display: none; }
+  .ray { display: none; }
+}
+
+/* ===== SCROLL REVEAL ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
