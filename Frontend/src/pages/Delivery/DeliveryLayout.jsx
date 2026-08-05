@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "../../components/Delivery/Sidebar";
-import Navbar from "../../components/Delivery/NavBar";
+import Navbar from "../../components/Delivery/Navbar";
 
 const animations = `
 @keyframes fadeSlideUp {
