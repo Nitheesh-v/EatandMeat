@@ -3,7 +3,7 @@ import {
   registerUser,
   loginUser,logoutUser,getCurrentUser,
 } from "../controllers/authcontroller.js"
-import protect from "../middleware/Protect.js";
+import protect from "../middleware/protect.js";
 
 
 
