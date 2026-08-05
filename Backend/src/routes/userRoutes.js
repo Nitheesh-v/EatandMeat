@@ -2,7 +2,7 @@ import express from "express";
 
 import { getMyProfile } from "../controllers/userController.js";
 import {authorize} from  "../middleware/roleModdleware.js"
-import protect from "../middleware/Protect.js";
+import protect from "../middleware/protect.js";
 
 
 

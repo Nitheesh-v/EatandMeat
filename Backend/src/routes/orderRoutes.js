@@ -3,7 +3,7 @@ import express from "express";
 import { createOrder,getMyOrders ,getPendingOrders,acceptOrder,preparingOrder,packedOrder,getCompanyOrders,
     getAvailableOrders, acceptDelivery, getMyDeliveries,deliveredOrder, pickupOrder, outForDelivery, 
 } from "../controllers/orderController.js"
-import protect from "../middleware/Protect.js";
+import protect from "../middleware/protect.js";
 import {authorize} from  "../middleware/roleModdleware.js"
 
 
