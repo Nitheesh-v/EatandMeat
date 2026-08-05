@@ -1,345 +1,273 @@
-import { Link } from "react-router-dom";
-import {
-  Mail,
-  Lock,
-  Eye,
-  EyeOff,
-  UserPlus,
-  Shield,
-  User,
-} from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { User, UserPlus, Mail, Lock, Phone, Eye, EyeOff, Shield, Flame, Briefcase, Bike } from "lucide-react";
 import { useState } from "react";
+import { useAuth } from "../../Context/AuthContext";
 
 const registerStyles = `
-.reg-section {
-  background: linear-gradient(135deg, #1a0000 0%, #2d0a0a 50%, #1a0505 100%);
-  min-height: 100vh;
-  position: relative;
-  overflow: hidden;
+.reg-page { min-height: 100vh; width: 100%; display: flex; background: linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 50%, #0a0a0a 100%); }
+
+.reg-visual {
+  position: relative; overflow: hidden; flex: 1;
+  background: linear-gradient(150deg, #0f0a0a 0%, #1a0e0e 40%, #2a1015 100%);
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: 56px 48px;
 }
-.reg-bg-mesh {
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse at 10% 20%, rgba(185, 28, 28, 0.3) 0%, transparent 50%),
-    radial-gradient(ellipse at 90% 80%, rgba(234, 88, 12, 0.2) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 50%, rgba(127, 29, 29, 0.4) 0%, transparent 70%),
-    linear-gradient(135deg, #1a0000 0%, #2d0a0a 50%, #1a0505 100%);
-  animation: regMeshMove 20s ease-in-out infinite;
+.reg-visual-glow { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; }
+.reg-visual-glow-1 { width: 380px; height: 380px; top: -10%; left: -10%; background: radial-gradient(circle, rgba(212,33,60,0.3), transparent 70%); animation: regGlow1 20s ease-in-out infinite; }
+.reg-visual-glow-2 { width: 340px; height: 340px; bottom: -10%; right: -10%; background: radial-gradient(circle, rgba(212,175,55,0.2), transparent 70%); animation: regGlow2 24s ease-in-out infinite; }
+@keyframes regGlow1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(30px,20px) scale(1.08); } }
+@keyframes regGlow2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-25px,-20px) scale(1.05); } }
+
+.reg-ember {
+  position: absolute; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle at 35% 30%, #ffc98a, #d4213c 55%, transparent 75%);
+  opacity: .5; animation: regEmberFloat ease-in-out infinite;
 }
-@keyframes regMeshMove {
-  0%, 100% { background-position: 0% 0%; filter: hue-rotate(0deg); }
-  25% { background-position: 100% 0%; }
-  50% { background-position: 100% 100%; filter: hue-rotate(10deg); }
-  75% { background-position: 0% 100%; }
+@keyframes regEmberFloat {
+  0% { transform: translateY(0) translateX(0) scale(1); opacity: .1; }
+  50% { opacity: .55; }
+  100% { transform: translateY(-70px) translateX(16px) scale(1.15); opacity: 0; }
 }
-.reg-hex-grid {
-  position: absolute; inset: 0;
-  background-image:
-    linear-gradient(30deg, rgba(220, 38, 38, 0.06) 12%, transparent 12.5%, transparent 87%, rgba(220, 38, 38, 0.06) 87.5%, rgba(220, 38, 38, 0.06)),
-    linear-gradient(150deg, rgba(220, 38, 38, 0.06) 12%, transparent 12.5%, transparent 87%, rgba(220, 38, 38, 0.06) 87.5%, rgba(220, 38, 38, 0.06)),
-    linear-gradient(60deg, rgba(234, 88, 12, 0.04) 25%, transparent 25.5%, transparent 75%, rgba(234, 88, 12, 0.04) 75%, rgba(234, 88, 12, 0.04));
-  background-size: 80px 140px;
-  animation: regHexScroll 25s linear infinite;
-  opacity: 0.5;
-}
-@keyframes regHexScroll {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(40px, 70px); }
-}
-.reg-particle {
-  position: absolute; border-radius: 50%; pointer-events: none; opacity: 0;
-  animation: regParticleFloat linear infinite;
-}
-.reg-particle-1 { width: 4px; height: 4px; background: radial-gradient(circle, #ef4444, transparent); left: 10%; bottom: -10px; animation-duration: 12s; }
-.reg-particle-2 { width: 6px; height: 6px; background: radial-gradient(circle, #f97316, transparent); left: 20%; bottom: -10px; animation-duration: 15s; animation-delay: 2s; }
-.reg-particle-3 { width: 3px; height: 3px; background: radial-gradient(circle, #ef4444, transparent); left: 35%; bottom: -10px; animation-duration: 10s; animation-delay: 4s; }
-.reg-particle-4 { width: 5px; height: 5px; background: radial-gradient(circle, #fbbf24, transparent); left: 50%; bottom: -10px; animation-duration: 14s; animation-delay: 1s; }
-.reg-particle-5 { width: 4px; height: 4px; background: radial-gradient(circle, #ef4444, transparent); left: 65%; bottom: -10px; animation-duration: 11s; animation-delay: 3s; }
-.reg-particle-6 { width: 7px; height: 7px; background: radial-gradient(circle, #f97316, transparent); left: 75%; bottom: -10px; animation-duration: 16s; animation-delay: 5s; }
-@keyframes regParticleFloat {
-  0% { transform: translateY(0) translateX(0) scale(0); opacity: 0; }
-  10% { opacity: 1; transform: translateY(-10vh) translateX(10px) scale(1); }
-  90% { opacity: 0.6; }
-  100% { transform: translateY(-110vh) translateX(-20px) scale(0.3); opacity: 0; }
-}
-.reg-orb { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; }
-.reg-orb-1 {
-  width: 400px; height: 400px;
-  background: radial-gradient(circle, rgba(220, 38, 38, 0.25), transparent 70%);
-  top: -10%; left: -5%;
-  animation: regOrbMove1 15s ease-in-out infinite;
-}
-.reg-orb-2 {
-  width: 350px; height: 350px;
-  background: radial-gradient(circle, rgba(234, 88, 12, 0.2), transparent 70%);
-  bottom: -10%; right: -5%;
-  animation: regOrbMove2 18s ease-in-out infinite;
-}
-@keyframes regOrbMove1 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(100px, 80px) scale(1.2); }
-  66% { transform: translate(-50px, 120px) scale(0.9); }
-}
-@keyframes regOrbMove2 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(-80px, -60px) scale(1.15); }
-  66% { transform: translate(60px, -100px) scale(0.85); }
-}
-.reg-vignette {
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse at center, transparent 40%, rgba(0, 0, 0, 0.6) 100%);
-  pointer-events: none; z-index: 1;
-}
-.reg-card {
-  background: linear-gradient(135deg, rgba(127, 29, 29, 0.25) 0%, rgba(69, 10, 10, 0.5) 100%);
-  border: 1px solid rgba(220, 38, 38, 0.2);
-  border-radius: 24px;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  padding: 40px 36px;
-  position: relative;
-  overflow: hidden;
-  animation: regCardIn 0.8s ease-out;
-}
-.reg-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: -100%;
-  width: 100%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(220, 38, 38, 0.08), transparent);
-  transition: left 0.8s ease;
-}
-.reg-card:hover::before { left: 100%; }
-@keyframes regCardIn {
-  from { opacity: 0; transform: translateY(30px) scale(0.97); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-.reg-logo-wrap {
-  width: 64px; height: 64px;
-  background: linear-gradient(135deg, #dc2626 0%, #ea580c 100%);
-  border-radius: 18px;
-  display: flex; align-items: center; justify-content: center;
-  margin-bottom: 24px;
-  box-shadow: 0 8px 24px rgba(220, 38, 38, 0.4);
-}
+
+.reg-form-side { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 24px; min-height: 100vh; }
+.reg-form-wrap { width: 100%; max-width: 440px; animation: regFormIn .7s cubic-bezier(.16,.84,.32,1); }
+@keyframes regFormIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
 .reg-title {
-  color: white;
-  font-size: 1.75rem;
-  font-weight: 800;
-  line-height: 1.2;
+  font-size: clamp(1.75rem, 4vw, 2rem); font-weight: 800; line-height: 1.2;
+  background: linear-gradient(135deg, #ffffff 0%, #e0d0d0 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
 .reg-title .accent {
-  background: linear-gradient(135deg, #ef4444, #f97316);
+  background: linear-gradient(135deg, #d4213c, #ff6b35);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
-.reg-subtitle {
-  color: #9ca3af;
-  font-size: 0.95rem;
-  margin-top: 8px;
+.reg-subtitle { color: rgba(255,255,255,0.4); font-size: 0.9rem; margin-top: 8px; }
+
+.reg-role-select {
+  width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
+  padding: 13px 16px; color: #fff; font-size: 0.95rem; transition: all 0.25s ease; box-sizing: border-box;
+  appearance: none; cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.4)' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
 }
-.reg-input-group {
-  position: relative;
-  margin-top: 18px;
-}
-.reg-input-label {
-  display: block;
-  color: #d1d5db;
-  font-size: 0.85rem;
-  font-weight: 600;
-  margin-bottom: 8px;
-}
+.reg-role-select:focus { outline: none; border-color: #d4213c; box-shadow: 0 0 0 3px rgba(212,33,60,0.15); }
+.reg-role-select option { background: #1a0a0a; color: #fff; }
+
+.reg-input-group { position: relative; margin-top: 16px; }
+.reg-input-label { display: block; color: rgba(255,255,255,0.5); font-size: 0.8rem; font-weight: 600; margin-bottom: 8px; }
 .reg-input {
-  width: 100%;
-  background: rgba(69, 10, 10, 0.4);
-  border: 1px solid rgba(220, 38, 38, 0.25);
-  border-radius: 12px;
-  padding: 14px 18px 14px 48px;
-  color: #f3f4f6;
-  font-size: 0.95rem;
-  backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
-  box-sizing: border-box;
+  width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
+  padding: 13px 16px; color: #fff; font-size: 0.95rem; transition: all 0.25s ease; box-sizing: border-box;
 }
-.reg-input::placeholder { color: rgba(209, 213, 219, 0.4); }
-.reg-input:focus {
-  outline: none;
-  border-color: rgba(220, 38, 38, 0.6);
-  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
-  background: rgba(69, 10, 10, 0.6);
-}
-.reg-input-icon {
-  position: absolute;
-  left: 16px;
-  top: 42px;
-  color: #6b7280;
-  pointer-events: none;
-}
-.reg-toggle-pw {
-  position: absolute;
-  right: 16px;
-  top: 42px;
-  color: #6b7280;
-  cursor: pointer;
-  background: none;
-  border: none;
-  padding: 4px;
-  transition: color 0.2s;
-}
-.reg-toggle-pw:hover { color: #fca5a5; }
-.reg-terms-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  margin-top: 20px;
-}
-.reg-terms-row input[type="checkbox"] {
-  accent-color: #ef4444;
-  width: 18px; height: 18px;
-  cursor: pointer;
-  margin-top: 2px;
-}
-.reg-terms-label {
-  color: #9ca3af;
-  font-size: 0.85rem;
-  line-height: 1.5;
-}
-.reg-terms-link {
-  color: #fca5a5;
-  font-weight: 600;
-  text-decoration: none;
-  transition: color 0.2s;
-}
-.reg-terms-link:hover { color: white; }
+.reg-input-group .reg-input-icon + .reg-input { padding-left: 46px; }
+.reg-input::placeholder { color: rgba(255,255,255,0.25); }
+.reg-input:focus { outline: none; border-color: #d4213c; box-shadow: 0 0 0 3px rgba(212,33,60,0.15); }
+.reg-input-icon { position: absolute; left: 15px; top: 41px; color: rgba(255,255,255,0.3); pointer-events: none; z-index: 1; }
+.reg-toggle-pw { position: absolute; right: 14px; top: 39px; color: rgba(255,255,255,0.3); cursor: pointer; background: none; border: none; padding: 4px; transition: color 0.2s; }
+.reg-toggle-pw:hover { color: #d4213c; }
+
+.reg-terms-row { display: flex; align-items: flex-start; gap: 10px; margin-top: 18px; }
+.reg-terms-row input[type="checkbox"] { accent-color: #d4213c; width: 17px; height: 17px; margin-top: 2px; cursor: pointer; }
+.reg-terms-label { color: rgba(255,255,255,0.5); font-size: 0.85rem; line-height: 1.4; }
+.reg-terms-link { color: #d4af37; font-weight: 600; text-decoration: none; }
+.reg-terms-link:hover { text-decoration: underline; }
+
 .reg-submit-btn {
-  width: 100%;
-  background: linear-gradient(135deg, #dc2626 0%, #ea580c 100%);
-  border: none;
-  border-radius: 14px;
-  color: white;
-  font-weight: 700;
-  font-size: 1rem;
-  padding: 16px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 4px 20px rgba(220, 38, 38, 0.4);
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 28px;
+  width: 100%; background: linear-gradient(135deg, #d4213c 0%, #ff6b35 100%);
+  border: none; border-radius: 14px; color: white; font-weight: 700; font-size: 1rem; padding: 15px;
+  cursor: pointer; box-shadow: 0 6px 20px rgba(212,33,60,0.35); transition: all 0.3s ease;
+  display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 22px;
 }
-.reg-submit-btn::after {
-  content: '';
-  position: absolute;
-  top: -50%; left: -50%;
-  width: 200%; height: 200%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 60%);
-  transform: scale(0);
-  transition: transform 0.5s ease;
-}
-.reg-submit-btn:hover::after { transform: scale(1); }
-.reg-submit-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(220, 38, 38, 0.6);
-}
-.reg-divider {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(220, 38, 38, 0.3), transparent);
-  margin: 24px 0;
-}
-.reg-login-text {
-  color: #9ca3af;
-  font-size: 0.9rem;
-  text-align: center;
-}
-.reg-login-link {
-  color: #fca5a5;
-  font-weight: 600;
-  text-decoration: none;
-  margin-left: 6px;
-  transition: color 0.2s;
-}
-.reg-login-link:hover { color: white; }
-.reg-secure-badge {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  color: #6b7280;
-  font-size: 0.75rem;
-  margin-top: 20px;
-}
-@media (max-width: 768px) {
-  .reg-card { padding: 28px 20px; margin: 0 16px; }
-  .reg-orb { display: none; }
+.reg-submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(212,33,60,0.5); }
+.reg-submit-btn:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+
+.reg-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent); margin: 20px 0; }
+
+.reg-signin-text { color: rgba(255,255,255,0.4); font-size: 0.9rem; text-align: center; }
+.reg-signin-link { color: #d4af37; font-weight: 700; text-decoration: none; margin-left: 6px; }
+.reg-signin-link:hover { text-decoration: underline; }
+
+.reg-secure-badge { display: flex; align-items: center; justify-content: center; gap: 6px; color: rgba(255,255,255,0.3); font-size: 0.75rem; margin-top: 16px; }
+
+.reg-password-strength { margin-top: 6px; }
+.reg-strength-bar { height: 3px; border-radius: 2px; background: rgba(255,255,255,0.08); overflow: hidden; }
+.reg-strength-fill { height: 100%; border-radius: 2px; transition: all 0.3s ease; }
+.reg-strength-text { font-size: 0.7rem; margin-top: 3px; font-weight: 600; }
+
+@keyframes fadeSlideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+@media (max-width: 900px) {
+  .reg-visual { display: none; }
+  .reg-form-side { padding: 32px 20px; }
 }
 `;
 
 export const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const { register, loading } = useAuth();
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    fullName: "",
+    phone: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    role: "customer",
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const getPasswordStrength = (password) => {
+    if (!password) return { level: 0, label: "", color: "transparent" };
+    let score = 0;
+    if (password.length >= 8) score++;
+    if (/[A-Z]/.test(password)) score++;
+    if (/[0-9]/.test(password)) score++;
+    if (/[^A-Za-z0-9]/.test(password)) score++;
+    const levels = [
+      { label: "Weak", color: "#ef4444" },
+      { label: "Fair", color: "#f59e0b" },
+      { label: "Good", color: "#3b82f6" },
+      { label: "Strong", color: "#10b981" },
+    ];
+    return { level: score, ...levels[Math.min(score - 1, 3)] };
+  };
+
+  const passwordStrength = getPasswordStrength(formData.password);
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    if (formData.password !== formData.confirmPassword) { alert("Passwords do not match"); return; }
+    const result = await register({
+      fullName: formData.fullName,
+      phone: formData.phone,
+      email: formData.email,
+      password: formData.password,
+      role: formData.role,
+    });
+    if (!result.success) { alert(result.message); return; }
+    alert("Registration Successful");
+    navigate("/login", { replace: true });
+  };
 
   return (
     <>
       <style>{registerStyles}</style>
-      <section className="reg-section flex items-center justify-center px-6 py-8">
-        {/* Background layers */}
-        <div className="reg-bg-mesh"></div>
-        <div className="reg-hex-grid"></div>
+      <div className="reg-page">
+        {/* Visual side */}
+        <div className="reg-visual">
+          <div className="reg-visual-glow reg-visual-glow-1" />
+          <div className="reg-visual-glow reg-visual-glow-2" />
+          <span className="reg-ember" style={{ width: 14, height: 14, top: "20%", left: "70%", animationDuration: "11s" }} />
+          <span className="reg-ember" style={{ width: 9, height: 9, top: "55%", left: "85%", animationDelay: "1.5s", animationDuration: "13s" }} />
+          <span className="reg-ember" style={{ width: 20, height: 20, top: "72%", left: "60%", animationDelay: "2.5s", animationDuration: "12s" }} />
 
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="reg-particle reg-particle-1"></div>
-          <div className="reg-particle reg-particle-2"></div>
-          <div className="reg-particle reg-particle-3"></div>
-          <div className="reg-particle reg-particle-4"></div>
-          <div className="reg-particle reg-particle-5"></div>
-          <div className="reg-particle reg-particle-6"></div>
+          <div className="relative z-10 flex items-center gap-2 mt-20">
+            <div
+              className="w-10 h-10 rounded-xl flex items-center justify-center"
+              style={{ background: "linear-gradient(135deg, #d4213c, #ff6b35)", boxShadow: "0 4px 15px rgba(212,33,60,0.5)" }}
+            >
+              <Flame size={22} color="white" />
+            </div>
+            <span className="text-2xl font-black">
+              <span style={{ color: "#fff" }}>Eat</span>
+              <span style={{ color: "#d4213c" }}>And</span>
+              <span style={{ color: "#d4af37" }}>Meat</span>
+            </span>
+          </div>
+
+          <div className="relative z-10">
+            <h2 className="text-4xl font-black text-white leading-tight" style={{ fontFamily: "'Fraunces', serif" }}>
+              Join the<br />EatAndMeat family.
+            </h2>
+            <p className="text-white/60 mt-4 max-w-sm">
+              Create an account for faster checkout, order tracking, and exclusive offers.
+            </p>
+          </div>
+
+          <div className="relative z-10 flex gap-8 text-white/70 text-sm">
+            <div><span className="text-white font-bold text-xl block">500+</span>Customers</div>
+            <div><span className="text-white font-bold text-xl block">50+</span>Products</div>
+            <div><span className="text-white font-bold text-xl block">4.9★</span>Rating</div>
+          </div>
         </div>
 
-        <div className="reg-orb reg-orb-1"></div>
-        <div className="reg-orb reg-orb-2"></div>
-        <div className="reg-vignette"></div>
+        {/* Form side */}
+        <div className="reg-form-side mt-20">
+          <div className="reg-form-wrap">
+            <h1 className="reg-title">
+              Join <span className="accent">EatAndMeat</span>
+            </h1>
+            <p className="reg-subtitle">Create your account to get started</p>
 
-        {/* Card */}
-        <div className="relative z-10 w-full  sm:max-w-md mt-20">
-          <div className="reg-card">
-            {/* Logo */}
-            <div className="reg-logo-wrap">
-              <UserPlus size={28} className="text-white" />
+            <div className="reg-input-group" style={{ marginTop: 20 }}>
+              <label className="reg-input-label">Register As</label>
+              <select
+                name="role"
+                value={formData.role}
+                onChange={handleChange}
+                className="reg-role-select"
+              >
+                <option value="customer">🛒 Customer</option>
+                <option value="company">🏢 Company</option>
+                <option value="delivery">🚴 Delivery Partner</option>
+              </select>
             </div>
 
-            <h1 className="reg-title">
-              Join <span className="accent">MeatHub</span>
-            </h1>
-            <p className="reg-subtitle">
-              Create your account to get started
-            </p>
-
-            <form className="mt-6" onSubmit={(e) => e.preventDefault()}>
-              {/* Email */}
+            <form className="mt-2" onSubmit={handleRegister}>
               <div className="reg-input-group">
-                <label htmlFor="email" className="reg-input-label">
-                  Email Address
-                </label>
+                <label htmlFor="fullName" className="reg-input-label">Full Name</label>
+                <User size={18} className="reg-input-icon" />
+                <input
+                  type="text"
+                  id="fullName"
+                  name="fullName"
+                  className="reg-input"
+                  placeholder="Enter your full name"
+                  value={formData.fullName}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="reg-input-group">
+                <label htmlFor="phone" className="reg-input-label">Mobile Number</label>
+                <Phone size={18} className="reg-input-icon" />
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  className="reg-input"
+                  placeholder="+91 9876543210"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="reg-input-group">
+                <label htmlFor="email" className="reg-input-label">Email Address</label>
                 <Mail size={18} className="reg-input-icon" />
                 <input
                   type="email"
                   id="email"
                   name="email"
                   className="reg-input"
-                  placeholder="name@company.com"
+                  placeholder="name@example.com"
+                  value={formData.email}
+                  onChange={handleChange}
                   required
                 />
               </div>
 
-              {/* Password */}
               <div className="reg-input-group">
-                <label htmlFor="password" className="reg-input-label">
-                  Password
-                </label>
+                <label htmlFor="password" className="reg-input-label">Password</label>
                 <Lock size={18} className="reg-input-icon" />
                 <input
                   type={showPassword ? "text" : "password"}
@@ -347,78 +275,91 @@ export const Register = () => {
                   name="password"
                   className="reg-input"
                   placeholder="••••••••"
+                  value={formData.password}
+                  onChange={handleChange}
                   required
                   style={{ paddingRight: 48 }}
                 />
-                <button
-                  type="button"
-                  className="reg-toggle-pw"
-                  onClick={() => setShowPassword(!showPassword)}
-                  tabIndex={-1}
-                >
+                <button type="button" className="reg-toggle-pw" onClick={() => setShowPassword(!showPassword)}>
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
+                {/* Password strength */}
+                {formData.password && (
+                  <div className="reg-password-strength">
+                    <div className="reg-strength-bar">
+                      <div
+                        className="reg-strength-fill"
+                        style={{
+                          width: `${(passwordStrength.level / 4) * 100}%`,
+                          background: passwordStrength.color,
+                          boxShadow: passwordStrength.level > 0 ? `0 0 8px ${passwordStrength.color}60` : "none",
+                        }}
+                      />
+                    </div>
+                    <p className="reg-strength-text" style={{ color: passwordStrength.color }}>
+                      {passwordStrength.label}
+                    </p>
+                  </div>
+                )}
               </div>
 
-              {/* Confirm Password */}
               <div className="reg-input-group">
-                <label htmlFor="confirm-password" className="reg-input-label">
-                  Confirm Password
-                </label>
+                <label htmlFor="confirmPassword" className="reg-input-label">Confirm Password</label>
                 <Lock size={18} className="reg-input-icon" />
                 <input
                   type={showConfirmPassword ? "text" : "password"}
-                  id="confirm-password"
-                  name="confirm-password"
+                  id="confirmPassword"
+                  name="confirmPassword"
                   className="reg-input"
                   placeholder="••••••••"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
                   required
                   style={{ paddingRight: 48 }}
                 />
-                <button
-                  type="button"
-                  className="reg-toggle-pw"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  tabIndex={-1}
-                >
+                <button type="button" className="reg-toggle-pw" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
                   {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
+                {formData.confirmPassword && (
+                  <p
+                    className="reg-strength-text"
+                    style={{
+                      color: formData.password === formData.confirmPassword ? "#10b981" : "#ef4444",
+                      marginTop: 4,
+                    }}
+                  >
+                    {formData.password === formData.confirmPassword ? "✓ Passwords match" : "✗ Passwords do not match"}
+                  </p>
+                )}
               </div>
 
-              {/* Terms */}
               <div className="reg-terms-row">
                 <input type="checkbox" id="terms" required />
                 <label htmlFor="terms" className="reg-terms-label">
-                  I accept the{" "}
-                  <a href="#" className="reg-terms-link">
-                    Terms and Conditions
-                  </a>
+                  I accept the <a href="#" className="reg-terms-link">Terms and Conditions</a> & <a href="#" className="reg-terms-link">Privacy Policy</a>
                 </label>
               </div>
 
-              {/* Submit */}
-              <button type="submit" className="reg-submit-btn">
+              <button type="submit" className="reg-submit-btn" disabled={loading}>
                 <UserPlus size={20} />
-                Create Account
+                {loading ? "Creating account…" : "Create Account"}
               </button>
             </form>
 
             <div className="reg-divider"></div>
 
-            <p className="reg-login-text">
+            <p className="reg-signin-text">
               Already have an account?
-              <Link to="/login" className="reg-login-link">
-                Login here
-              </Link>
+              <Link to="/login" className="reg-signin-link">Sign In</Link>
             </p>
 
             <div className="reg-secure-badge">
               <Shield size={12} />
-              Your data is safe with us
+              Secured with 256-bit encryption
             </div>
           </div>
         </div>
-      </section>
+      </div>
     </>
   );
 };

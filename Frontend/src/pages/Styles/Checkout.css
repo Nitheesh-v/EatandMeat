@@ -1,0 +1,266 @@
+/* ============================================
+   Checkout Page - Classic Theme with Animations
+   ============================================ */
+
+/* Section Base */
+.checkout-section {
+  background: linear-gradient(135deg, #1a0a0a 0%, #2a1010 50%, #1a0808 100%);
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Mesh gradient */
+.checkout-bg-mesh {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 10% 20%, rgba(185, 28, 28, 0.2) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 80%, rgba(234, 88, 12, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(127, 29, 29, 0.25) 0%, transparent 70%);
+  animation: checkoutMeshMove 20s ease-in-out infinite;
+}
+
+@keyframes checkoutMeshMove {
+  0%, 100% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+}
+
+/* Particles */
+.checkout-particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  animation: checkoutParticleFloat linear infinite;
+}
+
+.checkout-particle-1 { width: 4px; height: 4px; background: radial-gradient(circle, #ef4444, transparent); left: 10%; bottom: -10px; animation-duration: 12s; }
+.checkout-particle-2 { width: 6px; height: 6px; background: radial-gradient(circle, #f97316, transparent); left: 20%; bottom: -10px; animation-duration: 15s; animation-delay: 2s; }
+.checkout-particle-3 { width: 3px; height: 3px; background: radial-gradient(circle, #ef4444, transparent); left: 35%; bottom: -10px; animation-duration: 10s; animation-delay: 4s; }
+.checkout-particle-4 { width: 5px; height: 5px; background: radial-gradient(circle, #fbbf24, transparent); left: 50%; bottom: -10px; animation-duration: 14s; animation-delay: 1s; }
+.checkout-particle-5 { width: 4px; height: 4px; background: radial-gradient(circle, #ef4444, transparent); left: 65%; bottom: -10px; animation-duration: 11s; animation-delay: 3s; }
+.checkout-particle-6 { width: 7px; height: 7px; background: radial-gradient(circle, #f97316, transparent); left: 75%; bottom: -10px; animation-duration: 16s; animation-delay: 5s; }
+
+@keyframes checkoutParticleFloat {
+  0% { transform: translateY(0) translateX(0) scale(0); opacity: 0; }
+  10% { opacity: 1; transform: translateY(-10vh) translateX(10px) scale(1); }
+  90% { opacity: 0.6; }
+  100% { transform: translateY(-110vh) translateX(-20px) scale(0.3); opacity: 0; }
+}
+
+/* Orbs */
+.checkout-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+.checkout-orb-1 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(220, 38, 38, 0.15), transparent 70%);
+  top: -10%; left: -5%;
+  animation: checkoutOrbMove1 15s ease-in-out infinite;
+}
+
+.checkout-orb-2 {
+  width: 350px; height: 350px;
+  background: radial-gradient(circle, rgba(234, 88, 12, 0.12), transparent 70%);
+  bottom: -10%; right: -5%;
+  animation: checkoutOrbMove2 18s ease-in-out infinite;
+}
+
+@keyframes checkoutOrbMove1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(60px, 40px) scale(1.1); }
+}
+
+@keyframes checkoutOrbMove2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-40px, -60px) scale(1.1); }
+}
+
+/* Vignette */
+.checkout-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 50%, rgba(0, 0, 0, 0.4) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Section label */
+.checkout-section-label {
+  display: inline-block;
+  background: rgba(220, 38, 38, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  color: #fca5a5;
+  padding: 8px 20px;
+  border-radius: 30px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+/* Accent text */
+.checkout-accent-text {
+  background: linear-gradient(135deg, #ef4444, #f97316, #fbbf24, #ef4444);
+  background-size: 300% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: checkoutTextShimmer 4s linear infinite;
+}
+
+@keyframes checkoutTextShimmer {
+  0% { background-position: 0% center; }
+  100% { background-position: 300% center; }
+}
+
+/* Glassmorphism card */
+.checkout-glass-card {
+  background: rgba(40, 15, 15, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(220, 38, 38, 0.15);
+  border-radius: 20px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.checkout-glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(220, 38, 38, 0.08), transparent);
+  transition: left 0.6s ease;
+}
+
+.checkout-glass-card:hover::before { left: 100%; }
+
+.checkout-glass-card:hover {
+  border-color: rgba(220, 38, 38, 0.4);
+  box-shadow: 0 8px 32px rgba(220, 38, 38, 0.15);
+}
+
+/* Input */
+.checkout-input {
+  width: 100%;
+  background: rgba(30, 10, 10, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  border-radius: 12px;
+  padding: 14px 18px;
+  color: #f3f4f6;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.checkout-input::placeholder {
+  color: rgba(209, 213, 219, 0.4);
+}
+
+.checkout-input:focus {
+  outline: none;
+  border-color: rgba(220, 38, 38, 0.6);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+  background: rgba(30, 10, 10, 0.7);
+}
+
+.checkout-textarea {
+  min-height: 120px;
+}
+
+/* Radio button */
+.checkout-radio {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background: rgba(30, 10, 10, 0.4);
+  border: 1px solid rgba(220, 38, 38, 0.15);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #e5e7eb;
+}
+
+.checkout-radio:hover {
+  border-color: rgba(220, 38, 38, 0.4);
+  background: rgba(30, 10, 10, 0.6);
+}
+
+.checkout-radio input[type="radio"] {
+  accent-color: #ef4444;
+  width: 18px;
+  height: 18px;
+}
+
+.checkout-radio input[type="radio"]:checked + span {
+  color: #fca5a5;
+  font-weight: 600;
+}
+
+/* Button */
+.checkout-btn {
+  background: linear-gradient(135deg, #dc2626 0%, #ea580c 100%);
+  border: none;
+  border-radius: 14px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(220, 38, 38, 0.3);
+  transition: all 0.3s ease;
+}
+
+.checkout-btn::after {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 60%);
+  transform: scale(0);
+  transition: transform 0.5s ease;
+}
+
+.checkout-btn:hover::after { transform: scale(1); }
+
+.checkout-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(220, 38, 38, 0.5);
+}
+
+/* Divider */
+.checkout-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(220, 38, 38, 0.3), transparent);
+  margin: 20px 0;
+}
+
+/* Fade in */
+.checkout-fade-in {
+  animation: checkoutFadeInUp 0.8s ease-out forwards;
+}
+
+@keyframes checkoutFadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.checkout-delay-1 { animation-delay: 0.1s; opacity: 0; }
+.checkout-delay-2 { animation-delay: 0.2s; opacity: 0; }
+.checkout-delay-3 { animation-delay: 0.3s; opacity: 0; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .checkout-orb { display: none; }
+}

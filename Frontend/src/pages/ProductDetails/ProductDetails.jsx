@@ -9,13 +9,13 @@ import {
   ShieldCheck,
   Sparkles,
   Truck,
-  CheckCircle2,
+  
 } from "lucide-react";
 
 const productDetailsStyles = `
 .pd-glass-card {
   background: linear-gradient(135deg, rgba(127, 29, 29, 0.2) 0%, rgba(69, 10, 10, 0.4) 100%);
-  border: 1px solid rgba(220, 38, 38, 0.2);
+  border: 1px solid rgba(212, 175, 55, 0.25);
   border-radius: 24px;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -112,7 +112,7 @@ const productDetailsStyles = `
   align-items: center;
   gap: 6px;
   background: rgba(220, 38, 38, 0.15);
-  border: 1px solid rgba(220, 38, 38, 0.25);
+  border: 1px solid rgba(212, 175, 55, 0.22);
   color: #fca5a5;
   padding: 8px 16px;
   border-radius: 30px;
@@ -163,7 +163,7 @@ const productDetailsStyles = `
   color: #f472b6;
 }
 .pd-add-btn {
-  background: linear-gradient(135deg, #dc2626 0%, #ea580c 100%);
+  background: linear-gradient(135deg, #dc2626 0%, #92721e 100%);
   border: none;
   border-radius: 16px;
   color: white;
@@ -304,7 +304,7 @@ const ProductDetails = () => {
             </Link>
 
             <h1 className="pd-title">{product.name}</h1>
-
+        <p className="pd-desc-text">{product.description}</p>
             <div className="pd-weight-badge">
               <Weight size={16} />
               {product.weight}
@@ -346,7 +346,7 @@ const ProductDetails = () => {
         </div>
 
         {/* Description Section */}
-        <div className="pd-desc-card pd-fade-in">
+        {/* <div className="pd-desc-card pd-fade-in">
           <h2 className="pd-desc-title">
             <CheckCircle2 size={22} className="text-red-400" />
             Description
@@ -357,7 +357,7 @@ const ProductDetails = () => {
             partners. Each order is carefully prepared to ensure maximum
             freshness and taste.
           </p>
-        </div>
+        </div> */}
       </section>
     </>
   );

@@ -3,10 +3,30 @@
 
 /* ── Google Font fallback (already preloaded in index.html) ── */
 @layer base {
-  html { scroll-behavior: smooth; }
+ html {
+  scroll-behavior: smooth;
+ 
+}
+
+
+.custom-cursor{
+    position:fixed;
+    width:20px;
+    height:20px;
+
+    top:0;
+    left:0;
+
+    pointer-events:none;
+
+    z-index:999999;
+
+    transform:translate(-50%,-50%);
+}
 
   body {
-    
+ 
+
     font-family: 'Poppins', sans-serif;
 
     background-color: #0a0202;
@@ -221,6 +241,9 @@
   0%,100% { transform: translateY(0); }
   50%      { transform: translateY(8px); }
 }
+
+
+
  /* ============================================
    MeatHub Women Empowerment - Advanced Animated Background
    Dark red/maroon theme with particles, hex grid, light rays

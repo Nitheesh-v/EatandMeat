@@ -9,383 +9,798 @@ import {
   CreditCard,
   Banknote,
   Smartphone,
-  ArrowRight,
   Shield,
+  Flame,
+  IndianRupee,
+  Truck,
+  Check,
+  ArrowRight,
 } from "lucide-react";
+import { useAuth } from "../../Context/AuthContext";
 
-const checkoutStyles = `
-.meathub-dark-section {
-  background: linear-gradient(135deg, #1a0000 0%, #2d0a0a 50%, #1a0505 100%);
-  min-height: 100vh;
-  position: relative;
-  overflow: hidden;
-}
-.bg-mesh-gradient {
-  background: radial-gradient(ellipse at 10% 20%, rgba(185, 28, 28, 0.3) 0%, transparent 50%),
-    radial-gradient(ellipse at 90% 80%, rgba(234, 88, 12, 0.2) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 50%, rgba(127, 29, 29, 0.4) 0%, transparent 70%),
-    linear-gradient(135deg, #1a0000 0%, #2d0a0a 50%, #1a0505 100%);
-  animation: meshMove 20s ease-in-out infinite;
-  position: absolute; inset: 0;
-}
-@keyframes meshMove {
-  0%, 100% { background-position: 0% 0%; filter: hue-rotate(0deg); }
-  25% { background-position: 100% 0%; }
-  50% { background-position: 100% 100%; filter: hue-rotate(10deg); }
-  75% { background-position: 0% 100%; }
-}
-.hex-grid {
-  position: absolute; inset: 0;
-  background-image:
-    linear-gradient(30deg, rgba(220, 38, 38, 0.06) 12%, transparent 12.5%, transparent 87%, rgba(220, 38, 38, 0.06) 87.5%, rgba(220, 38, 38, 0.06)),
-    linear-gradient(150deg, rgba(220, 38, 38, 0.06) 12%, transparent 12.5%, transparent 87%, rgba(220, 38, 38, 0.06) 87.5%, rgba(220, 38, 38, 0.06)),
-    linear-gradient(60deg, rgba(234, 88, 12, 0.04) 25%, transparent 25.5%, transparent 75%, rgba(234, 88, 12, 0.04) 75%, rgba(234, 88, 12, 0.04));
-  background-size: 80px 140px;
-  animation: hexScroll 25s linear infinite;
-  opacity: 0.5;
-}
-@keyframes hexScroll {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(40px, 70px); }
-}
-.particle {
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
-  opacity: 0;
-  animation: particleFloat linear infinite;
-}
-.particle-1 { width: 4px; height: 4px; background: radial-gradient(circle, #ef4444, transparent); left: 10%; bottom: -10px; animation-duration: 12s; }
-.particle-2 { width: 6px; height: 6px; background: radial-gradient(circle, #f97316, transparent); left: 20%; bottom: -10px; animation-duration: 15s; animation-delay: 2s; }
-.particle-3 { width: 3px; height: 3px; background: radial-gradient(circle, #ef4444, transparent); left: 35%; bottom: -10px; animation-duration: 10s; animation-delay: 4s; }
-.particle-4 { width: 5px; height: 5px; background: radial-gradient(circle, #fbbf24, transparent); left: 50%; bottom: -10px; animation-duration: 14s; animation-delay: 1s; }
-.particle-5 { width: 4px; height: 4px; background: radial-gradient(circle, #ef4444, transparent); left: 65%; bottom: -10px; animation-duration: 11s; animation-delay: 3s; }
-.particle-6 { width: 7px; height: 7px; background: radial-gradient(circle, #f97316, transparent); left: 75%; bottom: -10px; animation-duration: 16s; animation-delay: 5s; }
-@keyframes particleFloat {
-  0% { transform: translateY(0) translateX(0) scale(0); opacity: 0; }
-  10% { opacity: 1; transform: translateY(-10vh) translateX(10px) scale(1); }
-  90% { opacity: 0.6; }
-  100% { transform: translateY(-110vh) translateX(-20px) scale(0.3); opacity: 0; }
-}
-.orb { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; }
-.orb-1 {
-  width: 400px; height: 400px;
-  background: radial-gradient(circle, rgba(220, 38, 38, 0.25), transparent 70%);
-  top: -10%; left: -5%;
-  animation: orbMove1 15s ease-in-out infinite;
-}
-.orb-2 {
-  width: 350px; height: 350px;
-  background: radial-gradient(circle, rgba(234, 88, 12, 0.2), transparent 70%);
-  bottom: -10%; right: -5%;
-  animation: orbMove2 18s ease-in-out infinite;
-}
-@keyframes orbMove1 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(100px, 80px) scale(1.2); }
-  66% { transform: translate(-50px, 120px) scale(0.9); }
-}
-@keyframes orbMove2 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(-80px, -60px) scale(1.15); }
-  66% { transform: translate(60px, -100px) scale(0.85); }
-}
-.vignette-overlay {
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse at center, transparent 40%, rgba(0, 0, 0, 0.6) 100%);
-  pointer-events: none; z-index: 1;
-}
-.glass-card {
-  background: linear-gradient(135deg, rgba(127, 29, 29, 0.25) 0%, rgba(69, 10, 10, 0.45) 100%);
-  border: 1px solid rgba(220, 38, 38, 0.2);
-  border-radius: 20px;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative; overflow: hidden;
-}
-.glass-card::before {
-  content: ''; position: absolute; top: 0; left: -100%;
-  width: 100%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(220, 38, 38, 0.1), transparent);
-  transition: left 0.6s ease;
-}
-.glass-card:hover::before { left: 100%; }
-.glass-card:hover { border-color: rgba(220, 38, 38, 0.5); box-shadow: 0 8px 32px rgba(220, 38, 38, 0.2); }
-.glass-input {
-  background: rgba(69, 10, 10, 0.4);
-  border: 1px solid rgba(220, 38, 38, 0.25);
-  border-radius: 12px;
-  padding: 14px 18px;
-  color: #f3f4f6;
-  backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
-  width: 100%;
-}
-.glass-input::placeholder { color: rgba(209, 213, 219, 0.5); }
-.glass-input:focus {
-  outline: none;
-  border-color: rgba(220, 38, 38, 0.6);
-  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
-  background: rgba(69, 10, 10, 0.6);
-}
-.meathub-btn {
-  background: linear-gradient(135deg, #dc2626 0%, #ea580c 100%);
-  border: none; border-radius: 14px; color: white; font-weight: 600;
-  padding: 14px 28px; cursor: pointer; position: relative; overflow: hidden;
-  box-shadow: 0 4px 20px rgba(220, 38, 38, 0.4);
-  transition: all 0.3s ease;
-  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-}
-.meathub-btn::after {
-  content: ''; position: absolute; top: -50%; left: -50%;
-  width: 200%; height: 200%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 60%);
-  transform: scale(0); transition: transform 0.5s ease;
-}
-.meathub-btn:hover::after { transform: scale(1); }
-.meathub-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(220, 38, 38, 0.6); }
-.meathub-radio {
-  display: flex; align-items: center; gap: 12px;
-  padding: 14px 18px;
-  background: rgba(69, 10, 10, 0.3);
-  border: 1px solid rgba(220, 38, 38, 0.2);
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  color: #e5e7eb;
-}
-.meathub-radio:hover { border-color: rgba(220, 38, 38, 0.5); background: rgba(69, 10, 10, 0.5); }
-.meathub-radio input[type="radio"] { accent-color: #ef4444; width: 18px; height: 18px; }
-.meathub-radio input[type="radio"]:checked + span { color: #fca5a5; font-weight: 600; }
-.page-title { color: white; font-size: 2.5rem; font-weight: 800; }
-.page-title .accent {
-  background: linear-gradient(135deg, #ef4444, #f97316);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.section-label {
-  display: inline-block; background: rgba(220, 38, 38, 0.15);
-  border: 1px solid rgba(220, 38, 38, 0.3); color: #fca5a5;
-  padding: 8px 20px; border-radius: 30px;
-  font-size: 0.875rem; font-weight: 600; margin-bottom: 16px;
-}
-.meathub-divider {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(220, 38, 38, 0.3), transparent);
-  margin: 20px 0;
-}
-.fade-in-up { animation: fadeInUp 0.8s ease-out forwards; }
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.fade-in-up-delay-1 { animation-delay: 0.1s; opacity: 0; }
-.fade-in-up-delay-2 { animation-delay: 0.2s; opacity: 0; }
-.fade-in-up-delay-3 { animation-delay: 0.3s; opacity: 0; }
-@media (max-width: 768px) {
-  .page-title { font-size: 1.75rem !important; }
-  .orb { display: none; }
-}
-`;
+import { createOrder } from "../../services/orderService";
+import LocationPicker from "../../components/map/LocationPicker";
 
 const Checkout = () => {
-  const { cartItems, totalPrice } = useCart();
+  const { cartItems, totalPrice, clearCart } = useCart();
+  const [location, setLocation] = useState({
+  latitude: "",
+  longitude: "",
+});
+
+  const tax = 0;
+  const { currentUser } = useAuth();
   const navigate = useNavigate();
-  const [paymentMethod, setPaymentMethod] = useState("cod");
+  const [paymentMethod, setPaymentMethod] = useState("COD");
+
+
+  const [formData, setFormData] = useState({
+    fullName: currentUser?.fullName || "",
+    phone: "",
+    email: currentUser?.email || "",
+    address: "",
+    city: "",
+    pincode: "",
+  });
+
 
   const deliveryCharge = cartItems.length > 0 ? 40 : 0;
   const grandTotal = totalPrice + deliveryCharge;
+  const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
-  const handlePlaceOrder = (e) => {
-    e.preventDefault();
-    navigate("/order-success");
+  const handleChange = (field, value) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
+
+  const getCurrentLocation = () => {
+  if (!navigator.geolocation) {
+    alert("Geolocation is not supported.");
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      setLocation({
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+      });
+
+      alert("Location selected successfully.");
+    },
+    () => {
+      alert("Unable to fetch your location.");
+    }
+  );
+};
+
+  const handlePlaceOrder = async (e) => {
+    e.preventDefault();
+console.log(cartItems);
+    try {
+      const orderData = {
+        items: cartItems.map((item) => ({
+          product: item.id.toString(),
+          name: item.name,
+          image: item.image,
+          quantity: item.quantity,
+          price: item.price,
+        })),
+
+        deliveryAddress: {
+          fullName: formData.fullName,
+          phone: formData.phone,
+          address: formData.address,
+          city: formData.city,
+          state: formData.state,
+          pincode: formData.pincode,
+           latitude: location.latitude,
+  longitude: location.longitude,
+        },
+
+        paymentMethod,
+
+        subtotal: totalPrice,
+
+        deliveryCharge,
+
+        tax,
+
+        totalAmount: grandTotal,
+      };
+      console.log(orderData);
+
+      const res = await createOrder(orderData);
+
+      console.log(res);
+
+      alert("Order Placed Successfully");
+
+      clearCart();
+
+      navigate("/my-orders");
+    } catch (err) {
+      console.log(err);
+
+      alert("Order Failed");
+    }
+  };
+
+ const paymentOptions = [
+  {
+    value: "COD",
+    label: "Cash on Delivery",
+    icon: Banknote,
+    color: "#10b981",
+  },
+  {
+    value: "ONLINE",
+    label: "Online Payment (UPI / Card)",
+    icon: Smartphone,
+    color: "#8b5cf6",
+  },
+];
+
   return (
-    <>
-      <style>{checkoutStyles}</style>
-      <section className="meathub-dark-section relative overflow-hidden py-16 px-6">
-        <div className="bg-mesh-gradient"></div>
-        <div className="hex-grid"></div>
+    <section
+      className=" mt-10 relative overflow-hidden px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16"
+      style={{
+        background:
+          "linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 50%, #0a0a0a 100%)",
+        minHeight: "100vh",
+      }}
+    >
+      {/* Background glows */}
+      <div
+        className="absolute rounded-full"
+        style={{
+          width: 400,
+          height: 400,
+          top: "-10%",
+          right: "-5%",
+          background:
+            "radial-gradient(circle, rgba(212,33,60,0.08) 0%, transparent 70%)",
+          filter: "blur(60px)",
+        }}
+      />
+      <div
+        className="absolute rounded-full"
+        style={{
+          width: 300,
+          height: 300,
+          bottom: "10%",
+          left: "-5%",
+          background:
+            "radial-gradient(circle, rgba(212,175,55,0.06) 0%, transparent 70%)",
+          filter: "blur(50px)",
+        }}
+      />
 
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="particle particle-1"></div>
-          <div className="particle particle-2"></div>
-          <div className="particle particle-3"></div>
-          <div className="particle particle-4"></div>
-          <div className="particle particle-5"></div>
-          <div className="particle particle-6"></div>
-        </div>
-
-        <div className="orb orb-1"></div>
-        <div className="orb orb-2"></div>
-        <div className="vignette-overlay"></div>
-
-        <div className="relative z-10 max-w-7xl mx-auto mt-10">
-          <div className="mb-10 fade-in-up">
-            <span className="section-label"> Secure Checkout</span>
-            <h1 className="page-title">
-              Complete Your <span className="accent">Order</span>
-            </h1>
+      <div className="relative z-10 max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="mb-8 sm:mb-10">
+          <div
+            className="flex items-center gap-3 mb-3"
+            style={{ animation: "fadeSlideUp 0.5s ease both" }}
+          >
+            <div
+              className="w-10 h-10 rounded-xl flex items-center justify-center"
+              style={{
+                background: "linear-gradient(135deg, #d4213c, #ff6b35)",
+                boxShadow: "0 4px 15px rgba(212,33,60,0.4)",
+              }}
+            >
+              <Shield size={20} color="white" />
+            </div>
+            <span
+              className="text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-full"
+              style={{
+                background: "rgba(16,185,129,0.12)",
+                color: "#10b981",
+                border: "1px solid rgba(16,185,129,0.25)",
+              }}
+            >
+              Secure Checkout
+            </span>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-10">
-            <form onSubmit={handlePlaceOrder} className="lg:col-span-2 space-y-8">
-              <div className="glass-card p-8 fade-in-up fade-in-up-delay-1">
-                <h2 className="text-2xl font-semibold text-white mb-6 flex items-center gap-3">
-                  <User size={24} className="text-red-400" />
-                  Customer Details
-                </h2>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="relative md:col-span-2">
-                    <User size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
+          <h1
+            className="font-extrabold tracking-tight leading-tight"
+            style={{
+              fontSize: "clamp(1.75rem, 4vw, 2.5rem)",
+              background: "linear-gradient(135deg, #ffffff 0%, #e0d0d0 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              animation: "fadeSlideUp 0.5s ease 0.1s both",
+            }}
+          >
+            Complete Your{" "}
+            <span
+              style={{
+                background: "linear-gradient(135deg, #d4213c, #ff6b35)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
+              Order
+            </span>
+          </h1>
+        </div>
+
+        <form onSubmit={handlePlaceOrder}>
+          <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
+            {/* Form Sections */}
+            <div className="lg:col-span-2 space-y-6">
+              {/* Customer Details */}
+              <div
+                className="rounded-2xl overflow-hidden"
+                style={{
+                  background:
+                    "linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%)",
+                  border: "1px solid rgba(255,255,255,0.06)",
+                  backdropFilter: "blur(20px)",
+                  animation: "fadeSlideUp 0.5s ease 0.15s both",
+                }}
+              >
+                <div
+                  className="h-1"
+                  style={{
+                    background: "linear-gradient(90deg, #d4213c, #ff6b35)",
+                  }}
+                />
+                <div className="p-5 sm:p-6">
+                  <h2
+                    className="font-extrabold text-lg flex items-center gap-3 mb-5"
+                    style={{ color: "#fff" }}
+                  >
+                    <div
+                      className="w-9 h-9 rounded-lg flex items-center justify-center"
+                      style={{ background: "rgba(212,33,60,0.12)" }}
+                    >
+                      <User size={18} style={{ color: "#d4213c" }} />
+                    </div>
+                    Customer Details
+                  </h2>
+
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="relative md:col-span-2">
+                      <User
+                        size={16}
+                        className="absolute left-4 top-1/2 -translate-y-1/2"
+                        style={{ color: "rgba(255,255,255,0.3)" }}
+                      />
+                      <input
+                        type="text"
+                        placeholder="Full Name"
+                        required
+                        value={formData.fullName}
+                        onChange={(e) =>
+                          handleChange("fullName", e.target.value)
+                        }
+                        className="w-full rounded-xl text-sm font-medium transition-all duration-300"
+                        style={{
+                          background: "rgba(255,255,255,0.04)",
+                          border: "1px solid rgba(255,255,255,0.1)",
+                          color: "#fff",
+                          padding: "13px 16px 13px 44px",
+                          outline: "none",
+                        }}
+                        onFocus={(e) => {
+                          e.currentTarget.style.borderColor = "#d4213c";
+                          e.currentTarget.style.boxShadow =
+                            "0 0 0 3px rgba(212,33,60,0.15)";
+                        }}
+                        onBlur={(e) => {
+                          e.currentTarget.style.borderColor =
+                            "rgba(255,255,255,0.1)";
+                          e.currentTarget.style.boxShadow = "none";
+                        }}
+                      />
+                    </div>
+
+                    <div className="relative">
+                      <Phone
+                        size={16}
+                        className="absolute left-4 top-1/2 -translate-y-1/2"
+                        style={{ color: "rgba(255,255,255,0.3)" }}
+                      />
+                      <input
+                        type="tel"
+                        placeholder="Phone Number"
+                        required
+                        value={formData.phone}
+                        onChange={(e) => handleChange("phone", e.target.value)}
+                        className="w-full rounded-xl text-sm font-medium transition-all duration-300"
+                        style={{
+                          background: "rgba(255,255,255,0.04)",
+                          border: "1px solid rgba(255,255,255,0.1)",
+                          color: "#fff",
+                          padding: "13px 16px 13px 44px",
+                          outline: "none",
+                        }}
+                        onFocus={(e) => {
+                          e.currentTarget.style.borderColor = "#d4213c";
+                          e.currentTarget.style.boxShadow =
+                            "0 0 0 3px rgba(212,33,60,0.15)";
+                        }}
+                        onBlur={(e) => {
+                          e.currentTarget.style.borderColor =
+                            "rgba(255,255,255,0.1)";
+                          e.currentTarget.style.boxShadow = "none";
+                        }}
+                      />
+                    </div>
+
+                    <div className="relative">
+                      <Mail
+                        size={16}
+                        className="absolute left-4 top-1/2 -translate-y-1/2"
+                        style={{ color: "rgba(255,255,255,0.3)" }}
+                      />
+                      <input
+                        type="email"
+                        placeholder="Email Address"
+                        value={formData.email}
+                        onChange={(e) => handleChange("email", e.target.value)}
+                        className="w-full rounded-xl text-sm font-medium transition-all duration-300"
+                        style={{
+                          background: "rgba(255,255,255,0.04)",
+                          border: "1px solid rgba(255,255,255,0.1)",
+                          color: "#fff",
+                          padding: "13px 16px 13px 44px",
+                          outline: "none",
+                        }}
+                        onFocus={(e) => {
+                          e.currentTarget.style.borderColor = "#d4213c";
+                          e.currentTarget.style.boxShadow =
+                            "0 0 0 3px rgba(212,33,60,0.15)";
+                        }}
+                        onBlur={(e) => {
+                          e.currentTarget.style.borderColor =
+                            "rgba(255,255,255,0.1)";
+                          e.currentTarget.style.boxShadow = "none";
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Delivery Address */}
+              <div
+                className="rounded-2xl overflow-hidden"
+                style={{
+                  background:
+                    "linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%)",
+                  border: "1px solid rgba(255,255,255,0.06)",
+                  backdropFilter: "blur(20px)",
+                  animation: "fadeSlideUp 0.5s ease 0.25s both",
+                }}
+              >
+                <div
+                  className="h-1"
+                  style={{
+                    background: "linear-gradient(90deg, #d4af37, #f6e3a1)",
+                  }}
+                />
+                <div className="p-5 sm:p-6">
+                  <h2
+                    className="font-extrabold text-lg flex items-center gap-3 mb-5"
+                    style={{ color: "#fff" }}
+                  >
+                    <div
+                      className="w-9 h-9 rounded-lg flex items-center justify-center"
+                      style={{ background: "rgba(212,175,55,0.12)" }}
+                    >
+                      <MapPin size={18} style={{ color: "#d4af37" }} />
+                    </div>
+                    Delivery Address
+                  </h2>
+
+                  <div className="relative mb-4">
+                    <MapPin
+                      size={16}
+                      className="absolute left-4 top-4"
+                      style={{ color: "rgba(255,255,255,0.3)" }}
+                    />
+                    <textarea
+                      rows={4}
+                      placeholder="Enter your complete address with landmark..."
+                      required
+                      value={formData.address}
+                      onChange={(e) => handleChange("address", e.target.value)}
+                      className="w-full rounded-xl text-sm font-medium transition-all duration-300"
+                      style={{
+                        background: "rgba(255,255,255,0.04)",
+                        border: "1px solid rgba(255,255,255,0.1)",
+                        color: "#fff",
+                        padding: "13px 16px 13px 44px",
+                        outline: "none",
+                        resize: "none",
+                      }}
+                      onFocus={(e) => {
+                        e.currentTarget.style.borderColor = "#d4af37";
+                        e.currentTarget.style.boxShadow =
+                          "0 0 0 3px rgba(212,175,55,0.15)";
+                      }}
+                      onBlur={(e) => {
+                        e.currentTarget.style.borderColor =
+                          "rgba(255,255,255,0.1)";
+                        e.currentTarget.style.boxShadow = "none";
+                      }}
+                    />
+                  </div>
+
+                  <div className="grid md:grid-cols-2 gap-4">
                     <input
                       type="text"
-                      placeholder="Full Name"
-                      className="glass-input pl-12"
+                      placeholder="City / Town"
                       required
+                      value={formData.city}
+                      onChange={(e) => handleChange("city", e.target.value)}
+                      className="w-full rounded-xl text-sm font-medium transition-all duration-300"
+                      style={{
+                        background: "rgba(255,255,255,0.04)",
+                        border: "1px solid rgba(255,255,255,0.1)",
+                        color: "#fff",
+                        padding: "13px 16px",
+                        outline: "none",
+                      }}
+                      onFocus={(e) => {
+                        e.currentTarget.style.borderColor = "#d4af37";
+                        e.currentTarget.style.boxShadow =
+                          "0 0 0 3px rgba(212,175,55,0.15)";
+                      }}
+                      onBlur={(e) => {
+                        e.currentTarget.style.borderColor =
+                          "rgba(255,255,255,0.1)";
+                        e.currentTarget.style.boxShadow = "none";
+                      }}
                     />
-                  </div>
-                  <div className="relative">
-                    <Phone size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
                     <input
-                      type="tel"
-                      placeholder="Phone Number"
-                      className="glass-input pl-12"
+                      type="text"
+                      placeholder="PIN Code"
                       required
+                      value={formData.pincode}
+                      onChange={(e) => handleChange("pincode", e.target.value)}
+                      className="w-full rounded-xl text-sm font-medium transition-all duration-300"
+                      style={{
+                        background: "rgba(255,255,255,0.04)",
+                        border: "1px solid rgba(255,255,255,0.1)",
+                        color: "#fff",
+                        padding: "13px 16px",
+                        outline: "none",
+                      }}
+                      onFocus={(e) => {
+                        e.currentTarget.style.borderColor = "#d4af37";
+                        e.currentTarget.style.boxShadow =
+                          "0 0 0 3px rgba(212,175,55,0.15)";
+                      }}
+                      onBlur={(e) => {
+                        e.currentTarget.style.borderColor =
+                          "rgba(255,255,255,0.1)";
+                        e.currentTarget.style.boxShadow = "none";
+                      }}
                     />
                   </div>
-                  <div className="relative">
-                    <Mail size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
-                    <input
-                      type="email"
-                      placeholder="Email Address"
-                      className="glass-input pl-12"
-                    />
-                  </div>
                 </div>
               </div>
 
-              <div className="glass-card p-8 fade-in-up fade-in-up-delay-2">
-                <h2 className="text-2xl font-semibold text-white mb-6 flex items-center gap-3">
-                  <MapPin size={24} className="text-red-400" />
-                  Delivery Address
-                </h2>
-                <div className="relative">
-                  <MapPin size={18} className="absolute left-4 top-5 text-gray-500" />
-                  <textarea
-                    rows="4"
-                    placeholder="Enter your complete address with landmark..."
-                    className="glass-input pl-12 resize-none"
-                    required
-                  />
-                </div>
-                <div className="grid md:grid-cols-2 gap-4 mt-4">
-                  <input type="text" placeholder="City / Town" className="glass-input" required />
-                  <input type="text" placeholder="PIN Code" className="glass-input" required />
-                </div>
-              </div>
+              <button
+  type="button"
+  onClick={getCurrentLocation}
+  className="bg-green-600 text-white px-4 py-2 rounded mb-4"
+>
+  📍 Use My Current Location
+</button>
+              <h3 className="text-lg font-semibold mt-6 mb-2">
+  Select Delivery Location
+</h3>
 
-              <div className="glass-card p-8 fade-in-up fade-in-up-delay-3">
-                <h2 className="text-2xl font-semibold text-white mb-6 flex items-center gap-3">
-                  <CreditCard size={24} className="text-red-400" />
-                  Payment Method
-                </h2>
-                <div className="space-y-3">
-                  <label className="meathub-radio">
-                    <input
-                      type="radio"
-                      name="payment"
-                      value="cod"
-                      checked={paymentMethod === "cod"}
-                      onChange={(e) => setPaymentMethod(e.target.value)}
-                    />
-                    <Banknote size={20} className="text-green-400" />
-                    <span>Cash on Delivery</span>
-                  </label>
-                  <label className="meathub-radio">
-                    <input
-                      type="radio"
-                      name="payment"
-                      value="upi"
-                      checked={paymentMethod === "upi"}
-                      onChange={(e) => setPaymentMethod(e.target.value)}
-                    />
-                    <Smartphone size={20} className="text-purple-400" />
-                    <span>UPI (GPay / PhonePe / Paytm)</span>
-                  </label>
-                  <label className="meathub-radio">
-                    <input
-                      type="radio"
-                      name="payment"
-                      value="card"
-                      checked={paymentMethod === "card"}
-                      onChange={(e) => setPaymentMethod(e.target.value)}
-                    />
-                    <CreditCard size={20} className="text-blue-400" />
-                    <span>Credit / Debit Card</span>
-                  </label>
-                </div>
-              </div>
-            </form>
 
-            <div className="fade-in-up fade-in-up-delay-2">
-              <div className="glass-card p-8 sticky top-8">
-                <h2 className="text-2xl font-semibold text-white mb-6">
-                  Order Summary
-                </h2>
-                <div className="space-y-3 max-h-60 overflow-y-auto pr-2 mb-4">
-                  {cartItems.map((item) => (
+<div className="mt-3">
+  <p>
+    <strong>Latitude:</strong> {location.latitude}
+  </p>
+
+  <p>
+    <strong>Longitude:</strong> {location.longitude}
+  </p>
+</div>
+
+<LocationPicker
+  onLocationSelect={(loc) => setLocation(loc)}
+/>
+
+              {/* Payment Method */}
+              <div
+                className="rounded-2xl overflow-hidden"
+                style={{
+                  background:
+                    "linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%)",
+                  border: "1px solid rgba(255,255,255,0.06)",
+                  backdropFilter: "blur(20px)",
+                  animation: "fadeSlideUp 0.5s ease 0.35s both",
+                }}
+              >
+                <div
+                  className="h-1"
+                  style={{
+                    background: "linear-gradient(90deg, #8b5cf6, #a78bfa)",
+                  }}
+                />
+                <div className="p-5 sm:p-6">
+                  <h2
+                    className="font-extrabold text-lg flex items-center gap-3 mb-5"
+                    style={{ color: "#fff" }}
+                  >
                     <div
-                      key={item.id}
-                      className="flex justify-between items-center text-gray-300 text-sm"
+                      className="w-9 h-9 rounded-lg flex items-center justify-center"
+                      style={{ background: "rgba(139,92,246,0.12)" }}
                     >
-                      <span className="truncate mr-2">
-                        {item.name} × {item.quantity}
+                      <CreditCard size={18} style={{ color: "#8b5cf6" }} />
+                    </div>
+                    Payment Method
+                  </h2>
+
+                  <div className="space-y-3">
+                    {paymentOptions.map((option) => (
+                      <label
+                        key={option.value}
+                        className="flex items-center gap-4 p-4 rounded-xl cursor-pointer transition-all duration-300"
+                        style={{
+                          background:
+                            paymentMethod === option.value
+                              ? `${option.color}12`
+                              : "rgba(255,255,255,0.02)",
+                          border:
+                            paymentMethod === option.value
+                              ? `1px solid ${option.color}40`
+                              : "1px solid rgba(255,255,255,0.06)",
+                          boxShadow:
+                            paymentMethod === option.value
+                              ? `0 0 20px ${option.color}15`
+                              : "none",
+                        }}
+                      >
+                        <input
+                          type="radio"
+                          name="payment"
+                          value={option.value}
+                          checked={paymentMethod === option.value}
+                          onChange={(e) => setPaymentMethod(e.target.value)}
+                          className="sr-only"
+                        />
+                        <div
+                          className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                          style={{
+                            background: `${option.color}15`,
+                          }}
+                        >
+                          <option.icon
+                            size={20}
+                            style={{ color: option.color }}
+                          />
+                        </div>
+                        <span
+                          className="font-semibold text-sm"
+                          style={{ color: "#fff" }}
+                        >
+                          {option.label}
+                        </span>
+                        {paymentMethod === option.value && (
+                          <div
+                            className="ml-auto w-6 h-6 rounded-full flex items-center justify-center"
+                            style={{
+                              background: option.color,
+                              boxShadow: `0 0 12px ${option.color}60`,
+                            }}
+                          >
+                            <Check size={14} color="white" strokeWidth={3} />
+                          </div>
+                        )}
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Order Summary */}
+            <div className="lg:col-span-1">
+              <div
+                className="rounded-2xl overflow-hidden sticky top-24"
+                style={{
+                  background:
+                    "linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%)",
+                  border: "1px solid rgba(255,255,255,0.06)",
+                  backdropFilter: "blur(20px)",
+                  animation: "fadeSlideUp 0.6s ease 0.3s both",
+                }}
+              >
+                <div
+                  className="h-1"
+                  style={{
+                    background:
+                      "linear-gradient(90deg, #d4213c, #ff6b35, #d4af37)",
+                  }}
+                />
+                <div className="p-5 sm:p-6">
+                  <div className="flex items-center gap-3 mb-5">
+                    <div
+                      className="w-10 h-10 rounded-xl flex items-center justify-center"
+                      style={{
+                        background: "linear-gradient(135deg, #d4213c, #ff6b35)",
+                        boxShadow: "0 4px 15px rgba(212,33,60,0.4)",
+                      }}
+                    >
+                      <IndianRupee size={20} color="white" />
+                    </div>
+                    <div>
+                      <h2
+                        className="font-extrabold text-lg"
+                        style={{ color: "#fff" }}
+                      >
+                        Order Summary
+                      </h2>
+                      <p
+                        className="text-[10px] font-bold uppercase tracking-wider"
+                        style={{ color: "#d4af37" }}
+                      >
+                        {cartItems.length} items
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Items list */}
+                  <div className="space-y-3 max-h-48 overflow-y-auto pr-2 mb-4">
+                    {cartItems.map((item) => (
+                      <div
+                        key={item.id}
+                        className="flex justify-between items-center text-sm"
+                        style={{ color: "rgba(255,255,255,0.6)" }}
+                      >
+                        <span className="truncate mr-2">
+                          {item.name}{" "}
+                          <span style={{ color: "rgba(255,255,255,0.3)" }}>
+                            × {item.quantity}
+                          </span>
+                        </span>
+                        <span
+                          className="font-bold whitespace-nowrap"
+                          style={{ color: "#fff" }}
+                        >
+                          ₹{item.price * item.quantity}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div
+                    className="my-4 h-px"
+                    style={{
+                      background:
+                        "linear-gradient(90deg, transparent, rgba(212,175,55,0.3), transparent)",
+                    }}
+                  />
+
+                  {/* Totals */}
+                  <div className="space-y-3">
+                    <div className="flex justify-between text-sm">
+                      <span style={{ color: "rgba(255,255,255,0.5)" }}>
+                        Subtotal
                       </span>
-                      <span className="font-medium text-white whitespace-nowrap">
-                        ₹{item.price * item.quantity}
+                      <span
+                        className="font-bold"
+                        style={{ color: "rgba(255,255,255,0.8)" }}
+                      >
+                        ₹{totalPrice}
                       </span>
                     </div>
-                  ))}
-                </div>
-                <div className="meathub-divider"></div>
-                <div className="space-y-3 mt-4">
-                  <div className="flex justify-between text-gray-300">
-                    <span>Subtotal</span>
-                    <span>₹{totalPrice}</span>
+                    <div className="flex justify-between items-center text-sm">
+                      <div
+                        className="flex items-center gap-2"
+                        style={{ color: "rgba(255,255,255,0.5)" }}
+                      >
+                        Delivery
+                        <Truck
+                          size={13}
+                          style={{ color: "rgba(255,255,255,0.3)" }}
+                        />
+                      </div>
+                      {deliveryCharge === 0 ? (
+                        <span
+                          className="text-xs font-bold px-2.5 py-1 rounded-full"
+                          style={{
+                            background: "rgba(16,185,129,0.15)",
+                            color: "#10b981",
+                            border: "1px solid rgba(16,185,129,0.3)",
+                          }}
+                        >
+                          FREE
+                        </span>
+                      ) : (
+                        <span
+                          className="font-bold"
+                          style={{ color: "rgba(255,255,255,0.8)" }}
+                        >
+                          ₹{deliveryCharge}
+                        </span>
+                      )}
+                    </div>
                   </div>
-                  <div className="flex justify-between text-gray-300">
-                    <span>Delivery</span>
-                    <span>₹{deliveryCharge}</span>
+
+                  <div
+                    className="my-5 h-px"
+                    style={{
+                      background:
+                        "linear-gradient(90deg, transparent, rgba(212,175,55,0.3), transparent)",
+                    }}
+                  />
+
+                  {/* Grand Total */}
+                  <div className="flex justify-between items-center">
+                    <span
+                      className="text-base font-bold"
+                      style={{ color: "#fff" }}
+                    >
+                      Grand Total
+                    </span>
+                    <div className="text-right">
+                      <p
+                        className="font-extrabold text-2xl"
+                        style={{ color: "#d4af37" }}
+                      >
+                        ₹{grandTotal}
+                      </p>
+                      <p
+                        className="text-[10px]"
+                        style={{ color: "rgba(255,255,255,0.3)" }}
+                      >
+                        incl. all taxes
+                      </p>
+                    </div>
                   </div>
+
+                  {/* Submit Button */}
+                  <button
+                    type="submit"
+                    className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl text-sm font-bold mt-6 transition-all duration-300 cursor-pointer"
+                    style={{
+                      background:
+                        "linear-gradient(135deg, #d4213c 0%, #ff6b35 100%)",
+                      color: "white",
+                      boxShadow: "0 4px 20px rgba(212,33,60,0.4)",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = "translateY(-2px)";
+                      e.currentTarget.style.boxShadow =
+                        "0 8px 30px rgba(212,33,60,0.6)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = "translateY(0)";
+                      e.currentTarget.style.boxShadow =
+                        "0 4px 20px rgba(212,33,60,0.4)";
+                    }}
+                  >
+                    <Shield size={18} />
+                    Place Order — ₹{grandTotal}
+                  </button>
+
+                  <p
+                    className="text-center text-xs mt-4 flex items-center justify-center gap-1.5"
+                    style={{ color: "rgba(255,255,255,0.3)" }}
+                  >
+                    <Shield size={11} />
+                    100% secure & encrypted checkout
+                  </p>
                 </div>
-                <div className="meathub-divider"></div>
-                <div className="flex justify-between mt-4">
-                  <span className="text-lg font-semibold text-white">Total</span>
-                  <span className="text-2xl font-bold text-orange-400">
-                    ₹{grandTotal}
-                  </span>
-                </div>
-                <button
-                  type="submit"
-                  onClick={handlePlaceOrder}
-                  className="meathub-btn w-full mt-8 py-4 text-lg"
-                >
-                  <Shield size={20} />
-                  Place Order — ₹{grandTotal}
-                </button>
-                <p className="text-center text-gray-500 text-xs mt-4 flex items-center justify-center gap-1">
-                  <Shield size={12} />
-                  100% secure & encrypted checkout
-                </p>
               </div>
             </div>
           </div>
-        </div>
-      </section>
-    </>
+        </form>
+      </div>
+    </section>
   );
 };
 

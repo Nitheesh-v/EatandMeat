@@ -1,0 +1,197 @@
+/* ============================================
+   Products Page - Background Animations & Effects
+   Only animations, keyframes, and complex effects
+   ============================================ */
+
+/* Section Base */
+.products-dark-section {
+  background: linear-gradient(135deg, #1a0000 0%, #2d0a0a 50%, #1a0505 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* ===== ANIMATED MESH GRADIENT ===== */
+.products-bg-mesh {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 10% 20%, lab(50.61% 4.23 1.53 / 0.3) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 80%, rgba(214, 202, 195, 0.2) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, lch(67.47% 7.38 20.01 / 0.4) 0%, transparent 70%),
+    linear-gradient(135deg, #1a0000 0%, #e9e5e5 50%, #1a0505 100%);
+  animation: productsMeshMove 20s ease-in-out infinite;
+}
+
+@keyframes productsMeshMove {
+  0%, 100% { background-position: 0% 0%; filter: hue-rotate(0deg); }
+  25% { background-position: 100% 0%; }
+  50% { background-position: 100% 100%; filter: hue-rotate(10deg); }
+  75% { background-position: 0% 100%; }
+}
+
+/* ===== HEXAGONAL GRID ===== */
+.products-hex-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(30deg, rgba(220, 38, 38, 0.06) 12%, transparent 12.5%, transparent 87%, rgba(220, 38, 38, 0.06) 87.5%, rgba(220, 38, 38, 0.06)),
+    linear-gradient(150deg, rgba(220, 38, 38, 0.06) 12%, transparent 12.5%, transparent 87%, rgba(220, 38, 38, 0.06) 87.5%, rgba(220, 38, 38, 0.06)),
+    linear-gradient(60deg, rgba(234, 88, 12, 0.04) 25%, transparent 25.5%, transparent 75%, rgba(234, 88, 12, 0.04) 75%, rgba(234, 88, 12, 0.04));
+  background-size: 80px 140px;
+  animation: productsHexScroll 25s linear infinite;
+  opacity: 0.5;
+}
+
+@keyframes productsHexScroll {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(40px, 70px); }
+}
+
+/* ===== FLOATING PARTICLES ===== */
+.products-particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  animation: productsParticleFloat linear infinite;
+}
+
+.products-particle-1 { width: 4px; height: 4px; background: radial-gradient(circle, #ef4444, transparent); left: 10%; bottom: -10px; animation-duration: 12s; }
+.products-particle-2 { width: 6px; height: 6px; background: radial-gradient(circle, #f97316, transparent); left: 20%; bottom: -10px; animation-duration: 15s; animation-delay: 2s; }
+.products-particle-3 { width: 3px; height: 3px; background: radial-gradient(circle, #ef4444, transparent); left: 35%; bottom: -10px; animation-duration: 10s; animation-delay: 4s; }
+.products-particle-4 { width: 5px; height: 5px; background: radial-gradient(circle, #fbbf24, transparent); left: 50%; bottom: -10px; animation-duration: 14s; animation-delay: 1s; }
+.products-particle-5 { width: 4px; height: 4px; background: radial-gradient(circle, #ef4444, transparent); left: 65%; bottom: -10px; animation-duration: 11s; animation-delay: 3s; }
+.products-particle-6 { width: 7px; height: 7px; background: radial-gradient(circle, #f97316, transparent); left: 75%; bottom: -10px; animation-duration: 16s; animation-delay: 5s; }
+
+@keyframes productsParticleFloat {
+  0% { transform: translateY(0) translateX(0) scale(0); opacity: 0; }
+  10% { opacity: 1; transform: translateY(-10vh) translateX(10px) scale(1); }
+  90% { opacity: 0.6; }
+  100% { transform: translateY(-110vh) translateX(-20px) scale(0.3); opacity: 0; }
+}
+
+/* ===== GLOWING ORBS ===== */
+.products-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+.products-orb-1 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(220, 38, 38, 0.25), transparent 70%);
+  top: -10%; left: -5%;
+  animation: productsOrbMove1 15s ease-in-out infinite;
+}
+
+.products-orb-2 {
+  width: 350px; height: 350px;
+  background: radial-gradient(circle, rgba(234, 88, 12, 0.2), transparent 70%);
+  bottom: -10%; right: -5%;
+  animation: productsOrbMove2 18s ease-in-out infinite;
+}
+
+@keyframes productsOrbMove1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(100px, 80px) scale(1.2); }
+  66% { transform: translate(-50px, 120px) scale(0.9); }
+}
+
+@keyframes productsOrbMove2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-80px, -60px) scale(1.15); }
+  66% { transform: translate(60px, -100px) scale(0.85); }
+}
+
+/* ===== VIGNETTE ===== */
+.products-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(0, 0, 0, 0.6) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ===== SECTION LABEL (Glassmorphism Badge) ===== */
+.products-section-label {
+  display: inline-block;
+  background: rgba(220, 38, 38, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  color: #fca5a5;
+  padding: 8px 20px;
+  border-radius: 30px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  transition: all 0.3s ease;
+}
+
+.products-section-label:hover {
+  border-color: rgba(220, 38, 38, 0.6);
+  background: rgba(220, 38, 38, 0.25);
+  transform: translateY(-2px);
+}
+
+/* ===== ACCENT TEXT (Gradient Shimmer) ===== */
+.products-accent-text {
+  background: linear-gradient(135deg, #ef4444, #f97316, #fbbf24, #ef4444);
+  background-size: 300% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: productsTextShimmer 4s linear infinite;
+}
+
+@keyframes productsTextShimmer {
+  0% { background-position: 0% center; }
+  100% { background-position: 300% center; }
+}
+
+/* ===== FADE IN ANIMATIONS ===== */
+.products-fade-in {
+  animation: productsFadeInUp 0.8s ease-out forwards;
+}
+
+@keyframes productsFadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.products-delay-1 { animation-delay: 0.1s; opacity: 0; }
+.products-delay-2 { animation-delay: 0.2s; opacity: 0; }
+.products-delay-3 { animation-delay: 0.3s; opacity: 0; }
+
+/* ===== GLASSMORPHISM SEARCH BAR WRAPPER ===== */
+.products-search-glass {
+  background: rgba(30, 30, 30, 0.5);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  border-radius: 14px;
+  transition: all 0.3s ease;
+}
+
+.products-search-glass:focus-within {
+  border-color: rgba(220, 38, 38, 0.5);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .products-orb { display: none; }
+}
+
+/* ===== SCROLL REVEAL (optional class) ===== */
+.products-scroll-reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.products-scroll-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}

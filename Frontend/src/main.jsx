@@ -1,85 +1,204 @@
 import ReactDOM from "react-dom/client";
-
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import App from "./App";
-import Products from "./pages/Products/Products";
-import Cart from "./pages/Cart/Cart";
-import Login from "./pages/Login/Login";
-import { Contact } from "./pages/Contact/Contact";
-
 import "./index.css";
+import "./mmthemes.css"
+import App from "./App";
 import MainLayout from "./layouts/MainLayout";
+
+// Context
+import { AuthProvider } from "./Context/AuthContext";
 import { CartProvider } from "./Context/CartContext";
+import { LocationProvider } from "./Context/LocationContext";
+import { OrderProvider } from "./Context/OrderContext";
+
+// Customer Pages
+import Products from "./pages/Products/Products";
+import ProductDetails from "./pages/ProductDetails/ProductDetails";
+import Cart from "./pages/Cart/Cart";
 import Checkout from "./pages/Checkout/Checkout";
 import OrderSuccess from "./pages/OrderSuccess/OrderSuccess";
-import ProductDetails from "./pages/ProductDetails/ProductDetails";
-import Offers from "./components/Offer";
+import {TrackOrder} from "./pages/TrackOrder/TrackOrder";
+import Login from "./pages/Login/Login";
 import { Register } from "./pages/register/Register";
-import { LocationProvider } from "./Context/LocationContext";
+import { Contact } from "./pages/Contact/Contact";
+
+// Company Pages
+import Dashboard from "./pages/Company/Dashboard";
+import Orders from "./pages/Company/Orders";
+import Preparing from "./pages/Company/Preparing";
+import Packed from "./pages/Company/Packed";
+import {DeliveryPartners} from "./pages/Company/DeliveryPartners";
+import Reports from "./pages/Company/Reports";
+
+// Components
+import Offers from "./components/Offer";
+import DeliveryModal from "./components/Delivery/DeliveryModal";
+import CompanyLayout from "./pages/Company/CompanyLayout";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import { MyOrders } from "./pages/MyOrders/MyOrders";
+
+
+//delivery
+import DeliveryLayout from "./pages/Delivery/DeliveryLayout.jsx"
+import {DeliveryDashboard} from "./pages/Delivery/DeliveryDashboard.jsx";
+import {AvailableOrders} from "./pages/Delivery/AvailableOrders";
+import {MyDeliveries} from "./pages/Delivery/MyDeliveries";
+import {Earnings} from "./pages/Delivery/Earnings";
+import {Profile} from "./pages/Delivery/Profile";
+
+import "leaflet/dist/leaflet.css";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
     children: [
+      // ==========================
+      // Public Routes
+      // ==========================
       {
         index: true,
         element: <App />,
       },
-
       {
-        path: "/",
-        element: <App />,
-      },
-
-      {
-        path: "/products",
+        path: "products",
         element: <Products />,
-      },
-
-      {
-        path: "/cart",
-        element: <Cart />,
-      },
-
-      {
-        path: "/login",
-        element: <Login />,
-      },
-
-      {
-        path: "/contact",
-        element: <Contact />,
-      },
-      {
-        path: "/offers",
-        element: <Offers />,
-      },
-      {
-        path: "checkout",
-        element: <Checkout />,
-      },
-      {
-        path: "order-success",
-        element: <OrderSuccess />,
       },
       {
         path: "products/:id",
         element: <ProductDetails />,
       },
       {
+        path: "login",
+        element: <Login />,
+      },
+      {
         path: "register",
         element: <Register />,
       },
+      {
+        path: "contact",
+        element: <Contact />,
+      },
+      {
+        path: "locavailable",
+        element: <DeliveryModal />,
+      },
+
+      // ==========================
+      // Customer Protected Routes
+      // ==========================
+
+      {
+        element: (
+          <ProtectedRoute allowedRoles={["customer"]} />
+        ),
+        children: [
+          {
+            path: "cart",
+            element: <Cart />,
+          },
+          {
+            path: "checkout",
+            element: <Checkout />,
+          },
+          {
+            path: "order-success",
+            element: <OrderSuccess />,
+          },
+          {
+            path: "track-order",
+            element: <TrackOrder />,
+          },
+          {
+            path: "my-orders",
+            element: <MyOrders />,
+          },
+        ],
+      },
+
+      // ==========================
+      // Company Protected Routes
+      // ==========================
+
+      {
+        path: "company",
+        element: (
+          <ProtectedRoute allowedRoles={["company"]}>
+            <CompanyLayout />
+          </ProtectedRoute>
+        ),
+        children: [
+          {
+            path: "dashboard",
+            element: <Dashboard />,
+          },
+          {
+            path: "orders",
+            element: <Orders />,
+          },
+          {
+            path: "preparing",
+            element: <Preparing />,
+          },
+          {
+            path: "packed",
+            element: <Packed />,
+          },
+          {
+            path: "delivery-partners",
+            element: <DeliveryPartners />,
+          },
+          {
+            path: "reports",
+            element: <Reports />,
+          },
+        ],
+      },
+      {
+  element: <ProtectedRoute allowedRoles={["delivery"]} />,
+  children: [
+    {
+      path: "delivery",
+      element: <DeliveryLayout />,
+      children: [
+        {
+          path: "dashboard",
+          element: <DeliveryDashboard />,
+        },
+        {
+          path: "available-orders",
+          element: <AvailableOrders />,
+        },
+        {
+          path: "my-deliveries",
+          element: <MyDeliveries />,
+        },
+        {
+          path: "earnings",
+          element: <Earnings />,
+        },
+        {
+          path: "profile",
+          element: <Profile />,
+        },
+      ],
+    },
+  ],
+},
     ],
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <LocationProvider>
-    <CartProvider>
-      <RouterProvider router={router} />
-    </CartProvider>
-  </LocationProvider>,
+  <AuthProvider>
+    <LocationProvider>
+      <CartProvider>
+        <OrderProvider>
+          <RouterProvider router={router} />
+        </OrderProvider>
+      </CartProvider>
+    </LocationProvider>
+  </AuthProvider>
 );

@@ -3,7 +3,8 @@ const ProductFilter = ({ category, setCategory }) => {
     const categories = [
         "All",
         "Fresh Chicken",
-        "Masalas"
+        "Masalas",
+    "Combos"
     ];
 
     return (

@@ -1,4 +1,5 @@
 import { MapPin, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const DELIVERY_BG = "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1600&q=80";
 
@@ -65,6 +66,9 @@ const DeliveryAreas = () => (
       </div>
 
       {/* CTA */}
+
+     
+   
       <button
         className="inline-flex items-center gap-2.5 bg-gradient-fire text-white
           px-10 py-4 rounded-full font-bold text-sm tracking-wide
@@ -76,6 +80,7 @@ const DeliveryAreas = () => (
         <MapPin size={17} />
         Check Availability
       </button>
+      
     </div>
   </section>
 );

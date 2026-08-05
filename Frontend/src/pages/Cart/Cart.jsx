@@ -1,173 +1,7 @@
 import { Link } from "react-router-dom";
 import { useCart } from "../../Context/CartContext";
-import { ShoppingCart, Trash2, ArrowRight, Package } from "lucide-react";
-
-const cartStyles = `
-.meathub-dark-section {
-  background: linear-gradient(135deg, #1a0000 0%, #2d0a0a 50%, #1a0505 100%);
-  min-height: 100vh;
-  position: relative;
-  overflow: hidden;
-}
-.bg-mesh-gradient {
-  background: radial-gradient(ellipse at 10% 20%, rgba(185, 28, 28, 0.3) 0%, transparent 50%),
-    radial-gradient(ellipse at 90% 80%, rgba(234, 88, 12, 0.2) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 50%, rgba(127, 29, 29, 0.4) 0%, transparent 70%),
-    linear-gradient(135deg, #1a0000 0%, #2d0a0a 50%, #1a0505 100%);
-  animation: meshMove 20s ease-in-out infinite;
-  position: absolute; inset: 0;
-}
-@keyframes meshMove {
-  0%, 100% { background-position: 0% 0%; filter: hue-rotate(0deg); }
-  25% { background-position: 100% 0%; }
-  50% { background-position: 100% 100%; filter: hue-rotate(10deg); }
-  75% { background-position: 0% 100%; }
-}
-.hex-grid {
-  position: absolute; inset: 0;
-  background-image:
-    linear-gradient(30deg, rgba(220, 38, 38, 0.06) 12%, transparent 12.5%, transparent 87%, rgba(220, 38, 38, 0.06) 87.5%, rgba(220, 38, 38, 0.06)),
-    linear-gradient(150deg, rgba(220, 38, 38, 0.06) 12%, transparent 12.5%, transparent 87%, rgba(220, 38, 38, 0.06) 87.5%, rgba(220, 38, 38, 0.06)),
-    linear-gradient(60deg, rgba(234, 88, 12, 0.04) 25%, transparent 25.5%, transparent 75%, rgba(234, 88, 12, 0.04) 75%, rgba(234, 88, 12, 0.04));
-  background-size: 80px 140px;
-  animation: hexScroll 25s linear infinite;
-  opacity: 0.5;
-}
-@keyframes hexScroll {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(40px, 70px); }
-}
-.particle {
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
-  opacity: 0;
-  animation: particleFloat linear infinite;
-}
-.particle-1 { width: 4px; height: 4px; background: radial-gradient(circle, #ef4444, transparent); left: 10%; bottom: -10px; animation-duration: 12s; animation-delay: 0s; }
-.particle-2 { width: 6px; height: 6px; background: radial-gradient(circle, #f97316, transparent); left: 20%; bottom: -10px; animation-duration: 15s; animation-delay: 2s; }
-.particle-3 { width: 3px; height: 3px; background: radial-gradient(circle, #ef4444, transparent); left: 35%; bottom: -10px; animation-duration: 10s; animation-delay: 4s; }
-.particle-4 { width: 5px; height: 5px; background: radial-gradient(circle, #fbbf24, transparent); left: 50%; bottom: -10px; animation-duration: 14s; animation-delay: 1s; }
-.particle-5 { width: 4px; height: 4px; background: radial-gradient(circle, #ef4444, transparent); left: 65%; bottom: -10px; animation-duration: 11s; animation-delay: 3s; }
-.particle-6 { width: 7px; height: 7px; background: radial-gradient(circle, #f97316, transparent); left: 75%; bottom: -10px; animation-duration: 16s; animation-delay: 5s; }
-@keyframes particleFloat {
-  0% { transform: translateY(0) translateX(0) scale(0); opacity: 0; }
-  10% { opacity: 1; transform: translateY(-10vh) translateX(10px) scale(1); }
-  90% { opacity: 0.6; }
-  100% { transform: translateY(-110vh) translateX(-20px) scale(0.3); opacity: 0; }
-}
-.orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  pointer-events: none;
-}
-.orb-1 {
-  width: 400px; height: 400px;
-  background: radial-gradient(circle, rgba(220, 38, 38, 0.25), transparent 70%);
-  top: -10%; left: -5%;
-  animation: orbMove1 15s ease-in-out infinite;
-}
-.orb-2 {
-  width: 350px; height: 350px;
-  background: radial-gradient(circle, rgba(234, 88, 12, 0.2), transparent 70%);
-  bottom: -10%; right: -5%;
-  animation: orbMove2 18s ease-in-out infinite;
-}
-@keyframes orbMove1 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(100px, 80px) scale(1.2); }
-  66% { transform: translate(-50px, 120px) scale(0.9); }
-}
-@keyframes orbMove2 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(-80px, -60px) scale(1.15); }
-  66% { transform: translate(60px, -100px) scale(0.85); }
-}
-.vignette-overlay {
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse at center, transparent 40%, rgba(0, 0, 0, 0.6) 100%);
-  pointer-events: none; z-index: 1;
-}
-.glass-card {
-  background: linear-gradient(135deg, rgba(127, 29, 29, 0.25) 0%, rgba(69, 10, 10, 0.45) 100%);
-  border: 1px solid rgba(220, 38, 38, 0.2);
-  border-radius: 20px;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative; overflow: hidden;
-}
-.glass-card::before {
-  content: ''; position: absolute; top: 0; left: -100%;
-  width: 100%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(220, 38, 38, 0.1), transparent);
-  transition: left 0.6s ease;
-}
-.glass-card:hover::before { left: 100%; }
-.glass-card:hover {
-  border-color: rgba(220, 38, 38, 0.5);
-  box-shadow: 0 8px 32px rgba(220, 38, 38, 0.2);
-}
-.meathub-btn {
-  background: linear-gradient(135deg, #dc2626 0%, #ea580c 100%);
-  border: none; border-radius: 14px; color: white; font-weight: 600;
-  padding: 14px 28px; cursor: pointer; position: relative; overflow: hidden;
-  box-shadow: 0 4px 20px rgba(220, 38, 38, 0.4);
-  transition: all 0.3s ease;
-  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-}
-.meathub-btn::after {
-  content: ''; position: absolute; top: -50%; left: -50%;
-  width: 200%; height: 200%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 60%);
-  transform: scale(0); transition: transform 0.5s ease;
-}
-.meathub-btn:hover::after { transform: scale(1); }
-.meathub-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(220, 38, 38, 0.6); }
-.qty-btn {
-  width: 36px; height: 36px; border-radius: 10px;
-  border: 1px solid rgba(220, 38, 38, 0.3);
-  background: rgba(69, 10, 10, 0.4); color: #fca5a5;
-  font-size: 18px; font-weight: bold; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.2s ease;
-}
-.qty-btn:hover {
-  background: rgba(220, 38, 38, 0.3);
-  border-color: rgba(220, 38, 38, 0.6); color: white;
-}
-.page-title { color: white; font-size: 2.5rem; font-weight: 800; }
-.page-title .accent {
-  background: linear-gradient(135deg, #ef4444, #f97316);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.section-label {
-  display: inline-block; background: rgba(220, 38, 38, 0.15);
-  border: 1px solid rgba(220, 38, 38, 0.3); color: #fca5a5;
-  padding: 8px 20px; border-radius: 30px;
-  font-size: 0.875rem; font-weight: 600; margin-bottom: 16px;
-}
-.meathub-divider {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(220, 38, 38, 0.3), transparent);
-  margin: 20px 0;
-}
-.fade-in-up { animation: fadeInUp 0.8s ease-out forwards; }
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.fade-in-up-delay-1 { animation-delay: 0.1s; opacity: 0; }
-.fade-in-up-delay-2 { animation-delay: 0.2s; opacity: 0; }
-.fade-in-up-delay-3 { animation-delay: 0.3s; opacity: 0; }
-.fade-in-up-delay-4 { animation-delay: 0.4s; opacity: 0; }
-@media (max-width: 768px) {
-  .page-title { font-size: 1.75rem !important; }
-  .orb { display: none; }
-}
-`;
+import { ShoppingCart, Trash2, ArrowRight, Package, Minus, Plus, Flame, IndianRupee, Truck, Tag } from "lucide-react";
+import { useState } from "react";
 
 const Cart = () => {
   const {
@@ -178,191 +12,605 @@ const Cart = () => {
     totalPrice,
   } = useCart();
 
+  const [removingId, setRemovingId] = useState(null);
+
   const deliveryCharge = cartItems.length > 0 ? 40 : 0;
   const grandTotal = totalPrice + deliveryCharge;
+  const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
+  const handleRemove = (id) => {
+    setRemovingId(id);
+    setTimeout(() => {
+      removeFromCart(id);
+      setRemovingId(null);
+    }, 300);
+  };
+
+  // Empty cart state
   if (cartItems.length === 0) {
     return (
-      <>
-        <style>{cartStyles}</style>
-        <section className="meathub-dark-section relative overflow-hidden py-24 px-6">
-          <div className="bg-mesh-gradient"></div>
-          <div className="hex-grid"></div>
-          <div className="orb orb-1"></div>
-          <div className="orb orb-2"></div>
-          <div className="vignette-overlay"></div>
+      <section
+        className="relative overflow-hidden flex items-center justify-center min-h-screen px-4"
+        style={{
+          background: "linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 50%, #0a0a0a 100%)",
+        }}
+      >
+        {/* Background glows */}
+        <div
+          className="absolute rounded-full"
+          style={{
+            width: 400,
+            height: 400,
+            top: "10%",
+            left: "50%",
+            transform: "translateX(-50%)",
+            background: "radial-gradient(circle, rgba(212,33,60,0.12) 0%, transparent 70%)",
+            filter: "blur(60px)",
+          }}
+        />
+        <div
+          className="absolute rounded-full"
+          style={{
+            width: 300,
+            height: 300,
+            bottom: "10%",
+            right: "10%",
+            background: "radial-gradient(circle, rgba(212,175,55,0.08) 0%, transparent 70%)",
+            filter: "blur(40px)",
+          }}
+        />
 
-          <div className="relative z-10 max-w-3xl mx-auto text-center">
-            <div className="fade-in-up">
-              <div className="inline-flex items-center justify-center w-32 h-32 rounded-full bg-red-500/10 border border-red-500/20 mb-8">
-                <ShoppingCart size={56} className="text-red-400" />
-              </div>
-              <h1 className="page-title">Your Cart is Empty</h1>
-              <p className="text-gray-400 mt-4 text-lg max-w-md mx-auto">
-                Add fresh chicken and masalas to your cart and we'll deliver them
-                fresh to your doorstep.
-              </p>
-              <Link to="/products" className="inline-block mt-8">
-                <button className="meathub-btn px-10 py-4 text-lg">
-                  <Package size={20} />
-                  Start Shopping
-                </button>
-              </Link>
-            </div>
+        <div className="relative z-10 max-w-lg mx-auto text-center px-4">
+          {/* Animated empty cart icon */}
+          <div
+            className="inline-flex items-center justify-center rounded-3xl mb-8"
+            style={{
+              width: "clamp(100px, 25vw, 140px)",
+              height: "clamp(100px, 25vw, 140px)",
+              background: "linear-gradient(135deg, rgba(212,33,60,0.1), rgba(212,175,55,0.05))",
+              border: "1px solid rgba(212,33,60,0.2)",
+              animation: "fadeSlideUp 0.6s ease both",
+            }}
+          >
+            <ShoppingCart
+              size={56}
+              style={{ color: "rgba(212,33,60,0.8)" }}
+            />
           </div>
-        </section>
-      </>
+
+          <h1
+            className="font-extrabold tracking-tight leading-tight"
+            style={{
+              fontSize: "clamp(1.75rem, 5vw, 2.5rem)",
+              background: "linear-gradient(135deg, #ffffff 0%, #e0d0d0 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              animation: "fadeSlideUp 0.6s ease 0.1s both",
+            }}
+          >
+            Your Cart is{" "}
+            <span
+              style={{
+                background: "linear-gradient(135deg, #d4213c, #ff6b35)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
+              Empty
+            </span>
+          </h1>
+
+          <p
+            className="mt-4 text-base max-w-md mx-auto"
+            style={{
+              color: "rgba(255,255,255,0.4)",
+              animation: "fadeSlideUp 0.6s ease 0.2s both",
+            }}
+          >
+            Add fresh chicken and masalas to your cart and we'll deliver them
+            fresh to your doorstep.
+          </p>
+
+          <div className="mt-8" style={{ animation: "fadeSlideUp 0.6s ease 0.3s both" }}>
+            <Link to="/products">
+              <button
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl text-sm font-bold transition-all duration-300 cursor-pointer"
+                style={{
+                  background: "linear-gradient(135deg, #d4213c 0%, #ff6b35 100%)",
+                  color: "white",
+                  boxShadow: "0 4px 20px rgba(212,33,60,0.4)",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "translateY(-2px)";
+                  e.currentTarget.style.boxShadow = "0 8px 30px rgba(212,33,60,0.6)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.boxShadow = "0 4px 20px rgba(212,33,60,0.4)";
+                }}
+              >
+                <Package size={18} />
+                Start Shopping
+              </button>
+            </Link>
+          </div>
+        </div>
+      </section>
     );
   }
 
   return (
-    <>
-      <style>{cartStyles}</style>
-      <section className="meathub-dark-section relative overflow-hidden py-16 px-6 mt-20">
-        <div className="bg-mesh-gradient"></div>
-        <div className="hex-grid"></div>
+    <section
+      className=" mt-10 relative overflow-hidden px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16"
+      style={{
+        background: "linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 50%, #0a0a0a 100%)",
+        minHeight: "100vh",
+      }}
+    >
+      {/* Background glows */}
+      <div
+        className="absolute rounded-full"
+        style={{
+          width: 380,
+          height: 380,
+          top: "-5%",
+          right: "-5%",
+          background: "radial-gradient(circle, rgba(212,33,60,0.1) 0%, transparent 70%)",
+          filter: "blur(60px)",
+        }}
+      />
+      <div
+        className="absolute rounded-full"
+        style={{
+          width: 320,
+          height: 320,
+          bottom: "0%",
+          left: "-5%",
+          background: "radial-gradient(circle, rgba(212,175,55,0.06) 0%, transparent 70%)",
+          filter: "blur(50px)",
+        }}
+      />
 
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="particle particle-1"></div>
-          <div className="particle particle-2"></div>
-          <div className="particle particle-3"></div>
-          <div className="particle particle-4"></div>
-          <div className="particle particle-5"></div>
-          <div className="particle particle-6"></div>
-        </div>
-
-        <div className="orb orb-1"></div>
-        <div className="orb orb-2"></div>
-        <div className="vignette-overlay"></div>
-
-        <div className="relative z-10 max-w-7xl mx-auto">
-          <div className="mb-10 fade-in-up">
-            <span className="section-label">🛒 Your Selection</span>
-            <h1 className="page-title">
-              Shopping <span className="accent">Cart</span>
-            </h1>
-            <p className="text-gray-400 mt-2">
-              {cartItems.length} {cartItems.length === 1 ? "item" : "items"} in your cart
-            </p>
+      <div className="relative z-10 max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="mb-8 sm:mb-10">
+          <div className="flex items-center gap-3 mb-3" style={{ animation: "fadeSlideUp 0.5s ease both" }}>
+            <div
+              className="w-10 h-10 rounded-xl flex items-center justify-center"
+              style={{
+                background: "linear-gradient(135deg, #d4213c, #ff6b35)",
+                boxShadow: "0 4px 15px rgba(212,33,60,0.4)",
+              }}
+            >
+              <ShoppingCart size={20} color="white" />
+            </div>
+            <span
+              className="text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-full"
+              style={{
+                background: "rgba(212,33,60,0.12)",
+                color: "#d4213c",
+                border: "1px solid rgba(212,33,60,0.25)",
+              }}
+            >
+               Your Selection
+            </span>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-2 space-y-6">
-              {cartItems.map((item, index) => (
+          <h1
+            className="font-extrabold tracking-tight leading-tight"
+            style={{
+              fontSize: "clamp(1.75rem, 4vw, 2.5rem)",
+              background: "linear-gradient(135deg, #ffffff 0%, #e0d0d0 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              animation: "fadeSlideUp 0.5s ease 0.1s both",
+            }}
+          >
+            Shopping{" "}
+            <span
+              style={{
+                background: "linear-gradient(135deg, #d4213c, #ff6b35)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
+              Cart
+            </span>
+          </h1>
+
+          <p
+            className="mt-2 text-sm sm:text-base"
+            style={{ color: "rgba(255,255,255,0.4)" }}
+          >
+            <span className="font-bold" style={{ color: "#d4af37" }}>{totalItems}</span>{" "}
+            {totalItems === 1 ? "item" : "items"} in your cart ·{" "}
+            <span style={{ color: "rgba(255,255,255,0.3)" }}>
+              {cartItems.length} {cartItems.length === 1 ? "product" : "products"}
+            </span>
+          </p>
+        </div>
+
+        {/* Main Grid */}
+        <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
+          {/* Cart Items */}
+          <div className="lg:col-span-2 space-y-4 sm:space-y-5">
+            {cartItems.map((item, index) => (
+              <div
+                key={item.id}
+                className="rounded-2xl overflow-hidden transition-all duration-500"
+                style={{
+                  background: removingId === item.id
+                    ? "rgba(212,33,60,0.05)"
+                    : "linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%)",
+                  border: removingId === item._id
+                    ? "1px solid rgba(212,33,60,0.3)"
+                    : "1px solid rgba(255,255,255,0.06)",
+                  backdropFilter: "blur(20px)",
+                  transform: removingId === item._id ? "translateX(20px)" : "translateX(0)",
+                  opacity: removingId === item._id ? 0.5 : 1,
+                  animation: `fadeSlideUp 0.5s ease ${0.1 + index * 0.08}s both`,
+                }}
+                onMouseEnter={(e) => {
+                  if (removingId !== item._id) {
+                    e.currentTarget.style.borderColor = "rgba(212,33,60,0.2)";
+                    e.currentTarget.style.transform = "translateY(-2px)";
+                    e.currentTarget.style.boxShadow = "0 8px 30px rgba(212,33,60,0.08)";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (removingId !== item._id) {
+                    e.currentTarget.style.borderColor = "rgba(255,255,255,0.06)";
+                    e.currentTarget.style.transform = "translateY(0)";
+                    e.currentTarget.style.boxShadow = "none";
+                  }
+                }}
+              >
+                {/* Accent bar */}
                 <div
-                  key={item.id}
-                  className={`glass-card p-6 flex gap-5 fade-in-up fade-in-up-delay-${
-                    index < 4 ? index + 1 : 4
-                  }`}
-                >
-                  <div className="relative flex-shrink-0">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-32 h-32 object-cover rounded-xl border border-red-500/10"
-                    />
-                    <div className="absolute -top-2 -right-2 w-8 h-8 bg-red-500 rounded-full flex items-center justify-center text-white text-sm font-bold">
-                      {item.quantity}
-                    </div>
-                  </div>
+                  className="h-1"
+                  style={{ background: "linear-gradient(90deg, #d4213c, #ff6b35, #d4af37)" }}
+                />
 
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <h2 className="text-xl font-semibold text-white">
-                          {item.name}
-                        </h2>
-                        <p className="text-gray-400 mt-1 text-sm">{item.weight}</p>
-                      </div>
-                      <button
-                        onClick={() => removeFromCart(item.id)}
-                        className="text-gray-500 hover:text-red-400 transition-colors p-2"
-                        title="Remove item"
+                <div className="p-4 sm:p-5 lg:p-6">
+                  <div className="flex gap-4 sm:gap-5">
+                    {/* Image */}
+                    <div className="relative flex-shrink-0">
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="rounded-xl object-cover"
+                        style={{
+                          width: "clamp(80px, 20vw, 128px)",
+                          height: "clamp(80px, 20vw, 128px)",
+                          border: "1px solid rgba(212,175,55,0.2)",
+                          boxShadow: "0 4px 15px rgba(0,0,0,0.3)",
+                        }}
+                      />
+                      {/* Quantity badge */}
+                      <div
+                        className="absolute -top-2 -right-2 rounded-full flex items-center justify-center text-white text-xs font-extrabold"
+                        style={{
+                          width: 28,
+                          height: 28,
+                          background: "linear-gradient(135deg, #d4213c, #ff6b35)",
+                          boxShadow: "0 2px 8px rgba(212,33,60,0.5)",
+                        }}
                       >
-                        <Trash2 size={18} />
-                      </button>
+                        {item.quantity}
+                      </div>
                     </div>
 
-                    <div className="flex items-center justify-between mt-4">
-                      <div className="flex items-center gap-3">
+                    {/* Details */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="min-w-0">
+                          <h2
+                            className="font-bold text-base sm:text-lg truncate"
+                            style={{ color: "#fff" }}
+                          >
+                            {item.name}
+                          </h2>
+                          <p
+                            className="text-xs sm:text-sm mt-1 flex items-center gap-1.5"
+                            style={{ color: "rgba(255,255,255,0.4)" }}
+                          >
+                            <Tag size={12} style={{ color: "#d4af37" }} />
+                            {item.weight}
+                          </p>
+                        </div>
+
+                        {/* Remove button */}
                         <button
-                          onClick={() => decreaseQuantity(item.id)}
-                          className="qty-btn"
+                          onClick={() => handleRemove(item.id)}
+                          className="flex-shrink-0 flex items-center justify-center rounded-lg transition-all duration-300 cursor-pointer"
+                          style={{
+                            width: 36,
+                            height: 36,
+                            background: "rgba(212,33,60,0.08)",
+                            border: "1px solid rgba(212,33,60,0.15)",
+                          }}
+                          title="Remove item"
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.background = "rgba(212,33,60,0.2)";
+                            e.currentTarget.style.borderColor = "rgba(212,33,60,0.4)";
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.background = "rgba(212,33,60,0.08)";
+                            e.currentTarget.style.borderColor = "rgba(212,33,60,0.15)";
+                          }}
                         >
-                          −
-                        </button>
-                        <span className="text-white font-bold text-lg w-8 text-center">
-                          {item.quantity}
-                        </span>
-                        <button
-                          onClick={() => increaseQuantity(item.id)}
-                          className="qty-btn"
-                        >
-                          +
+                          <Trash2 size={15} style={{ color: "#d4213c" }} />
                         </button>
                       </div>
 
-                      <div className="text-right">
-                        <p className="text-gray-400 text-sm">₹{item.price} each</p>
-                        <p className="text-orange-400 font-bold text-xl">
-                          ₹{item.price * item.quantity}
-                        </p>
+                      {/* Quantity + Price */}
+                      <div className="flex items-center justify-between mt-4 flex-wrap gap-3">
+                        {/* Quantity controls */}
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => decreaseQuantity(item.id)}
+                            className="flex items-center justify-center rounded-lg transition-all duration-300 cursor-pointer"
+                            style={{
+                              width: 34,
+                              height: 34,
+                              background: "rgba(255,255,255,0.05)",
+                              border: "1px solid rgba(255,255,255,0.1)",
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.background = "rgba(212,33,60,0.15)";
+                              e.currentTarget.style.borderColor = "rgba(212,33,60,0.3)";
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.background = "rgba(255,255,255,0.05)";
+                              e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
+                            }}
+                          >
+                            <Minus size={14} style={{ color: "rgba(255,255,255,0.7)" }} />
+                          </button>
+
+                          <span
+                            className="font-extrabold text-base w-8 text-center"
+                            style={{ color: "#fff" }}
+                          >
+                            {item.quantity}
+                          </span>
+
+                          <button
+                            onClick={() => increaseQuantity(item.id)}
+                            className="flex items-center justify-center rounded-lg transition-all duration-300 cursor-pointer"
+                            style={{
+                              width: 34,
+                              height: 34,
+                              background: "rgba(255,255,255,0.05)",
+                              border: "1px solid rgba(255,255,255,0.1)",
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.background = "rgba(16,185,129,0.15)";
+                              e.currentTarget.style.borderColor = "rgba(16,185,129,0.3)";
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.background = "rgba(255,255,255,0.05)";
+                              e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
+                            }}
+                          >
+                            <Plus size={14} style={{ color: "rgba(255,255,255,0.7)" }} />
+                          </button>
+                        </div>
+
+                        {/* Price */}
+                        <div className="text-right">
+                          <p className="text-xs" style={{ color: "rgba(255,255,255,0.35)" }}>
+                            ₹{item.price} each
+                          </p>
+                          <p
+                            className="font-extrabold text-lg sm:text-xl"
+                            style={{ color: "#d4af37" }}
+                          >
+                            ₹{item.price * item.quantity}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              ))}
+              </div>
+            ))}
+
+            {/* Clear cart button */}
+            <div className="flex justify-center pt-2">
+              <button
+                onClick={() => {
+                  if (window.confirm("Clear all items from cart?")) {
+                    cartItems.forEach((item) => removeFromCart(item.id));
+                  }
+                }}
+                className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 cursor-pointer"
+                style={{
+                  background: "rgba(212,33,60,0.08)",
+                  border: "1px solid rgba(212,33,60,0.15)",
+                  color: "#d4213c",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = "rgba(212,33,60,0.15)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = "rgba(212,33,60,0.08)";
+                }}
+              >
+                <Trash2 size={14} />
+                Clear All Items
+              </button>
             </div>
-{/* order summary */}
-            <div className="fade-in-up fade-in-up-delay-3 mb-10 ">
-              <div className="glass-card p-8 sticky top-8">
-                <h2 className="text-2xl font-bold text-white mb-6">
-                  Order Summary
-                </h2>
+          </div>
 
-                <div className="space-y-4">
-                  <div className="flex justify-between text-gray-300">
-                    <span>Subtotal</span>
-                    <span className="font-medium">₹{totalPrice}</span>
+          {/* Order Summary */}
+          <div className="lg:col-span-1">
+            <div
+              className="rounded-2xl overflow-hidden sticky top-24"
+              style={{
+                background: "linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%)",
+                border: "1px solid rgba(255,255,255,0.06)",
+                backdropFilter: "blur(20px)",
+                animation: "fadeSlideUp 0.6s ease 0.3s both",
+              }}
+            >
+              {/* Header */}
+              <div className="h-1" style={{ background: "linear-gradient(90deg, #d4af37, #f6e3a1)" }} />
+              <div className="p-6">
+                <div className="flex items-center gap-3 mb-6">
+                  <div
+                    className="w-10 h-10 rounded-xl flex items-center justify-center"
+                    style={{
+                      background: "linear-gradient(135deg, #d4af37, #f6e3a1)",
+                      boxShadow: "0 4px 15px rgba(212,175,55,0.3)",
+                    }}
+                  >
+                    <IndianRupee size={20} color="#1a0e0e" />
                   </div>
-                  <div className="flex justify-between text-gray-300">
-                    <span>Delivery Fee</span>
-                    <span className="font-medium">
-                      {deliveryCharge === 0 ? (
-                        <span className="text-green-400">FREE</span>
-                      ) : (
-                        `₹${deliveryCharge}`
-                      )}
-                    </span>
-                  </div>
-                  <div className="meathub-divider"></div>
-                  <div className="flex justify-between text-white">
-                    <span className="text-lg font-semibold">Grand Total</span>
-                    <span className="text-2xl font-bold text-orange-400">
-                      ₹{grandTotal}
-                    </span>
+                  <div>
+                    <h2 className="font-extrabold text-lg" style={{ color: "#fff" }}>
+                      Order Summary
+                    </h2>
+                    <p className="text-[10px] font-bold uppercase tracking-wider" style={{ color: "#d4af37" }}>
+                      {cartItems.length} {cartItems.length === 1 ? "item" : "items"}
+                    </p>
                   </div>
                 </div>
 
-                <Link to="/checkout" className="block mt-8">
-                  <button className="meathub-btn w-full py-4 text-lg">
+                {/* Breakdown */}
+                <div className="space-y-3.5">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm" style={{ color: "rgba(255,255,255,0.5)" }}>
+                      Subtotal
+                    </span>
+                    <span className="font-bold text-sm" style={{ color: "rgba(255,255,255,0.8)" }}>
+                      ₹{totalPrice}
+                    </span>
+                  </div>
+
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm" style={{ color: "rgba(255,255,255,0.5)" }}>
+                        Delivery
+                      </span>
+                      <Truck size={13} style={{ color: "rgba(255,255,255,0.3)" }} />
+                    </div>
+                    {deliveryCharge === 0 ? (
+                      <span
+                        className="text-xs font-bold px-2.5 py-1 rounded-full"
+                        style={{
+                          background: "rgba(16,185,129,0.15)",
+                          color: "#10b981",
+                          border: "1px solid rgba(16,185,129,0.3)",
+                        }}
+                      >
+                        FREE
+                      </span>
+                    ) : (
+                      <span className="font-bold text-sm" style={{ color: "rgba(255,255,255,0.8)" }}>
+                        ₹{deliveryCharge}
+                      </span>
+                    )}
+                  </div>
+
+                  {totalPrice > 0 && (
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm" style={{ color: "rgba(255,255,255,0.5)" }}>
+                        Items
+                      </span>
+                      <span className="font-bold text-sm" style={{ color: "rgba(255,255,255,0.8)" }}>
+                        {totalItems}
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Divider */}
+                <div
+                  className="my-5 h-px"
+                  style={{ background: "linear-gradient(90deg, transparent, rgba(212,175,55,0.3), transparent)" }}
+                />
+
+                {/* Grand Total */}
+                <div className="flex justify-between items-center">
+                  <span className="text-base font-bold" style={{ color: "#fff" }}>
+                    Grand Total
+                  </span>
+                  <div className="text-right">
+                    <p
+                      className="font-extrabold text-2xl"
+                      style={{ color: "#d4af37" }}
+                    >
+                      ₹{grandTotal}
+                    </p>
+                    <p className="text-[10px]" style={{ color: "rgba(255,255,255,0.3)" }}>
+                      incl. all taxes
+                    </p>
+                  </div>
+                </div>
+
+                {/* Checkout Button */}
+                <Link to="/checkout" className="block mt-6">
+                  <button
+                    className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl text-sm font-bold transition-all duration-300 cursor-pointer"
+                    style={{
+                      background: "linear-gradient(135deg, #d4213c 0%, #ff6b35 100%)",
+                      color: "white",
+                      boxShadow: "0 4px 20px rgba(212,33,60,0.4)",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = "translateY(-2px)";
+                      e.currentTarget.style.boxShadow = "0 8px 30px rgba(212,33,60,0.6)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = "translateY(0)";
+                      e.currentTarget.style.boxShadow = "0 4px 20px rgba(212,33,60,0.4)";
+                    }}
+                  >
                     Proceed to Checkout
-                    <ArrowRight size={20} />
+                    <ArrowRight size={18} />
                   </button>
                 </Link>
 
+                {/* Continue shopping */}
                 <Link
                   to="/products"
-                  className="block mt-4 text-center text-red-400 hover:text-red-300 text-sm transition-colors"
+                  className="block mt-3 text-center text-sm font-semibold transition-all duration-300 py-2"
+                  style={{ color: "rgba(255,255,255,0.4)" }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = "#d4213c";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = "rgba(255,255,255,0.4)";
+                  }}
                 >
                   ← Continue Shopping
                 </Link>
+
+                {/* Trust badges */}
+                <div
+                  className="mt-6 pt-5 flex items-center justify-center gap-4"
+                  style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}
+                >
+                  {[
+                    { icon: "🔒", label: "Secure" },
+                    { icon: "⚡", label: "Fast Delivery" },
+                    { icon: "✅", label: "Fresh" },
+                  ].map((badge) => (
+                    <div key={badge.label} className="flex items-center gap-1.5">
+                      <span className="text-sm">{badge.icon}</span>
+                      <span className="text-[10px] font-bold" style={{ color: "rgba(255,255,255,0.35)" }}>
+                        {badge.label}
+                      </span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 };
 

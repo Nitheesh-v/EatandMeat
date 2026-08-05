@@ -30,7 +30,7 @@ const deliveryModalStyles = `
 }
 .dm-card {
   background: linear-gradient(135deg, #2d0a0a 0%, #1a0505 100%);
-  border: 1px solid rgba(220, 38, 38, 0.25);
+  border: 1px solid rgba(212, 175, 55, 0.22);
   border-radius: 18px;
   padding: 24px 22px;
   width: 100%;
@@ -61,7 +61,7 @@ const deliveryModalStyles = `
   top: 12px; right: 12px;
   width: 28px; height: 28px;
   border-radius: 8px;
-  border: 1px solid rgba(220, 38, 38, 0.2);
+  border: 1px solid rgba(212, 175, 55, 0.25);
   background: rgba(69, 10, 10, 0.4);
   color: #9ca3af;
   display: flex; align-items: center; justify-content: center;
@@ -96,7 +96,7 @@ const deliveryModalStyles = `
   line-height: 1.2;
 }
 .dm-title .accent {
-  background: linear-gradient(135deg, #ef4444, #f97316);
+  background: linear-gradient(135deg, #ef4444, #d4af37);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
 }
@@ -113,7 +113,7 @@ const deliveryModalStyles = `
 .dm-select {
   width: 100%;
   background: rgba(69, 10, 10, 0.5);
-  border: 1px solid rgba(220, 38, 38, 0.25);
+  border: 1px solid rgba(212, 175, 55, 0.22);
   border-radius: 10px;
   padding: 10px 36px 10px 36px;
   color: #f3f4f6;
@@ -126,7 +126,7 @@ const deliveryModalStyles = `
 }
 .dm-select:focus {
   outline: none;
-  border-color: rgba(220, 38, 38, 0.6);
+  border-color: rgba(212, 175, 55, 0.6);
   box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.15);
 }
 .dm-select:disabled {
@@ -155,7 +155,7 @@ const deliveryModalStyles = `
 }
 .dm-check-btn {
   width: 100%;
-  background: linear-gradient(135deg, #dc2626 0%, #ea580c 100%);
+  background: linear-gradient(135deg, #dc2626 0%, #92721e 100%);
   border: none;
   border-radius: 12px;
   color: white;

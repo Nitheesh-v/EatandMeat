@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
 import { Flame, Phone, MapPin, Clock,  } from "lucide-react";
+import { BsInstagram, BsTwitter,  } from "react-icons/bs";
+import { FaFacebook } from "react-icons/fa";
+
 
 const navLinks = [
   { id: 1, name: "Home",     to: "/" },
@@ -16,9 +19,9 @@ const contacts = [
 ];
 
 const socials = [
-  { Icon: Flame, label: "Instagram" },
-  { Icon: Flame,  label: "Facebook"  },
-  { Icon: Flame,   label: "Twitter"   },
+  { Icon: BsInstagram, label: "Instagram" },
+  { Icon: FaFacebook,  label: "Facebook"  },
+  { Icon: BsTwitter,   label: "Twitter"   },
 ];
 
 const Footer = () => (

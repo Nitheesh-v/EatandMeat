@@ -1,0 +1,429 @@
+import Order from "../models/Order.js";
+
+// Create Order
+export const createOrder = async (req, res) => {
+  try {
+    const {
+      items,
+      deliveryAddress,
+      paymentMethod,
+      subtotal,
+      deliveryCharge,
+      tax,
+      totalAmount,
+    } = req.body;
+
+    // Validation
+    if (!items || items.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Order items are required",
+      });
+    }
+
+    // Generate Order Number
+    const orderNumber =
+      "ORD" +
+      Date.now().toString().slice(-8);
+
+    // Create Order
+    const order = await Order.create({
+      orderNumber,
+
+      customer: req.user._id,
+
+      items,
+
+      deliveryAddress,
+
+      paymentMethod,
+
+      subtotal,
+
+      deliveryCharge,
+
+      tax,
+
+      totalAmount,
+
+      placedAt: new Date(),
+    });
+
+    res.status(201).json({
+      success: true,
+      message: "Order Created Successfully",
+      order,
+    });
+  } catch (error) {
+    console.error("Create Order Error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
+// Get Logged-in Customer Orders
+
+export const getMyOrders = async (req, res) => {
+  try {
+    const orders = await Order.find({
+      customer: req.user._id,
+    })
+      .sort({ createdAt: -1 })
+      .populate("deliveryPartner", "fullName phone")
+      .populate("company", "fullName phone");
+
+    res.status(200).json({
+      success: true,
+      count: orders.length,
+      orders,
+    });
+  } catch (error) {
+    console.error("Get My Orders Error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
+
+// Get Pending Orders (Company)
+
+export const getPendingOrders = async (req, res) => {
+  try {
+    const orders = await Order.find({
+      orderStatus: "Pending",
+    })
+      .sort({ createdAt: -1 })
+      .populate("customer", "fullName phone email");
+
+    res.status(200).json({
+      success: true,
+      count: orders.length,
+      orders,
+    });
+  } catch (error) {
+    console.error("Pending Orders Error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
+
+// Company Accept Order
+
+export const acceptOrder = async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id);
+
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        message: "Order not found",
+      });
+    }
+
+    if (order.orderStatus !== "Pending") {
+      return res.status(400).json({
+        success: false,
+        message: "Order already processed",
+      });
+    }
+
+    order.orderStatus = "Accepted";
+
+    await order.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Order Accepted",
+      order,
+    });
+  } catch (error) {
+    console.error("Accept Order Error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
+
+
+// Company - Preparing Order
+
+export const preparingOrder = async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id);
+
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        message: "Order not found",
+      });
+    }
+
+    if (order.orderStatus !== "Accepted") {
+      return res.status(400).json({
+        success: false,
+        message: "Only accepted orders can be prepared",
+      });
+    }
+
+    order.orderStatus = "Preparing";
+
+    await order.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Order moved to Preparing",
+      order,
+    });
+
+  } catch (error) {
+    console.log(error);
+
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
+
+// Company - Packed Order
+
+export const packedOrder = async (req, res) => {
+  try {
+
+    const order = await Order.findById(req.params.id);
+
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        message: "Order not found",
+      });
+    }
+
+    if (order.orderStatus !== "Preparing") {
+      return res.status(400).json({
+        success: false,
+        message: "Order is not preparing",
+      });
+    }
+
+    order.orderStatus = "Packed";
+
+    await order.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Order Packed Successfully",
+      order,
+    });
+
+  } catch (error) {
+
+    console.log(error);
+
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+
+  }
+};
+
+
+// Get Available Orders
+
+export const getAvailableOrders = async (req, res) => {
+  try {
+    console.log("Logged in delivery partner:", req.user);
+
+    const orders = await Order.find({
+      orderStatus: "Packed",
+      deliveryPartner: null,
+    })
+      .populate("customer", "fullName phone")
+      .sort({ createdAt: -1 });
+      console.log("Available Orders:", orders);
+
+    res.status(200).json({
+      success: true,
+      count: orders.length,
+      orders,
+    });
+
+  } catch (error) {
+
+    console.log(error);
+
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+
+  }
+};
+
+// Accept Delivery
+
+export const acceptDelivery = async (req, res) => {
+
+  try {
+
+    const order = await Order.findById(req.params.id);
+
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        message: "Order not found",
+      });
+    }
+
+    if (order.deliveryPartner) {
+      return res.status(400).json({
+        success: false,
+        message: "Already accepted",
+      });
+    }
+
+    order.deliveryPartner = req.user._id;
+    order.orderStatus = "Assigned";
+
+    await order.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Delivery Accepted",
+      order,
+    });
+
+  } catch (error) {
+
+    console.log(error);
+
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+
+  }
+
+};
+
+
+
+// My Deliveries
+
+export const getMyDeliveries = async (req, res) => {
+
+  try {
+
+    const orders = await Order.find({
+      deliveryPartner: req.user._id,
+    })
+      .populate("customer", "fullName phone")
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      orders,
+    });
+
+  } catch (error) {
+
+    console.log(error);
+
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+
+  }
+
+};
+
+
+export const pickupOrder = async (req, res) => {
+
+  const order = await Order.findById(req.params.id);
+
+  order.orderStatus = "Picked Up";
+  order.pickedAt = new Date();
+
+  await order.save();
+
+  res.json({
+    success: true,
+    message: "Order Picked Up",
+  });
+
+};
+
+
+export const outForDelivery = async (req, res) => {
+
+  const order = await Order.findById(req.params.id);
+
+  order.orderStatus = "Out For Delivery";
+
+  await order.save();
+
+  res.json({
+    success: true,
+    message: "Out For Delivery",
+  });
+
+};
+
+
+export const deliveredOrder = async (req, res) => {
+
+  const order = await Order.findById(req.params.id);
+
+  order.orderStatus = "Delivered";
+  order.deliveredAt = new Date();
+
+  await order.save();
+
+  res.json({
+    success: true,
+    message: "Order Delivered",
+  });
+
+};
+
+export const getCompanyOrders = async (req, res) => {
+  try {
+    const { status } = req.query;
+
+    const filter = {};
+
+    if (status) {
+      filter.orderStatus = status;
+    }
+
+    const orders = await Order.find(filter)
+      .populate("customer", "fullName phone email")
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      count: orders.length,
+      orders,
+    });
+
+  } catch (error) {
+    console.log(error);
+
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
