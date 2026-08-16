@@ -398,6 +398,137 @@ export const deliveredOrder = async (req, res) => {
 
 };
 
+// Delivery Dashboard Stats
+export const getDeliveryStats = async (req, res) => {
+  try {
+    const partnerId = req.user._id;
+
+    const availableCount = await Order.countDocuments({
+      orderStatus: "Packed",
+      deliveryPartner: null,
+    });
+
+    const activeCount = await Order.countDocuments({
+      deliveryPartner: partnerId,
+      orderStatus: { $in: ["Assigned", "Picked Up", "Out For Delivery"] },
+    });
+
+    const todayStart = new Date();
+    todayStart.setHours(0, 0, 0, 0);
+
+    const todayDelivered = await Order.countDocuments({
+      deliveryPartner: partnerId,
+      orderStatus: "Delivered",
+      deliveredAt: { $gte: todayStart },
+    });
+
+    const todayEarningsResult = await Order.aggregate([
+      {
+        $match: {
+          deliveryPartner: partnerId,
+          orderStatus: "Delivered",
+          deliveredAt: { $gte: todayStart },
+        },
+      },
+      { $group: { _id: null, total: { $sum: "$totalAmount" } } },
+    ]);
+    const todayEarnings =
+      todayEarningsResult.length > 0 ? todayEarningsResult[0].total : 0;
+
+    const totalDelivered = await Order.countDocuments({
+      deliveryPartner: partnerId,
+      orderStatus: "Delivered",
+    });
+
+    const recentDeliveries = await Order.find({
+      deliveryPartner: partnerId,
+      orderStatus: "Delivered",
+    })
+      .populate("customer", "fullName phone")
+      .sort({ deliveredAt: -1 })
+      .limit(5);
+
+    res.status(200).json({
+      success: true,
+      stats: {
+        availableOrders: availableCount,
+        activeDeliveries: activeCount,
+        todayDelivered,
+        todayEarnings,
+        totalDelivered,
+      },
+      recentDeliveries,
+    });
+  } catch (error) {
+    console.error("Delivery Stats Error:", error);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
+
+// Delivery Earnings
+export const getDeliveryEarnings = async (req, res) => {
+  try {
+    const partnerId = req.user._id;
+
+    const todayStart = new Date();
+    todayStart.setHours(0, 0, 0, 0);
+
+    const weekStart = new Date();
+    weekStart.setDate(weekStart.getDate() - weekStart.getDay());
+    weekStart.setHours(0, 0, 0, 0);
+
+    const monthStart = new Date();
+    monthStart.setDate(1);
+    monthStart.setHours(0, 0, 0, 0);
+
+    const getEarnings = async (startDate) => {
+      const result = await Order.aggregate([
+        {
+          $match: {
+            deliveryPartner: partnerId,
+            orderStatus: "Delivered",
+            ...(startDate ? { deliveredAt: { $gte: startDate } } : {}),
+          },
+        },
+        {
+          $group: {
+            _id: null,
+            total: { $sum: "$totalAmount" },
+            count: { $sum: 1 },
+          },
+        },
+      ]);
+      return result.length > 0
+        ? { amount: result[0].total, orders: result[0].count }
+        : { amount: 0, orders: 0 };
+    };
+
+    const [today, week, month, allTime] = await Promise.all([
+      getEarnings(todayStart),
+      getEarnings(weekStart),
+      getEarnings(monthStart),
+      getEarnings(null),
+    ]);
+
+    // Recent deliveries for settlement history
+    const recentOrders = await Order.find({
+      deliveryPartner: partnerId,
+      orderStatus: "Delivered",
+    })
+      .sort({ deliveredAt: -1 })
+      .limit(20);
+
+    res.status(200).json({
+      success: true,
+      earnings: { today, week, month, allTime },
+      recentOrders,
+    });
+  } catch (error) {
+    console.error("Delivery Earnings Error:", error);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
+
 export const getCompanyOrders = async (req, res) => {
   try {
     const { status } = req.query;

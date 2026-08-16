@@ -1,95 +1,156 @@
-import { useOrder } from "../../Context/OrderContext";
-import { Bike, User, Phone, IndianRupee, PackageCheck, CheckCircle2 } from "lucide-react";
-
-const dpStyles = `
-.dp-wrap { animation: dpIn 0.4s ease-out; }
-@keyframes dpIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-.dp-head { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
-.dp-head h1 { font-family: 'Fraunces', serif; font-size: 1.4rem; font-weight: 800; color: #2a1a12; margin: 0; }
-.dp-head-icon {
-  width: 38px; height: 38px; background: rgba(226,55,68,0.1); border: 1px solid rgba(226,55,68,0.2);
-  border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #e23744;
-}
-.dp-empty { background: white; border: 1px solid rgba(42,26,18,0.08); border-radius: 14px; padding: 44px 24px; text-align: center; }
-.dp-empty .icon-circle {
-  width: 56px; height: 56px; background: rgba(226,55,68,0.08); border-radius: 50%;
-  display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; color: #e23744;
-}
-.dp-empty h2 { color: #2a1a12; font-size: 1.2rem; font-weight: 700; margin: 0 0 6px 0; }
-.dp-empty p { color: #8a7a6d; margin: 0; font-size: 0.85rem; }
-.dp-stack { display: flex; flex-direction: column; gap: 12px; }
-.dp-card {
-  background: white; border: 1px solid rgba(42,26,18,0.08); border-radius: 14px; padding: 20px;
-  transition: all 0.25s ease;
-}
-.dp-card:hover { border-color: rgba(226,55,68,0.2); box-shadow: 0 4px 14px rgba(42,26,18,0.05); }
-.dp-row { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
-.dp-id { font-size: 1.05rem; font-weight: 700; color: #2a1a12; margin: 0 0 4px 0; }
-.dp-meta { display: flex; align-items: center; gap: 6px; color: #6b5b4f; font-size: 0.85rem; margin-top: 3px; }
-.dp-btn {
-  display: inline-flex; align-items: center; gap: 7px; background: linear-gradient(135deg, #22c55e, #16a34a);
-  color: white; padding: 10px 20px; border-radius: 10px; border: none; font-weight: 600; font-size: 0.85rem;
-  cursor: pointer; transition: all 0.2s ease; box-shadow: 0 4px 14px rgba(34,197,94,0.28);
-}
-.dp-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(34,197,94,0.36); }
-.dp-assigned {
-  background: rgba(34,197,94,0.06); border: 1px solid rgba(34,197,94,0.2); border-radius: 11px;
-  padding: 12px 16px; min-width: 200px;
-}
-.dp-assigned-label { display: flex; align-items: center; gap: 6px; color: #16a34a; font-weight: 700; font-size: 0.82rem; margin-bottom: 6px; }
-.dp-assigned-row { display: flex; align-items: center; gap: 6px; color: #4a3b30; font-size: 0.83rem; margin-top: 3px; }
-`;
+import { useEffect, useState } from "react";
+import { getCompanyOrders } from "../../services/orderService";
+import { getDeliveryPartners } from "../../services/adminService";
+import { Bike, User, Phone, IndianRupee, PackageCheck, CheckCircle2, Truck } from "lucide-react";
 
 export const DeliveryPartners = () => {
-  const { orders, assignDeliveryPartner } = useOrder();
+  const [packedOrders, setPackedOrders] = useState([]);
+  const [partners, setPartners] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const packedOrders = orders.filter((order) => order.kitchenStatus === "Packed");
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const [ordersRes, partnersRes] = await Promise.all([
+          getCompanyOrders("Packed"),
+          getDeliveryPartners(),
+        ]);
+        setPackedOrders(ordersRes.orders || []);
+        setPartners(partnersRes.deliveryPartners || []);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[200px]" style={{ color: "rgba(255,255,255,0.5)" }}>
+        Loading...
+      </div>
+    );
+  }
 
   return (
-    <>
-      <style>{dpStyles}</style>
-      <div className="dp-wrap">
-        <div className="dp-head">
-          <span className="dp-head-icon"><Bike size={16} /></span>
-          <h1>Delivery Assignment</h1>
-        </div>
+    <div style={{ animation: "fadeIn 0.4s ease" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
+        <span style={{ width: 38, height: 38, background: "rgba(236,72,153,0.1)", border: "1px solid rgba(236,72,153,0.2)", borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center", color: "#ec4899" }}>
+          <Bike size={16} />
+        </span>
+        <h1 style={{ fontFamily: "'Fraunces', serif", fontSize: "1.4rem", fontWeight: 800, color: "#fff", margin: 0 }}>Delivery Partners</h1>
+      </div>
 
-        {packedOrders.length === 0 ? (
-          <div className="dp-empty">
-            <div className="icon-circle"><PackageCheck size={24} /></div>
-            <h2>No Packed Orders</h2>
-            <p>Packed orders will appear here, ready for assignment.</p>
-          </div>
+      {/* Available Partners */}
+      <div style={{ marginBottom: 28 }}>
+        <h2 style={{ fontSize: "1rem", fontWeight: 700, color: "#fff", marginBottom: 14 }}>Available Partners</h2>
+        {partners.length === 0 ? (
+          <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.85rem" }}>No delivery partners registered yet.</p>
         ) : (
-          <div className="dp-stack">
-            {packedOrders.map((order) => (
-              <div key={order.id} className="dp-card">
-                <div className="dp-row">
-                  <div>
-                    <h2 className="dp-id">{order.id}</h2>
-                    <div className="dp-meta"><User size={14} /> {order.customer?.name || "Customer"}</div>
-                    <div className="dp-meta"><IndianRupee size={14} /> {order.total}</div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))", gap: 12 }}>
+            {partners.map((p) => (
+              <div
+                key={p._id}
+                style={{
+                  background: "rgba(255,255,255,0.03)",
+                  border: "1px solid rgba(255,255,255,0.06)",
+                  borderRadius: 12,
+                  padding: 16,
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+                  <div style={{
+                    width: 36, height: 36, borderRadius: 10,
+                    background: "linear-gradient(135deg, #ec4899, #a855f7)",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    color: "white", fontWeight: 800, fontSize: "0.85rem",
+                  }}>
+                    {p.fullName?.charAt(0) || "D"}
                   </div>
-
-                  {order.assignedPartner ? (
-                    <div className="dp-assigned">
-                      <div className="dp-assigned-label"><CheckCircle2 size={15} /> Assigned</div>
-                      <div className="dp-assigned-row"><User size={13} /> {order.assignedPartner.name}</div>
-                      <div className="dp-assigned-row"><Phone size={13} /> {order.assignedPartner.phone}</div>
-                    </div>
-                  ) : (
-                    <button onClick={() => assignDeliveryPartner(order.id)} className="dp-btn">
-                      <Bike size={16} />
-                      Assign Partner
-                    </button>
-                  )}
+                  <div>
+                    <p style={{ fontWeight: 700, fontSize: "0.9rem", color: "#fff", margin: 0 }}>{p.fullName}</p>
+                    <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.4)", margin: 0 }}>{p.phone}</p>
+                  </div>
+                </div>
+                <div style={{ display: "flex", gap: 8 }}>
+                  <span style={{
+                    fontSize: "0.7rem", fontWeight: 600, padding: "3px 8px", borderRadius: 8,
+                    background: p.isActive ? "rgba(34,197,94,0.1)" : "rgba(226,55,68,0.1)",
+                    color: p.isActive ? "#22c55e" : "#e23744",
+                    border: `1px solid ${p.isActive ? "rgba(34,197,94,0.2)" : "rgba(226,55,68,0.2)"}`,
+                  }}>
+                    {p.isActive ? "Active" : "Inactive"}
+                  </span>
+                  <span style={{
+                    fontSize: "0.7rem", fontWeight: 600, padding: "3px 8px", borderRadius: 8,
+                    background: "rgba(59,130,246,0.1)", color: "#3b82f6",
+                    border: "1px solid rgba(59,130,246,0.2)",
+                  }}>
+                    {p.completedDeliveries || 0} deliveries
+                  </span>
                 </div>
               </div>
             ))}
           </div>
         )}
       </div>
-    </>
+
+      {/* Packed Orders awaiting assignment */}
+      <div>
+        <h2 style={{ fontSize: "1rem", fontWeight: 700, color: "#fff", marginBottom: 14 }}>
+          Packed Orders Awaiting Assignment ({packedOrders.length})
+        </h2>
+        {packedOrders.length === 0 ? (
+          <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 14, padding: "44px 24px", textAlign: "center" }}>
+            <div style={{ width: 56, height: 56, background: "rgba(34,197,94,0.08)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 14px", color: "#16a34a" }}>
+              <PackageCheck size={24} />
+            </div>
+            <h2 style={{ color: "#fff", fontSize: "1.1rem", fontWeight: 700, margin: "0 0 6px 0" }}>No Packed Orders</h2>
+            <p style={{ color: "rgba(255,255,255,0.4)", margin: 0, fontSize: "0.85rem" }}>Packed orders will appear here for delivery assignment.</p>
+          </div>
+        ) : (
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            {packedOrders.map((order) => (
+              <div
+                key={order._id}
+                style={{
+                  background: "rgba(255,255,255,0.03)",
+                  border: "1px solid rgba(255,255,255,0.06)",
+                  borderRadius: 14,
+                  padding: 20,
+                }}
+              >
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
+                  <div>
+                    <h2 style={{ fontSize: "1rem", fontWeight: 700, color: "#fff", margin: "0 0 4px 0" }}>#{order.orderNumber}</h2>
+                    <div style={{ display: "flex", alignItems: "center", gap: 6, color: "rgba(255,255,255,0.5)", fontSize: "0.83rem", marginTop: 3 }}>
+                      <User size={14} /> {order.customer?.fullName || "Customer"}
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", gap: 6, color: "#f59e0b", fontSize: "1rem", fontWeight: 800, marginTop: 6 }}>
+                      <IndianRupee size={14} /> {order.totalAmount}
+                    </div>
+                  </div>
+                  <div style={{
+                    background: "rgba(245,158,11,0.06)",
+                    border: "1px solid rgba(245,158,11,0.2)",
+                    borderRadius: 11,
+                    padding: "12px 16px",
+                    display: "flex", alignItems: "center", gap: 6,
+                    color: "#f59e0b",
+                    fontWeight: 600, fontSize: "0.83rem",
+                  }}>
+                    <Truck size={15} />
+                    Awaiting Assignment
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
   );
 };
 

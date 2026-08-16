@@ -34,7 +34,7 @@ const myDeliveriesStyles = `
   position: fixed; border-radius: 50%;
   width: 500px; height: 500px;
   top: -100px; right: -150px;
-  background: radial-gradient(circle, rgba(212,33,60,0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(147,51,234,0.08) 0%, transparent 70%);
   filter: blur(80px); pointer-events: none;
 }
 .md-glow-2 {
@@ -53,8 +53,8 @@ const myDeliveriesStyles = `
 .md-logo-icon {
   width: 44px; height: 44px; border-radius: 14px;
   display: flex; align-items: center; justify-content: center;
-  background: linear-gradient(135deg, #d4213c, #ff6b35);
-  box-shadow: 0 6px 20px rgba(212,33,60,0.4);
+  background: linear-gradient(135deg, #9333ea, #ec4899);
+  box-shadow: 0 6px 20px rgba(147,51,234,0.4);
 }
 .md-header-tag {
   display: inline-flex; align-items: center; gap: 6px;
@@ -68,12 +68,12 @@ const myDeliveriesStyles = `
 .md-title {
   font-size: clamp(2rem, 5vw, 2.75rem);
   font-weight: 900; letter-spacing: -0.03em; line-height: 1.1;
-  background: linear-gradient(135deg, #ffffff 0%, #f5e6e6 50%, #d4af37 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #f5e6e6 50%, #f59e0b 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
 .md-subtitle {
   margin-top: 8px; font-size: 0.9rem;
-  color: rgba(255,255,255,0.4);
+  color: #94a3b8;
 }
 
 /* Stats */
@@ -84,8 +84,8 @@ const myDeliveriesStyles = `
 }
 .md-stat {
   padding: 14px; border-radius: 14px;
-  background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
-  border: 1px solid rgba(255,255,255,0.06);
+  background: linear-gradient(135deg, rgba(147,51,234,0.03), rgba(147,51,234,0.01));
+  border: 1px solid rgba(0,0,0,0.06);
   position: relative; overflow: hidden;
 }
 .md-stat::before {
@@ -96,7 +96,7 @@ const myDeliveriesStyles = `
 .md-stat-label {
   margin-top: 4px; font-size: 0.7rem; font-weight: 600;
   text-transform: uppercase; letter-spacing: 0.05em;
-  color: rgba(255,255,255,0.4);
+  color: #94a3b8;
 }
 
 /* Timeline */
@@ -111,8 +111,8 @@ const myDeliveriesStyles = `
   width: 2px;
   background: linear-gradient(180deg,
     rgba(139,92,246,0.6) 0%,
-    rgba(212,175,55,0.3) 40%,
-    rgba(255,255,255,0.06) 100%
+    rgba(245,158,11,0.3) 40%,
+    rgba(0,0,0,0.06) 100%
   );
 }
 @media (min-width: 768px) { .md-timeline::before { left: 15px; } }
@@ -138,7 +138,7 @@ const myDeliveriesStyles = `
 /* Card */
 .md-card {
   border-radius: 18px; overflow: hidden;
-  background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+  background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(147,51,234,0.02));
   border: 1px solid rgba(255,255,255,0.08);
   backdrop-filter: blur(20px);
   transition: all 0.4s cubic-bezier(.16,.84,.32,1);
@@ -165,7 +165,7 @@ const myDeliveriesStyles = `
 .md-order-id { font-weight: 900; font-size: 1rem; color: #fff; }
 .md-order-time {
   display: flex; align-items: center; gap: 4px;
-  font-size: 0.7rem; color: rgba(255,255,255,0.4);
+  font-size: 0.7rem; color: #94a3b8;
   margin-top: 3px;
 }
 
@@ -203,7 +203,7 @@ const myDeliveriesStyles = `
 .md-customer-name { font-weight: 700; font-size: 0.9rem; color: #fff; margin: 0; }
 .md-customer-phone {
   display: flex; align-items: center; gap: 4px;
-  font-size: 0.75rem; color: rgba(255,255,255,0.4);
+  font-size: 0.75rem; color: #94a3b8;
   margin: 3px 0 0 0;
 }
 
@@ -216,17 +216,17 @@ const myDeliveriesStyles = `
   display: inline-flex; align-items: center; gap: 4px;
   padding: 4px 10px; border-radius: 999px;
   font-size: 0.7rem; font-weight: 600;
-  background: rgba(212,175,55,0.08);
-  border: 1px solid rgba(212,175,55,0.15);
-  color: #d4af37;
+  background: rgba(245,158,11,0.08);
+  border: 1px solid rgba(245,158,11,0.15);
+  color: #f59e0b;
 }
 
 /* Amount */
 .md-amount-row {
   display: flex; align-items: center; justify-content: space-between;
   padding: 12px; border-radius: 12px;
-  background: rgba(212,175,55,0.06);
-  border: 1px solid rgba(212,175,55,0.15);
+  background: rgba(245,158,11,0.06);
+  border: 1px solid rgba(245,158,11,0.15);
   margin-bottom: 12px;
 }
 .md-amount-label {
@@ -236,7 +236,7 @@ const myDeliveriesStyles = `
 }
 .md-amount-value {
   font-size: 1.35rem; font-weight: 900;
-  color: #d4af37;
+  color: #f59e0b;
   letter-spacing: -0.02em;
 }
 
@@ -275,8 +275,8 @@ const myDeliveriesStyles = `
 .md-empty {
   text-align: center; padding: 80px 20px;
   border-radius: 20px;
-  background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-  border: 1px solid rgba(255,255,255,0.06);
+  background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(147,51,234,0.01));
+  border: 1px solid rgba(0,0,0,0.06);
   animation: mdFadeUp 0.5s ease both;
 }
 .md-empty-icon {
@@ -292,20 +292,20 @@ const myDeliveriesStyles = `
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   margin-bottom: 8px;
 }
-.md-empty-subtitle { color: rgba(255,255,255,0.4); font-size: 0.9rem; }
+.md-empty-subtitle { color: #94a3b8; font-size: 0.9rem; }
 
 .md-loading {
   min-height: 100vh;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center; gap: 16px;
   background: linear-gradient(180deg, #0a0a0a, #0f0808 40%, #0a0a0a);
-  color: rgba(255,255,255,0.6); font-weight: 600;
+  color: #475569; font-weight: 600;
 }
 .md-loader {
   width: 48px; height: 48px; border-radius: 50%;
   border: 3px solid rgba(139,92,246,0.15);
   border-top-color: #8b5cf6;
-  border-right-color: #d4af37;
+  border-right-color: #f59e0b;
   animation: mdSpin 1s linear infinite;
 }
 @keyframes mdSpin { to { transform: rotate(360deg); } }
@@ -439,7 +439,7 @@ export const MyDeliveries = () => {
           {/* Stats */}
           <div className="md-stats">
             {[
-              { label: "Total", value: stats.total, color: "#d4af37", icon: Package },
+              { label: "Total", value: stats.total, color: "#f59e0b", icon: Package },
               { label: "Active", value: stats.active, color: "#8b5cf6", icon: TrendingUp },
               { label: "Delivered", value: stats.delivered, color: "#10b981", icon: CircleCheckBig },
             ].map((stat) => (
@@ -599,9 +599,9 @@ export const MyDeliveries = () => {
                           className="md-action-btn"
                           style={{
                             background: isDone
-                              ? "rgba(255,255,255,0.06)"
+                              ? "rgba(0,0,0,0.06)"
                               : config.actionGradient,
-                            color: isDone ? "rgba(255,255,255,0.4)" : "white",
+                            color: isDone ? "#94a3b8" : "white",
                             boxShadow: isDone ? "none" : `0 4px 15px ${config.actionColor}40`,
                           }}
                           onMouseEnter={(e) => {

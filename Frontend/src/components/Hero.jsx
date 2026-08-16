@@ -207,7 +207,7 @@ const Hero = () => (
       /* Warm ambient glow behind headline for richness */
       .mm-glow {
         position: absolute; top: 8%; left: -8%; width: 60%; height: 70%;
-        background: radial-gradient(circle, rgba(212,175,55,0.16) 0%, rgba(200,30,58,0.08) 45%, transparent 72%);
+        background: radial-gradient(circle, rgba(245,158,11,0.16) 0%, rgba(13,120,120,0.08) 45%, transparent 72%);
         filter: blur(40px); pointer-events: none; z-index: 1;
       }
 
@@ -250,8 +250,8 @@ const Hero = () => (
         transition: all .35s cubic-bezier(.16,.84,.32,1); cursor: default;
       }
       .mm-chip:hover {
-        background: rgba(180,28,52,0.2);
-        border-color: rgba(212,175,55,0.5);
+        background: rgba(13,120,120,0.2);
+        border-color: rgba(245,158,11,0.5);
         color: #fff;
         transform: translateY(-2px);
       }
@@ -262,11 +262,11 @@ const Hero = () => (
         padding: 16px 32px; border-radius: 999px;
         color: #fff; font-weight: 700; font-size: 14px; letter-spacing: .03em;
         background: linear-gradient(120deg, #D4213C 0%, #96101F 60%, #6E0F1C 100%);
-        box-shadow: 0 8px 30px rgba(180,28,52,0.45), 0 0 0 1px rgba(212,175,55,0.15);
+        box-shadow: 0 8px 30px rgba(13,120,120,0.45), 0 0 0 1px rgba(245,158,11,0.15);
         transition: all .35s cubic-bezier(.16,.84,.32,1);
       }
       .mm-btn-primary:hover {
-        box-shadow: 0 16px 46px rgba(212,33,60,0.55), 0 0 0 1px rgba(212,175,55,0.45);
+        box-shadow: 0 16px 46px rgba(13,148,136,0.55), 0 0 0 1px rgba(245,158,11,0.45);
         transform: translateY(-3px) scale(1.03);
       }
 
@@ -277,14 +277,14 @@ const Hero = () => (
         padding: 16px 32px; border-radius: 999px;
         color: rgba(255,255,255,0.9); font-weight: 700; font-size: 14px; letter-spacing: .03em;
         background: rgba(255,255,255,0.06);
-        border: 1px solid rgba(212,175,55,0.35);
+        border: 1px solid rgba(245,158,11,0.35);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         transition: all .35s cubic-bezier(.16,.84,.32,1);
       }
       .mm-btn-glass:hover {
         background: rgba(255,255,255,0.1);
-        border-color: rgba(212,175,55,0.65);
+        border-color: rgba(245,158,11,0.65);
         transform: translateY(-3px);
       }
       .mm-btn-glass::after {
@@ -325,8 +325,8 @@ const Hero = () => (
         background: linear-gradient(145deg, #2a1a12, #150d09);
         box-shadow:
           8px 8px 18px rgba(0,0,0,0.55),
-          -6px -6px 16px rgba(212,175,55,0.07),
-          inset 0 0 0 1px rgba(212,175,55,0.3);
+          -6px -6px 16px rgba(245,158,11,0.07),
+          inset 0 0 0 1px rgba(245,158,11,0.3);
       }
       .mm-seal-core-label {
         font-size: 9px; letter-spacing: 1.5px; color: #F2D888; font-weight: 700;
@@ -342,8 +342,8 @@ const Hero = () => (
         background: linear-gradient(145deg, #2a1a12, #150d09);
         box-shadow:
           4px 4px 10px rgba(0,0,0,0.5),
-          -3px -3px 8px rgba(212,175,55,0.06),
-          inset 0 0 0 1px rgba(212,175,55,0.3);
+          -3px -3px 8px rgba(245,158,11,0.06),
+          inset 0 0 0 1px rgba(245,158,11,0.3);
       }
 
       .mm-scroll-dot { animation: mm-bounce 2.4s ease-in-out infinite; }

@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { Mail, Lock, Eye, EyeOff, LogIn, Shield, Flame, User, Briefcase, Bike } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, LogIn, Shield, Flame, User, Briefcase, Bike, Crown } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "../../Context/AuthContext";
 
@@ -13,14 +13,14 @@ const loginStyles = `
   padding: 56px 48px;
 }
 .login-visual-glow { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; }
-.login-visual-glow-1 { width: 380px; height: 380px; top: -10%; left: -10%; background: radial-gradient(circle, rgba(212,33,60,0.3), transparent 70%); animation: loginGlow1 20s ease-in-out infinite; }
-.login-visual-glow-2 { width: 340px; height: 340px; bottom: -10%; right: -10%; background: radial-gradient(circle, rgba(212,175,55,0.2), transparent 70%); animation: loginGlow2 24s ease-in-out infinite; }
+.login-visual-glow-1 { width: 380px; height: 380px; top: -10%; left: -10%; background: radial-gradient(circle, rgba(13,148,136,0.3), transparent 70%); animation: loginGlow1 20s ease-in-out infinite; }
+.login-visual-glow-2 { width: 340px; height: 340px; bottom: -10%; right: -10%; background: radial-gradient(circle, rgba(245,158,11,0.2), transparent 70%); animation: loginGlow2 24s ease-in-out infinite; }
 @keyframes loginGlow1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(30px,20px) scale(1.08); } }
 @keyframes loginGlow2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-25px,-20px) scale(1.05); } }
 
 .login-ember {
   position: absolute; border-radius: 50%; pointer-events: none;
-  background: radial-gradient(circle at 35% 30%, #ffc98a, #d4213c 55%, transparent 75%);
+  background: radial-gradient(circle at 35% 30%, #ffc98a, #0d9488 55%, transparent 75%);
   opacity: .5; animation: loginEmberFloat ease-in-out infinite;
 }
 @keyframes loginEmberFloat {
@@ -42,7 +42,7 @@ const loginStyles = `
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
 .login-title .accent {
-  background: linear-gradient(135deg, #d4213c, #ff6b35);
+  background: linear-gradient(135deg, #0d9488, #14b8a6);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
 .login-subtitle { color: rgba(255,255,255,0.4); font-size: 0.9rem; margin-top: 8px; }
@@ -53,11 +53,11 @@ const loginStyles = `
   background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.5);
   border: 1px solid rgba(255,255,255,0.08);
 }
-.login-role-btn:hover { border-color: rgba(212,33,60,0.3); color: #fff; background: rgba(212,33,60,0.08); }
+.login-role-btn:hover { border-color: rgba(13,148,136,0.3); color: #fff; background: rgba(13,148,136,0.08); }
 .login-role-btn.active {
-  background: linear-gradient(135deg, #d4213c 0%, #96101f 100%);
+  background: linear-gradient(135deg, #0d9488 0%, #96101f 100%);
   border-color: transparent; color: white;
-  box-shadow: 0 4px 14px rgba(212,33,60,0.4);
+  box-shadow: 0 4px 14px rgba(13,148,136,0.4);
 }
 
 .login-input-group { position: relative; margin-top: 18px; }
@@ -67,30 +67,30 @@ const loginStyles = `
   padding: 13px 16px 13px 46px; color: #fff; font-size: 0.95rem; transition: all 0.25s ease; box-sizing: border-box;
 }
 .login-input::placeholder { color: rgba(255,255,255,0.25); }
-.login-input:focus { outline: none; border-color: #d4213c; box-shadow: 0 0 0 3px rgba(212,33,60,0.15); }
+.login-input:focus { outline: none; border-color: #0d9488; box-shadow: 0 0 0 3px rgba(13,148,136,0.15); }
 .login-input-icon { position: absolute; left: 15px; top: 41px; color: rgba(255,255,255,0.3); pointer-events: none; }
 .login-toggle-pw { position: absolute; right: 14px; top: 39px; color: rgba(255,255,255,0.3); cursor: pointer; background: none; border: none; padding: 4px; transition: color 0.2s; }
-.login-toggle-pw:hover { color: #d4213c; }
+.login-toggle-pw:hover { color: #0d9488; }
 
 .login-remember-row { display: flex; align-items: center; justify-content: space-between; margin-top: 18px; }
 .login-checkbox-wrap { display: flex; align-items: center; gap: 8px; cursor: pointer; }
-.login-checkbox-wrap input[type="checkbox"] { accent-color: #d4213c; width: 17px; height: 17px; cursor: pointer; }
+.login-checkbox-wrap input[type="checkbox"] { accent-color: #0d9488; width: 17px; height: 17px; cursor: pointer; }
 .login-checkbox-wrap span { color: rgba(255,255,255,0.5); font-size: 0.85rem; }
-.login-forgot-link { color: #d4af37; font-size: 0.85rem; font-weight: 600; text-decoration: none; }
+.login-forgot-link { color: #f59e0b; font-size: 0.85rem; font-weight: 600; text-decoration: none; }
 .login-forgot-link:hover { text-decoration: underline; }
 
 .login-submit-btn {
-  width: 100%; background: linear-gradient(135deg, #d4213c 0%, #ff6b35 100%);
+  width: 100%; background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
   border: none; border-radius: 14px; color: white; font-weight: 700; font-size: 1rem; padding: 15px;
-  cursor: pointer; box-shadow: 0 6px 20px rgba(212,33,60,0.35); transition: all 0.3s ease;
+  cursor: pointer; box-shadow: 0 6px 20px rgba(13,148,136,0.35); transition: all 0.3s ease;
   display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 24px;
 }
-.login-submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(212,33,60,0.5); }
+.login-submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(13,148,136,0.5); }
 
 .login-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent); margin: 22px 0; }
 
 .login-signup-text { color: rgba(255,255,255,0.4); font-size: 0.9rem; text-align: center; }
-.login-signup-link { color: #d4af37; font-weight: 700; text-decoration: none; margin-left: 6px; }
+.login-signup-link { color: #f59e0b; font-weight: 700; text-decoration: none; margin-left: 6px; }
 .login-signup-link:hover { text-decoration: underline; }
 
 .login-secure-badge { display: flex; align-items: center; justify-content: center; gap: 6px; color: rgba(255,255,255,0.3); font-size: 0.75rem; margin-top: 18px; }
@@ -133,6 +133,7 @@ const Login = () => {
     { value: "customer", label: "Customer", icon: User },
     { value: "company", label: "Company", icon: Briefcase },
     { value: "delivery", label: "Delivery", icon: Bike },
+    { value: "admin", label: "Admin", icon: Crown },
   ];
 
   return (
@@ -150,14 +151,14 @@ const Login = () => {
           <div className="relative z-10 flex items-center gap-2">
             <div
               className="w-10 h-10 rounded-xl flex items-center justify-center"
-              style={{ background: "linear-gradient(135deg, #d4213c, #ff6b35)", boxShadow: "0 4px 15px rgba(212,33,60,0.5)" }}
+              style={{ background: "linear-gradient(135deg, #0d9488, #14b8a6)", boxShadow: "0 4px 15px rgba(13,148,136,0.5)" }}
             >
               <Flame size={22} color="white" />
             </div>
             <span className="text-2xl font-black">
               <span style={{ color: "#fff" }}>Eat</span>
-              <span style={{ color: "#d4213c" }}>And</span>
-              <span style={{ color: "#d4af37" }}>Meat</span>
+              <span style={{ color: "#0d9488" }}>And</span>
+              <span style={{ color: "#f59e0b" }}>Meat</span>
             </span>
           </div>
 

@@ -35,14 +35,14 @@ const companyOrdersStyles = `
   position: fixed; border-radius: 50%;
   width: 500px; height: 500px;
   top: -100px; left: -150px;
-  background: radial-gradient(circle, rgba(212,33,60,0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%);
   filter: blur(80px); pointer-events: none;
 }
 .co-glow-2 {
   position: fixed; border-radius: 50%;
   width: 400px; height: 400px;
   bottom: -100px; right: -150px;
-  background: radial-gradient(circle, rgba(212,175,55,0.06) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(245,158,11,0.06) 0%, transparent 70%);
   filter: blur(80px); pointer-events: none;
 }
 
@@ -57,22 +57,22 @@ const companyOrdersStyles = `
 .co-logo-icon {
   width: 44px; height: 44px; border-radius: 14px;
   display: flex; align-items: center; justify-content: center;
-  background: linear-gradient(135deg, #d4213c, #ff6b35);
-  box-shadow: 0 6px 20px rgba(212,33,60,0.4);
+  background: linear-gradient(135deg, #3b82f6, #60a5fa);
+  box-shadow: 0 6px 20px rgba(59,130,246,0.4);
 }
 .co-header-tag {
   display: inline-flex; align-items: center; gap: 6px;
   font-size: 0.7rem; font-weight: 700;
   text-transform: uppercase; letter-spacing: 0.08em;
   padding: 6px 14px; border-radius: 999px;
-  background: rgba(212,33,60,0.1);
-  color: #d4213c;
-  border: 1px solid rgba(212,33,60,0.25);
+  background: rgba(59,130,246,0.1);
+  color: #3b82f6;
+  border: 1px solid rgba(59,130,246,0.25);
 }
 .co-title {
   font-size: clamp(2rem, 5vw, 2.75rem);
   font-weight: 900; letter-spacing: -0.03em; line-height: 1.1;
-  background: linear-gradient(135deg, #ffffff 0%, #f5e6e6 50%, #d4af37 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #f5e6e6 50%, #f59e0b 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
 .co-subtitle {
@@ -102,9 +102,9 @@ const companyOrdersStyles = `
   border-color: rgba(255,255,255,0.12);
 }
 .co-tab.active {
-  background: linear-gradient(135deg, #d4213c, #ff6b35);
+  background: linear-gradient(135deg, #3b82f6, #60a5fa);
   color: white; border: none;
-  box-shadow: 0 4px 15px rgba(212,33,60,0.4);
+  box-shadow: 0 4px 15px rgba(59,130,246,0.4);
 }
 .co-tab-count {
   font-size: 0.7rem; font-weight: 800;
@@ -227,16 +227,16 @@ const companyOrdersStyles = `
   display: inline-flex; align-items: center; gap: 4px;
   padding: 4px 10px; border-radius: 999px;
   font-size: 0.7rem; font-weight: 600;
-  background: rgba(212,175,55,0.08);
-  border: 1px solid rgba(212,175,55,0.15);
-  color: #d4af37;
+  background: rgba(245,158,11,0.08);
+  border: 1px solid rgba(245,158,11,0.15);
+  color: #f59e0b;
 }
 
 .co-amount-row {
   display: flex; align-items: center; justify-content: space-between;
   padding: 12px; border-radius: 12px;
-  background: rgba(212,175,55,0.06);
-  border: 1px solid rgba(212,175,55,0.15);
+  background: rgba(245,158,11,0.06);
+  border: 1px solid rgba(245,158,11,0.15);
   margin-bottom: 14px;
 }
 .co-amount-label {
@@ -246,7 +246,7 @@ const companyOrdersStyles = `
 }
 .co-amount-value {
   font-size: 1.35rem; font-weight: 900;
-  color: #d4af37;
+  color: #f59e0b;
   letter-spacing: -0.02em;
 }
 
@@ -291,8 +291,8 @@ const companyOrdersStyles = `
   width: 80px; height: 80px; border-radius: 20px;
   display: flex; align-items: center; justify-content: center;
   margin: 0 auto 20px;
-  background: linear-gradient(135deg, rgba(212,33,60,0.1), rgba(212,175,55,0.05));
-  border: 1px solid rgba(212,33,60,0.2);
+  background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(245,158,11,0.05));
+  border: 1px solid rgba(59,130,246,0.2);
 }
 .co-empty-title {
   font-size: 1.5rem; font-weight: 900;
@@ -311,9 +311,9 @@ const companyOrdersStyles = `
 }
 .co-loader {
   width: 48px; height: 48px; border-radius: 50%;
-  border: 3px solid rgba(212,33,60,0.15);
-  border-top-color: #d4213c;
-  border-right-color: #d4af37;
+  border: 3px solid rgba(59,130,246,0.15);
+  border-top-color: #3b82f6;
+  border-right-color: #f59e0b;
   animation: coSpin 1s linear infinite;
 }
 @keyframes coSpin { to { transform: rotate(360deg); } }
@@ -330,8 +330,8 @@ const statusConfig = {
     icon: AlertCircle,
     actionLabel: "Accept Order",
     actionIcon: CheckCircle2,
-    actionColor: "#d4213c",
-    actionGradient: "linear-gradient(135deg, #d4213c, #ff6b35)",
+    actionColor: "#3b82f6",
+    actionGradient: "linear-gradient(135deg, #3b82f6, #60a5fa)",
   },
   Accepted: {
     color: "#3b82f6",
@@ -468,7 +468,7 @@ const Orders = () => {
           {orders.length === 0 ? (
             <div className="co-empty">
               <div className="co-empty-icon">
-                <Package size={36} style={{ color: "#d4213c" }} />
+                <Package size={36} style={{ color: "#3b82f6" }} />
               </div>
               <h2 className="co-empty-title">No {status} Orders</h2>
               <p className="co-empty-subtitle">

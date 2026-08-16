@@ -1,22 +1,42 @@
 import express from "express";
 
-import { createOrder,getMyOrders ,getPendingOrders,acceptOrder,preparingOrder,packedOrder,getCompanyOrders,
-    getAvailableOrders, acceptDelivery, getMyDeliveries,deliveredOrder, pickupOrder, outForDelivery, 
-} from "../controllers/orderController.js"
+import {
+  createOrder,
+  getMyOrders,
+  getPendingOrders,
+  acceptOrder,
+  preparingOrder,
+  packedOrder,
+  getCompanyOrders,
+  getAvailableOrders,
+  acceptDelivery,
+  getMyDeliveries,
+  deliveredOrder,
+  pickupOrder,
+  outForDelivery,
+  getDeliveryStats,
+  getDeliveryEarnings,
+} from "../controllers/orderController.js";
 import protect from "../middleware/protect.js";
-import {authorize} from  "../middleware/roleModdleware.js"
-
+import { authorize } from "../middleware/roleModdleware.js";
 
 const router = express.Router();
 
+// Customer: Create order
 router.post("/", protect, createOrder);
+
+// Customer: My orders
 router.get("/my-orders", protect, getMyOrders);
+
+// Company: Pending orders
 router.get(
   "/company/pending",
   protect,
   authorize("company"),
   getPendingOrders
 );
+
+// Company: Accept order
 router.put(
   "/company/accept/:id",
   protect,
@@ -24,9 +44,15 @@ router.put(
   acceptOrder
 );
 
-router.get("/company", getCompanyOrders);
+// Company: Get all orders (with status filter)
+router.get(
+  "/company",
+  protect,
+  authorize("company"),
+  getCompanyOrders
+);
 
-
+// Company: Mark as preparing
 router.put(
   "/company/preparing/:id",
   protect,
@@ -34,7 +60,7 @@ router.put(
   preparingOrder
 );
 
-
+// Company: Mark as packed
 router.put(
   "/company/packed/:id",
   protect,
@@ -42,6 +68,7 @@ router.put(
   packedOrder
 );
 
+// Delivery: Available orders
 router.get(
   "/delivery/available",
   protect,
@@ -49,6 +76,7 @@ router.get(
   getAvailableOrders
 );
 
+// Delivery: Accept delivery
 router.put(
   "/delivery/accept/:id",
   protect,
@@ -56,7 +84,7 @@ router.put(
   acceptDelivery
 );
 
-
+// Delivery: My deliveries
 router.get(
   "/delivery/my-deliveries",
   protect,
@@ -64,7 +92,7 @@ router.get(
   getMyDeliveries
 );
 
-
+// Delivery: Pickup
 router.put(
   "/delivery/pickup/:id",
   protect,
@@ -72,7 +100,7 @@ router.put(
   pickupOrder
 );
 
-
+// Delivery: Out for delivery
 router.put(
   "/delivery/out-for-delivery/:id",
   protect,
@@ -80,11 +108,28 @@ router.put(
   outForDelivery
 );
 
-
+// Delivery: Delivered
 router.put(
   "/delivery/delivered/:id",
   protect,
   authorize("delivery"),
   deliveredOrder
 );
+
+// Delivery: Dashboard stats
+router.get(
+  "/delivery/stats",
+  protect,
+  authorize("delivery"),
+  getDeliveryStats
+);
+
+// Delivery: Earnings
+router.get(
+  "/delivery/earnings",
+  protect,
+  authorize("delivery"),
+  getDeliveryEarnings
+);
+
 export default router;

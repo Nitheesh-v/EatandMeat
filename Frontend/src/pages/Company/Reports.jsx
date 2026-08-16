@@ -1,54 +1,87 @@
-import { useOrder } from "../../Context/OrderContext";
+import { useEffect, useState } from "react";
+import { getCompanyOrders } from "../../services/orderService";
 import { BarChart3, IndianRupee, ShoppingBag, PackageCheck, TrendingUp, Bike } from "lucide-react";
 
 const reportsStyles = `
 .rp-wrap { animation: rpIn 0.4s ease-out; }
 @keyframes rpIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 .rp-head { display: flex; align-items: center; gap: 10px; margin-bottom: 22px; }
-.rp-head h1 { font-family: 'Fraunces', serif; font-size: 1.4rem; font-weight: 800; color: #2a1a12; margin: 0; }
+.rp-head h1 { font-family: 'Fraunces', serif; font-size: 1.4rem; font-weight: 800; color: #1e293b; margin: 0; }
 .rp-head-icon {
-  width: 38px; height: 38px; background: rgba(212,175,55,0.14); border: 1px solid rgba(212,175,55,0.3);
-  border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #a9871f;
+  width: 38px; height: 38px; background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.25);
+  border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #3b82f6;
 }
 .rp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; margin-bottom: 28px; }
-.rp-card { background: white; border: 1px solid rgba(42,26,18,0.08); border-radius: 14px; padding: 20px; transition: all .25s ease; }
-.rp-card:hover { transform: translateY(-2px); border-color: rgba(226,55,68,0.2); box-shadow: 0 6px 16px rgba(42,26,18,0.06); }
+.rp-card { background: white; border: 1px solid rgba(59,130,246,0.08); border-radius: 14px; padding: 20px; transition: all .25s ease; }
+.rp-card:hover { transform: translateY(-2px); border-color: rgba(59,130,246,0.2); box-shadow: 0 6px 16px rgba(59,130,246,0.06); }
 .rp-card-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
-.rp-label { color: #8a7a6d; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 4px; }
-.rp-value { color: #2a1a12; font-size: 1.7rem; font-weight: 800; }
-.rp-section { background: white; border: 1px solid rgba(42,26,18,0.08); border-radius: 14px; padding: 22px; margin-bottom: 20px; }
-.rp-section h2 { font-size: 1.05rem; font-weight: 700; color: #2a1a12; margin: 0 0 16px 0; }
+.rp-label { color: #64748b; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 4px; }
+.rp-value { color: #1e293b; font-size: 1.7rem; font-weight: 800; }
+.rp-section { background: white; border: 1px solid rgba(59,130,246,0.08); border-radius: 14px; padding: 22px; margin-bottom: 20px; }
+.rp-section h2 { font-size: 1.05rem; font-weight: 700; color: #1e293b; margin: 0 0 16px 0; }
 .rp-bar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-.rp-bar-label { width: 110px; font-size: 0.82rem; color: #4a3b30; font-weight: 600; flex-shrink: 0; }
-.rp-bar-track { flex: 1; height: 10px; background: #fff1e2; border-radius: 999px; overflow: hidden; }
+.rp-bar-label { width: 110px; font-size: 0.82rem; color: #334155; font-weight: 600; flex-shrink: 0; }
+.rp-bar-track { flex: 1; height: 10px; background: #f1f5f9; border-radius: 999px; overflow: hidden; }
 .rp-bar-fill { height: 100%; border-radius: 999px; transition: width .6s cubic-bezier(.16,.84,.32,1); }
-.rp-bar-value { width: 40px; text-align: right; font-size: 0.82rem; font-weight: 700; color: #2a1a12; flex-shrink: 0; }
+.rp-bar-value { width: 40px; text-align: right; font-size: 0.82rem; font-weight: 700; color: #1e293b; flex-shrink: 0; }
+.rp-loading { display: flex; align-items: center; justify-content: center; min-height: 200px; color: #94a3b8; }
 `;
 
 const Reports = () => {
-  const { totalOrders, pendingOrders, preparingOrders, packedOrders, revenue, orders } = useOrder();
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const deliveredCount = orders.filter((o) => o.deliveryStatus === "Delivered").length;
-  const inTransitCount = orders.filter(
-    (o) => o.deliveryStatus && o.deliveryStatus !== "Delivered" && o.deliveryStatus !== "Waiting"
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await getCompanyOrders("");
+        setOrders(res.orders || []);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  const totalOrders = orders.length;
+  const pendingOrders = orders.filter((o) => o.orderStatus === "Pending").length;
+  const preparingOrders = orders.filter((o) => o.orderStatus === "Preparing").length;
+  const packedOrders = orders.filter((o) => o.orderStatus === "Packed").length;
+  const deliveredCount = orders.filter((o) => o.orderStatus === "Delivered").length;
+  const inTransitCount = orders.filter((o) =>
+    ["Assigned", "Picked Up", "Out For Delivery"].includes(o.orderStatus)
   ).length;
+  const revenue = orders
+    .filter((o) => o.orderStatus === "Delivered")
+    .reduce((sum, o) => sum + (o.totalAmount || 0), 0);
   const avgOrderValue = totalOrders > 0 ? Math.round(revenue / totalOrders) : 0;
 
   const funnel = [
-    { label: "Pending", value: pendingOrders, color: "linear-gradient(90deg,#e23744,#b81f2b)" },
+    { label: "Pending", value: pendingOrders, color: "linear-gradient(90deg,#f59e0b,#d97706)" },
     { label: "Preparing", value: preparingOrders, color: "linear-gradient(90deg,#f97316,#ea580c)" },
     { label: "Packed", value: packedOrders, color: "linear-gradient(90deg,#22c55e,#16a34a)" },
-    { label: "Delivered", value: deliveredCount, color: "linear-gradient(90deg,#d4af37,#a9871f)" },
+    { label: "Delivered", value: deliveredCount, color: "linear-gradient(90deg,#3b82f6,#2563eb)" },
   ];
   const funnelMax = Math.max(1, ...funnel.map((f) => f.value));
 
   const stats = [
-    { label: "Total Revenue", value: `₹${revenue}`, icon: IndianRupee, bg: "rgba(212,175,55,0.14)", color: "#a9871f" },
-    { label: "Total Orders", value: totalOrders, icon: ShoppingBag, bg: "rgba(226,55,68,0.1)", color: "#e23744" },
-    { label: "Avg. Order Value", value: `₹${avgOrderValue}`, icon: TrendingUp, bg: "rgba(59,130,246,0.1)", color: "#3b82f6" },
-    { label: "Delivered", value: deliveredCount, icon: PackageCheck, bg: "rgba(34,197,94,0.1)", color: "#16a34a" },
-    { label: "In Transit", value: inTransitCount, icon: Bike, bg: "rgba(139,92,246,0.1)", color: "#8b5cf6" },
+    { label: "Total Revenue", value: `₹${revenue}`, icon: IndianRupee, bg: "rgba(59,130,246,0.1)", color: "#3b82f6" },
+    { label: "Total Orders", value: totalOrders, icon: ShoppingBag, bg: "rgba(99,102,241,0.1)", color: "#6366f1" },
+    { label: "Avg. Order Value", value: `₹${avgOrderValue}`, icon: TrendingUp, bg: "rgba(34,197,94,0.1)", color: "#22c55e" },
+    { label: "Delivered", value: deliveredCount, icon: PackageCheck, bg: "rgba(16,185,129,0.1)", color: "#10b981" },
+    { label: "In Transit", value: inTransitCount, icon: Bike, bg: "rgba(249,115,22,0.1)", color: "#f97316" },
   ];
+
+  if (loading) {
+    return (
+      <>
+        <style>{reportsStyles}</style>
+        <div className="rp-loading">Loading reports...</div>
+      </>
+    );
+  }
 
   return (
     <>
@@ -88,7 +121,7 @@ const Reports = () => {
         </div>
 
         {orders.length === 0 && (
-          <div className="rp-section" style={{ textAlign: "center", color: "#a89a8d" }}>
+          <div className="rp-section" style={{ textAlign: "center", color: "#94a3b8" }}>
             No order data yet — reports will populate as orders come in.
           </div>
         )}

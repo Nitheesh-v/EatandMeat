@@ -44,7 +44,7 @@ const Cart = () => {
             top: "10%",
             left: "50%",
             transform: "translateX(-50%)",
-            background: "radial-gradient(circle, rgba(212,33,60,0.12) 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(13,148,136,0.12) 0%, transparent 70%)",
             filter: "blur(60px)",
           }}
         />
@@ -55,7 +55,7 @@ const Cart = () => {
             height: 300,
             bottom: "10%",
             right: "10%",
-            background: "radial-gradient(circle, rgba(212,175,55,0.08) 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(245,158,11,0.08) 0%, transparent 70%)",
             filter: "blur(40px)",
           }}
         />
@@ -67,14 +67,14 @@ const Cart = () => {
             style={{
               width: "clamp(100px, 25vw, 140px)",
               height: "clamp(100px, 25vw, 140px)",
-              background: "linear-gradient(135deg, rgba(212,33,60,0.1), rgba(212,175,55,0.05))",
-              border: "1px solid rgba(212,33,60,0.2)",
+              background: "linear-gradient(135deg, rgba(13,148,136,0.1), rgba(245,158,11,0.05))",
+              border: "1px solid rgba(13,148,136,0.2)",
               animation: "fadeSlideUp 0.6s ease both",
             }}
           >
             <ShoppingCart
               size={56}
-              style={{ color: "rgba(212,33,60,0.8)" }}
+              style={{ color: "rgba(13,148,136,0.8)" }}
             />
           </div>
 
@@ -91,7 +91,7 @@ const Cart = () => {
             Your Cart is{" "}
             <span
               style={{
-                background: "linear-gradient(135deg, #d4213c, #ff6b35)",
+                background: "linear-gradient(135deg, #0d9488, #14b8a6)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
               }}
@@ -116,17 +116,17 @@ const Cart = () => {
               <button
                 className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl text-sm font-bold transition-all duration-300 cursor-pointer"
                 style={{
-                  background: "linear-gradient(135deg, #d4213c 0%, #ff6b35 100%)",
+                  background: "linear-gradient(135deg, #0d9488 0%, #14b8a6 100%)",
                   color: "white",
-                  boxShadow: "0 4px 20px rgba(212,33,60,0.4)",
+                  boxShadow: "0 4px 20px rgba(13,148,136,0.4)",
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = "translateY(-2px)";
-                  e.currentTarget.style.boxShadow = "0 8px 30px rgba(212,33,60,0.6)";
+                  e.currentTarget.style.boxShadow = "0 8px 30px rgba(13,148,136,0.6)";
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = "translateY(0)";
-                  e.currentTarget.style.boxShadow = "0 4px 20px rgba(212,33,60,0.4)";
+                  e.currentTarget.style.boxShadow = "0 4px 20px rgba(13,148,136,0.4)";
                 }}
               >
                 <Package size={18} />
@@ -155,7 +155,7 @@ const Cart = () => {
           height: 380,
           top: "-5%",
           right: "-5%",
-          background: "radial-gradient(circle, rgba(212,33,60,0.1) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(13,148,136,0.1) 0%, transparent 70%)",
           filter: "blur(60px)",
         }}
       />
@@ -166,7 +166,7 @@ const Cart = () => {
           height: 320,
           bottom: "0%",
           left: "-5%",
-          background: "radial-gradient(circle, rgba(212,175,55,0.06) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(245,158,11,0.06) 0%, transparent 70%)",
           filter: "blur(50px)",
         }}
       />
@@ -178,8 +178,8 @@ const Cart = () => {
             <div
               className="w-10 h-10 rounded-xl flex items-center justify-center"
               style={{
-                background: "linear-gradient(135deg, #d4213c, #ff6b35)",
-                boxShadow: "0 4px 15px rgba(212,33,60,0.4)",
+                background: "linear-gradient(135deg, #0d9488, #14b8a6)",
+                boxShadow: "0 4px 15px rgba(13,148,136,0.4)",
               }}
             >
               <ShoppingCart size={20} color="white" />
@@ -187,9 +187,9 @@ const Cart = () => {
             <span
               className="text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-full"
               style={{
-                background: "rgba(212,33,60,0.12)",
-                color: "#d4213c",
-                border: "1px solid rgba(212,33,60,0.25)",
+                background: "rgba(13,148,136,0.12)",
+                color: "#0d9488",
+                border: "1px solid rgba(13,148,136,0.25)",
               }}
             >
                Your Selection
@@ -209,7 +209,7 @@ const Cart = () => {
             Shopping{" "}
             <span
               style={{
-                background: "linear-gradient(135deg, #d4213c, #ff6b35)",
+                background: "linear-gradient(135deg, #0d9488, #14b8a6)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
               }}
@@ -222,7 +222,7 @@ const Cart = () => {
             className="mt-2 text-sm sm:text-base"
             style={{ color: "rgba(255,255,255,0.4)" }}
           >
-            <span className="font-bold" style={{ color: "#d4af37" }}>{totalItems}</span>{" "}
+            <span className="font-bold" style={{ color: "#f59e0b" }}>{totalItems}</span>{" "}
             {totalItems === 1 ? "item" : "items"} in your cart ·{" "}
             <span style={{ color: "rgba(255,255,255,0.3)" }}>
               {cartItems.length} {cartItems.length === 1 ? "product" : "products"}
@@ -240,10 +240,10 @@ const Cart = () => {
                 className="rounded-2xl overflow-hidden transition-all duration-500"
                 style={{
                   background: removingId === item.id
-                    ? "rgba(212,33,60,0.05)"
+                    ? "rgba(13,148,136,0.05)"
                     : "linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%)",
                   border: removingId === item._id
-                    ? "1px solid rgba(212,33,60,0.3)"
+                    ? "1px solid rgba(13,148,136,0.3)"
                     : "1px solid rgba(255,255,255,0.06)",
                   backdropFilter: "blur(20px)",
                   transform: removingId === item._id ? "translateX(20px)" : "translateX(0)",
@@ -252,9 +252,9 @@ const Cart = () => {
                 }}
                 onMouseEnter={(e) => {
                   if (removingId !== item._id) {
-                    e.currentTarget.style.borderColor = "rgba(212,33,60,0.2)";
+                    e.currentTarget.style.borderColor = "rgba(13,148,136,0.2)";
                     e.currentTarget.style.transform = "translateY(-2px)";
-                    e.currentTarget.style.boxShadow = "0 8px 30px rgba(212,33,60,0.08)";
+                    e.currentTarget.style.boxShadow = "0 8px 30px rgba(13,148,136,0.08)";
                   }
                 }}
                 onMouseLeave={(e) => {
@@ -268,7 +268,7 @@ const Cart = () => {
                 {/* Accent bar */}
                 <div
                   className="h-1"
-                  style={{ background: "linear-gradient(90deg, #d4213c, #ff6b35, #d4af37)" }}
+                  style={{ background: "linear-gradient(90deg, #0d9488, #14b8a6, #f59e0b)" }}
                 />
 
                 <div className="p-4 sm:p-5 lg:p-6">
@@ -282,7 +282,7 @@ const Cart = () => {
                         style={{
                           width: "clamp(80px, 20vw, 128px)",
                           height: "clamp(80px, 20vw, 128px)",
-                          border: "1px solid rgba(212,175,55,0.2)",
+                          border: "1px solid rgba(245,158,11,0.2)",
                           boxShadow: "0 4px 15px rgba(0,0,0,0.3)",
                         }}
                       />
@@ -292,8 +292,8 @@ const Cart = () => {
                         style={{
                           width: 28,
                           height: 28,
-                          background: "linear-gradient(135deg, #d4213c, #ff6b35)",
-                          boxShadow: "0 2px 8px rgba(212,33,60,0.5)",
+                          background: "linear-gradient(135deg, #0d9488, #14b8a6)",
+                          boxShadow: "0 2px 8px rgba(13,148,136,0.5)",
                         }}
                       >
                         {item.quantity}
@@ -314,7 +314,7 @@ const Cart = () => {
                             className="text-xs sm:text-sm mt-1 flex items-center gap-1.5"
                             style={{ color: "rgba(255,255,255,0.4)" }}
                           >
-                            <Tag size={12} style={{ color: "#d4af37" }} />
+                            <Tag size={12} style={{ color: "#f59e0b" }} />
                             {item.weight}
                           </p>
                         </div>
@@ -326,20 +326,20 @@ const Cart = () => {
                           style={{
                             width: 36,
                             height: 36,
-                            background: "rgba(212,33,60,0.08)",
-                            border: "1px solid rgba(212,33,60,0.15)",
+                            background: "rgba(13,148,136,0.08)",
+                            border: "1px solid rgba(13,148,136,0.15)",
                           }}
                           title="Remove item"
                           onMouseEnter={(e) => {
-                            e.currentTarget.style.background = "rgba(212,33,60,0.2)";
-                            e.currentTarget.style.borderColor = "rgba(212,33,60,0.4)";
+                            e.currentTarget.style.background = "rgba(13,148,136,0.2)";
+                            e.currentTarget.style.borderColor = "rgba(13,148,136,0.4)";
                           }}
                           onMouseLeave={(e) => {
-                            e.currentTarget.style.background = "rgba(212,33,60,0.08)";
-                            e.currentTarget.style.borderColor = "rgba(212,33,60,0.15)";
+                            e.currentTarget.style.background = "rgba(13,148,136,0.08)";
+                            e.currentTarget.style.borderColor = "rgba(13,148,136,0.15)";
                           }}
                         >
-                          <Trash2 size={15} style={{ color: "#d4213c" }} />
+                          <Trash2 size={15} style={{ color: "#0d9488" }} />
                         </button>
                       </div>
 
@@ -357,8 +357,8 @@ const Cart = () => {
                               border: "1px solid rgba(255,255,255,0.1)",
                             }}
                             onMouseEnter={(e) => {
-                              e.currentTarget.style.background = "rgba(212,33,60,0.15)";
-                              e.currentTarget.style.borderColor = "rgba(212,33,60,0.3)";
+                              e.currentTarget.style.background = "rgba(13,148,136,0.15)";
+                              e.currentTarget.style.borderColor = "rgba(13,148,136,0.3)";
                             }}
                             onMouseLeave={(e) => {
                               e.currentTarget.style.background = "rgba(255,255,255,0.05)";
@@ -404,7 +404,7 @@ const Cart = () => {
                           </p>
                           <p
                             className="font-extrabold text-lg sm:text-xl"
-                            style={{ color: "#d4af37" }}
+                            style={{ color: "#f59e0b" }}
                           >
                             ₹{item.price * item.quantity}
                           </p>
@@ -426,15 +426,15 @@ const Cart = () => {
                 }}
                 className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 cursor-pointer"
                 style={{
-                  background: "rgba(212,33,60,0.08)",
-                  border: "1px solid rgba(212,33,60,0.15)",
-                  color: "#d4213c",
+                  background: "rgba(13,148,136,0.08)",
+                  border: "1px solid rgba(13,148,136,0.15)",
+                  color: "#0d9488",
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.background = "rgba(212,33,60,0.15)";
+                  e.currentTarget.style.background = "rgba(13,148,136,0.15)";
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.background = "rgba(212,33,60,0.08)";
+                  e.currentTarget.style.background = "rgba(13,148,136,0.08)";
                 }}
               >
                 <Trash2 size={14} />
@@ -455,14 +455,14 @@ const Cart = () => {
               }}
             >
               {/* Header */}
-              <div className="h-1" style={{ background: "linear-gradient(90deg, #d4af37, #f6e3a1)" }} />
+              <div className="h-1" style={{ background: "linear-gradient(90deg, #f59e0b, #f6e3a1)" }} />
               <div className="p-6">
                 <div className="flex items-center gap-3 mb-6">
                   <div
                     className="w-10 h-10 rounded-xl flex items-center justify-center"
                     style={{
-                      background: "linear-gradient(135deg, #d4af37, #f6e3a1)",
-                      boxShadow: "0 4px 15px rgba(212,175,55,0.3)",
+                      background: "linear-gradient(135deg, #f59e0b, #f6e3a1)",
+                      boxShadow: "0 4px 15px rgba(245,158,11,0.3)",
                     }}
                   >
                     <IndianRupee size={20} color="#1a0e0e" />
@@ -471,7 +471,7 @@ const Cart = () => {
                     <h2 className="font-extrabold text-lg" style={{ color: "#fff" }}>
                       Order Summary
                     </h2>
-                    <p className="text-[10px] font-bold uppercase tracking-wider" style={{ color: "#d4af37" }}>
+                    <p className="text-[10px] font-bold uppercase tracking-wider" style={{ color: "#f59e0b" }}>
                       {cartItems.length} {cartItems.length === 1 ? "item" : "items"}
                     </p>
                   </div>
@@ -528,7 +528,7 @@ const Cart = () => {
                 {/* Divider */}
                 <div
                   className="my-5 h-px"
-                  style={{ background: "linear-gradient(90deg, transparent, rgba(212,175,55,0.3), transparent)" }}
+                  style={{ background: "linear-gradient(90deg, transparent, rgba(245,158,11,0.3), transparent)" }}
                 />
 
                 {/* Grand Total */}
@@ -539,7 +539,7 @@ const Cart = () => {
                   <div className="text-right">
                     <p
                       className="font-extrabold text-2xl"
-                      style={{ color: "#d4af37" }}
+                      style={{ color: "#f59e0b" }}
                     >
                       ₹{grandTotal}
                     </p>
@@ -554,17 +554,17 @@ const Cart = () => {
                   <button
                     className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl text-sm font-bold transition-all duration-300 cursor-pointer"
                     style={{
-                      background: "linear-gradient(135deg, #d4213c 0%, #ff6b35 100%)",
+                      background: "linear-gradient(135deg, #0d9488 0%, #14b8a6 100%)",
                       color: "white",
-                      boxShadow: "0 4px 20px rgba(212,33,60,0.4)",
+                      boxShadow: "0 4px 20px rgba(13,148,136,0.4)",
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.transform = "translateY(-2px)";
-                      e.currentTarget.style.boxShadow = "0 8px 30px rgba(212,33,60,0.6)";
+                      e.currentTarget.style.boxShadow = "0 8px 30px rgba(13,148,136,0.6)";
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.transform = "translateY(0)";
-                      e.currentTarget.style.boxShadow = "0 4px 20px rgba(212,33,60,0.4)";
+                      e.currentTarget.style.boxShadow = "0 4px 20px rgba(13,148,136,0.4)";
                     }}
                   >
                     Proceed to Checkout
@@ -578,7 +578,7 @@ const Cart = () => {
                   className="block mt-3 text-center text-sm font-semibold transition-all duration-300 py-2"
                   style={{ color: "rgba(255,255,255,0.4)" }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.color = "#d4213c";
+                    e.currentTarget.style.color = "#0d9488";
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.color = "rgba(255,255,255,0.4)";

@@ -1,24 +1,32 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SearchBar from "../../components/Products/SearchBar.jsx";
 import ProductFilter from "../../components/Products/ProductFilter";
 import ProductGrid from "../../components/Products/ProductGrid";
-import productsData from "../../data/Product/products.js";
-import "../Styles/ProductStyle.css"
+import { getProducts } from "../../services/productService";
+import "../Styles/ProductStyle.css";
 
 const Products = () => {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const filteredProducts = productsData.filter((product) => {
-    const matchCategory =
-      category === "All" || product.category === category;
-
-    const matchSearch = product.name
-      .toLowerCase()
-      .includes(search.toLowerCase());
-
-    return matchCategory && matchSearch;
-  });
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const params = {};
+        if (category && category !== "All") params.category = category;
+        if (search) params.search = search;
+        const res = await getProducts(params);
+        setProducts(res.products || []);
+      } catch (err) {
+        console.log("Failed to load products:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadProducts();
+  }, [search, category]);
 
   return (
     <section className="products-dark-section relative overflow-hidden min-h-screen">
@@ -66,13 +74,19 @@ const Products = () => {
         {/* Products Count */}
         <div className="mb-6 products-fade-in products-delay-3">
           <p className="text-[#9ca3af]">
-            <span className="text-white font-bold">{filteredProducts.length}</span>{" "}
+            <span className="text-white font-bold">{products.length}</span>{" "}
             Products Found
           </p>
         </div>
 
-        {/* Product Grid */}
-        <ProductGrid products={filteredProducts} />
+        {/* Loading or Products */}
+        {loading ? (
+          <div className="text-center py-20 text-gray-400">
+            Loading products...
+          </div>
+        ) : (
+          <ProductGrid products={products} />
+        )}
       </div>
     </section>
   );

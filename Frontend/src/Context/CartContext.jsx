@@ -17,16 +17,18 @@ useEffect(() => {
 }, [cartItems]);
 
     const addToCart = (product) => {
+        // Normalize id - use _id from MongoDB or fallback to id
+        const productId = product.id || product._id;
 
         const existingItem = cartItems.find(
-            (item) => item.id === product.id
+            (item) => item.id === productId
         );
 
         if (existingItem) {
 
             setCartItems(
                 cartItems.map((item) =>
-                    item.id === product.id
+                    item.id === productId
                         ? { ...item, quantity: item.quantity + 1 }
                         : item
                 )
@@ -38,6 +40,7 @@ useEffect(() => {
                 ...cartItems,
                 {
                     ...product,
+                    id: productId,
                     quantity: 1
                 }
             ]);

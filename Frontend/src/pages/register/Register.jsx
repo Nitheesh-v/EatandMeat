@@ -13,14 +13,14 @@ const registerStyles = `
   padding: 56px 48px;
 }
 .reg-visual-glow { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; }
-.reg-visual-glow-1 { width: 380px; height: 380px; top: -10%; left: -10%; background: radial-gradient(circle, rgba(212,33,60,0.3), transparent 70%); animation: regGlow1 20s ease-in-out infinite; }
-.reg-visual-glow-2 { width: 340px; height: 340px; bottom: -10%; right: -10%; background: radial-gradient(circle, rgba(212,175,55,0.2), transparent 70%); animation: regGlow2 24s ease-in-out infinite; }
+.reg-visual-glow-1 { width: 380px; height: 380px; top: -10%; left: -10%; background: radial-gradient(circle, rgba(13,148,136,0.3), transparent 70%); animation: regGlow1 20s ease-in-out infinite; }
+.reg-visual-glow-2 { width: 340px; height: 340px; bottom: -10%; right: -10%; background: radial-gradient(circle, rgba(245,158,11,0.2), transparent 70%); animation: regGlow2 24s ease-in-out infinite; }
 @keyframes regGlow1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(30px,20px) scale(1.08); } }
 @keyframes regGlow2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-25px,-20px) scale(1.05); } }
 
 .reg-ember {
   position: absolute; border-radius: 50%; pointer-events: none;
-  background: radial-gradient(circle at 35% 30%, #ffc98a, #d4213c 55%, transparent 75%);
+  background: radial-gradient(circle at 35% 30%, #ffc98a, #0d9488 55%, transparent 75%);
   opacity: .5; animation: regEmberFloat ease-in-out infinite;
 }
 @keyframes regEmberFloat {
@@ -39,7 +39,7 @@ const registerStyles = `
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
 .reg-title .accent {
-  background: linear-gradient(135deg, #d4213c, #ff6b35);
+  background: linear-gradient(135deg, #0d9488, #14b8a6);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
 .reg-subtitle { color: rgba(255,255,255,0.4); font-size: 0.9rem; margin-top: 8px; }
@@ -52,7 +52,7 @@ const registerStyles = `
   background-repeat: no-repeat;
   background-position: right 14px center;
 }
-.reg-role-select:focus { outline: none; border-color: #d4213c; box-shadow: 0 0 0 3px rgba(212,33,60,0.15); }
+.reg-role-select:focus { outline: none; border-color: #0d9488; box-shadow: 0 0 0 3px rgba(13,148,136,0.15); }
 .reg-role-select option { background: #1a0a0a; color: #fff; }
 
 .reg-input-group { position: relative; margin-top: 16px; }
@@ -63,30 +63,30 @@ const registerStyles = `
 }
 .reg-input-group .reg-input-icon + .reg-input { padding-left: 46px; }
 .reg-input::placeholder { color: rgba(255,255,255,0.25); }
-.reg-input:focus { outline: none; border-color: #d4213c; box-shadow: 0 0 0 3px rgba(212,33,60,0.15); }
+.reg-input:focus { outline: none; border-color: #0d9488; box-shadow: 0 0 0 3px rgba(13,148,136,0.15); }
 .reg-input-icon { position: absolute; left: 15px; top: 41px; color: rgba(255,255,255,0.3); pointer-events: none; z-index: 1; }
 .reg-toggle-pw { position: absolute; right: 14px; top: 39px; color: rgba(255,255,255,0.3); cursor: pointer; background: none; border: none; padding: 4px; transition: color 0.2s; }
-.reg-toggle-pw:hover { color: #d4213c; }
+.reg-toggle-pw:hover { color: #0d9488; }
 
 .reg-terms-row { display: flex; align-items: flex-start; gap: 10px; margin-top: 18px; }
-.reg-terms-row input[type="checkbox"] { accent-color: #d4213c; width: 17px; height: 17px; margin-top: 2px; cursor: pointer; }
+.reg-terms-row input[type="checkbox"] { accent-color: #0d9488; width: 17px; height: 17px; margin-top: 2px; cursor: pointer; }
 .reg-terms-label { color: rgba(255,255,255,0.5); font-size: 0.85rem; line-height: 1.4; }
-.reg-terms-link { color: #d4af37; font-weight: 600; text-decoration: none; }
+.reg-terms-link { color: #f59e0b; font-weight: 600; text-decoration: none; }
 .reg-terms-link:hover { text-decoration: underline; }
 
 .reg-submit-btn {
-  width: 100%; background: linear-gradient(135deg, #d4213c 0%, #ff6b35 100%);
+  width: 100%; background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
   border: none; border-radius: 14px; color: white; font-weight: 700; font-size: 1rem; padding: 15px;
-  cursor: pointer; box-shadow: 0 6px 20px rgba(212,33,60,0.35); transition: all 0.3s ease;
+  cursor: pointer; box-shadow: 0 6px 20px rgba(13,148,136,0.35); transition: all 0.3s ease;
   display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 22px;
 }
-.reg-submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(212,33,60,0.5); }
+.reg-submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(13,148,136,0.5); }
 .reg-submit-btn:disabled { opacity: .6; cursor: not-allowed; transform: none; }
 
 .reg-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent); margin: 20px 0; }
 
 .reg-signin-text { color: rgba(255,255,255,0.4); font-size: 0.9rem; text-align: center; }
-.reg-signin-link { color: #d4af37; font-weight: 700; text-decoration: none; margin-left: 6px; }
+.reg-signin-link { color: #f59e0b; font-weight: 700; text-decoration: none; margin-left: 6px; }
 .reg-signin-link:hover { text-decoration: underline; }
 
 .reg-secure-badge { display: flex; align-items: center; justify-content: center; gap: 6px; color: rgba(255,255,255,0.3); font-size: 0.75rem; margin-top: 16px; }
@@ -171,14 +171,14 @@ export const Register = () => {
           <div className="relative z-10 flex items-center gap-2 mt-20">
             <div
               className="w-10 h-10 rounded-xl flex items-center justify-center"
-              style={{ background: "linear-gradient(135deg, #d4213c, #ff6b35)", boxShadow: "0 4px 15px rgba(212,33,60,0.5)" }}
+              style={{ background: "linear-gradient(135deg, #0d9488, #14b8a6)", boxShadow: "0 4px 15px rgba(13,148,136,0.5)" }}
             >
               <Flame size={22} color="white" />
             </div>
             <span className="text-2xl font-black">
               <span style={{ color: "#fff" }}>Eat</span>
-              <span style={{ color: "#d4213c" }}>And</span>
-              <span style={{ color: "#d4af37" }}>Meat</span>
+              <span style={{ color: "#0d9488" }}>And</span>
+              <span style={{ color: "#f59e0b" }}>Meat</span>
             </span>
           </div>
 

@@ -19,28 +19,28 @@ const companyLayoutStyles = `
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background: #fff8f1;
+  background: #f0f4f8;
   display: flex;
   overflow: hidden;
   font-family: 'Inter', sans-serif;
 }
 .cl-sidebar {
   width: 240px;
-  background: linear-gradient(180deg, #2a1a12 0%, #1a100a 100%);
+  background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
   color: white;
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
-  border-right: 1px solid rgba(212, 175, 55, 0.15);
+  border-right: 1px solid rgba(59, 130, 246, 0.15);
 }
 .cl-sidebar-line {
   height: 3px;
-  background: linear-gradient(90deg, #e23744, #d4af37);
+  background: linear-gradient(90deg, #3b82f6, #60a5fa, #93c5fd);
   flex-shrink: 0;
 }
 .cl-logo-area {
   padding: 22px 18px;
-  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+  border-bottom: 1px solid rgba(59, 130, 246, 0.15);
   display: flex;
   align-items: center;
   gap: 12px;
@@ -67,17 +67,17 @@ const companyLayoutStyles = `
   border: 1px solid transparent;
 }
 .cl-nav-link:hover {
-  background: rgba(226, 55, 68, 0.12);
+  background: rgba(59, 130, 246, 0.12);
   color: white;
 }
 .cl-nav-link.active {
-  background: rgba(226, 55, 68, 0.18);
+  background: rgba(59, 130, 246, 0.18);
   color: white;
-  border-color: rgba(212, 175, 55, 0.35);
+  border-color: rgba(59, 130, 246, 0.35);
 }
 .cl-logout-area {
   padding: 14px 10px;
-  border-top: 1px solid rgba(212, 175, 55, 0.15);
+  border-top: 1px solid rgba(59, 130, 246, 0.15);
 }
 .cl-logout-btn {
   display: flex;
@@ -85,19 +85,19 @@ const companyLayoutStyles = `
   gap: 10px;
   width: 100%;
   padding: 11px 14px;
-  background: rgba(226, 55, 68, 0.14);
-  border: 1px solid rgba(226, 55, 68, 0.3);
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.25);
   border-radius: 10px;
-  color: #ffb4ba;
+  color: #fca5a5;
   font-weight: 600;
   font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 .cl-logout-btn:hover {
-  background: #e23744;
+  background: #ef4444;
   color: white;
-  border-color: #e23744;
+  border-color: #ef4444;
 }
 .cl-main-area {
   flex: 1;
@@ -108,7 +108,7 @@ const companyLayoutStyles = `
 }
 .cl-topbar {
   background: white;
-  border-bottom: 1px solid rgba(42, 26, 18, 0.08);
+  border-bottom: 1px solid rgba(59, 130, 246, 0.08);
   padding: 14px 24px;
   display: flex;
   justify-content: space-between;
@@ -119,11 +119,11 @@ const companyLayoutStyles = `
   font-family: 'Fraunces', serif;
   font-size: 1.25rem;
   font-weight: 800;
-  color: #2a1a12;
+  color: #1e293b;
   margin: 0;
 }
 .cl-topbar-sub {
-  color: #8a7a6d;
+  color: #64748b;
   font-size: 0.8rem;
   margin: 2px 0 0 0;
 }
@@ -161,7 +161,7 @@ const companyLayoutStyles = `
   gap: 8px;
   padding: 5px 12px 5px 5px;
   border-radius: 20px;
-  border: 1px solid rgba(42, 26, 18, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.15);
   background: white;
 }
 .flicker {
@@ -174,7 +174,7 @@ const companyLayoutStyles = `
 .cl-user-avatar {
   width: 28px;
   height: 28px;
-  background: linear-gradient(135deg, #e23744, #d4af37);
+  background: linear-gradient(135deg, #3b82f6, #60a5fa);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -185,7 +185,7 @@ const companyLayoutStyles = `
 }
 .cl-user-label {
   font-weight: 600;
-  color: #2a1a12;
+  color: #1e293b;
   font-size: 0.8rem;
 }
 .cl-body {
@@ -228,9 +228,9 @@ const CompanyLayout = () => {
 
           <div className="cl-logo-area">
             <Link to="/" className="flex items-center gap-2 shrink-0">
-              <Flame size={24} className="flicker" style={{ color: "#e23744" }} />
+              <Flame size={24} className="flicker" style={{ color: "#3b82f6" }} />
               <span className="text-xl font-black tracking-tight text-white cl-logo-text">
-                Eat And<span style={{ color: "#e23744" }}>Meat</span>
+                Eat And<span style={{ color: "#3b82f6" }}>Meat</span>
               </span>
             </Link>
           </div>

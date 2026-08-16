@@ -2,9 +2,9 @@ import mongoose from "mongoose";
 
 const orderItemSchema = new mongoose.Schema({
   product: {
-  type: String,
-  default: "",
-},
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Product",
+  },
 
   name: String,
 
@@ -103,6 +103,16 @@ const orderSchema = new mongoose.Schema(
     tax: Number,
 
     totalAmount: Number,
+
+    couponCode: {
+      type: String,
+      default: "",
+    },
+
+    discount: {
+      type: Number,
+      default: 0,
+    },
 
     placedAt: Date,
 

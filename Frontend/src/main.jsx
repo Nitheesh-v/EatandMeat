@@ -2,7 +2,7 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import "./index.css";
-import "./mmthemes.css"
+import "./mmthemes.css";
 import App from "./App";
 import MainLayout from "./layouts/MainLayout";
 
@@ -18,7 +18,7 @@ import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import Cart from "./pages/Cart/Cart";
 import Checkout from "./pages/Checkout/Checkout";
 import OrderSuccess from "./pages/OrderSuccess/OrderSuccess";
-import {TrackOrder} from "./pages/TrackOrder/TrackOrder";
+import { TrackOrder } from "./pages/TrackOrder/TrackOrder";
 import Login from "./pages/Login/Login";
 import { Register } from "./pages/register/Register";
 import { Contact } from "./pages/Contact/Contact";
@@ -28,24 +28,37 @@ import Dashboard from "./pages/Company/Dashboard";
 import Orders from "./pages/Company/Orders";
 import Preparing from "./pages/Company/Preparing";
 import Packed from "./pages/Company/Packed";
-import {DeliveryPartners} from "./pages/Company/DeliveryPartners";
+import { DeliveryPartners } from "./pages/Company/DeliveryPartners";
 import Reports from "./pages/Company/Reports";
 
 // Components
-import Offers from "./components/Offer";
 import DeliveryModal from "./components/Delivery/DeliveryModal";
 import CompanyLayout from "./pages/Company/CompanyLayout";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import { MyOrders } from "./pages/MyOrders/MyOrders";
 
+// Delivery Pages
+import DeliveryLayout from "./pages/Delivery/DeliveryLayout.jsx";
+import { DeliveryDashboard } from "./pages/Delivery/DeliveryDashboard.jsx";
+import { AvailableOrders } from "./pages/Delivery/AvailableOrders";
+import { MyDeliveries } from "./pages/Delivery/MyDeliveries";
+import { Earnings } from "./pages/Delivery/Earnings";
+import { Profile } from "./pages/Delivery/Profile";
+import Withdraw from "./pages/Delivery/Withdraw";
 
-//delivery
-import DeliveryLayout from "./pages/Delivery/DeliveryLayout.jsx"
-import {DeliveryDashboard} from "./pages/Delivery/DeliveryDashboard.jsx";
-import {AvailableOrders} from "./pages/Delivery/AvailableOrders";
-import {MyDeliveries} from "./pages/Delivery/MyDeliveries";
-import {Earnings} from "./pages/Delivery/Earnings";
-import {Profile} from "./pages/Delivery/Profile";
+// Admin Pages
+import AdminLayout from "./pages/Admin/AdminLayout";
+import AdminDashboard from "./pages/Admin/AdminDashboard";
+import AdminProducts from "./pages/Admin/AdminProducts";
+import AdminAddProduct from "./pages/Admin/AdminAddProduct";
+import AdminCategories from "./pages/Admin/AdminCategories";
+import AdminInventory from "./pages/Admin/AdminInventory";
+import AdminUsers from "./pages/Admin/AdminUsers";
+import AdminOrders from "./pages/Admin/AdminOrders";
+import AdminCustomers from "./pages/Admin/AdminCustomers";
+import AdminDeliveryPartners from "./pages/Admin/AdminDeliveryPartners";
+import AdminReports from "./pages/Admin/AdminReports";
+import AdminCoupons from "./pages/Admin/AdminCoupons";
 
 import "leaflet/dist/leaflet.css";
 
@@ -89,11 +102,8 @@ const router = createBrowserRouter([
       // ==========================
       // Customer Protected Routes
       // ==========================
-
       {
-        element: (
-          <ProtectedRoute allowedRoles={["customer"]} />
-        ),
+        element: <ProtectedRoute allowedRoles={["customer"]} />,
         children: [
           {
             path: "cart",
@@ -121,7 +131,6 @@ const router = createBrowserRouter([
       // ==========================
       // Company Protected Routes
       // ==========================
-
       {
         path: "company",
         element: (
@@ -156,37 +165,103 @@ const router = createBrowserRouter([
           },
         ],
       },
+
+      // ==========================
+      // Delivery Protected Routes
+      // ==========================
       {
-  element: <ProtectedRoute allowedRoles={["delivery"]} />,
-  children: [
-    {
-      path: "delivery",
-      element: <DeliveryLayout />,
-      children: [
-        {
-          path: "dashboard",
-          element: <DeliveryDashboard />,
-        },
-        {
-          path: "available-orders",
-          element: <AvailableOrders />,
-        },
-        {
-          path: "my-deliveries",
-          element: <MyDeliveries />,
-        },
-        {
-          path: "earnings",
-          element: <Earnings />,
-        },
-        {
-          path: "profile",
-          element: <Profile />,
-        },
-      ],
-    },
-  ],
-},
+        element: <ProtectedRoute allowedRoles={["delivery"]} />,
+        children: [
+          {
+            path: "delivery",
+            element: <DeliveryLayout />,
+            children: [
+              {
+                path: "dashboard",
+                element: <DeliveryDashboard />,
+              },
+              {
+                path: "available-orders",
+                element: <AvailableOrders />,
+              },
+              {
+                path: "my-deliveries",
+                element: <MyDeliveries />,
+              },
+              {
+                path: "earnings",
+                element: <Earnings />,
+              },
+              {
+                path: "withdraw",
+                element: <Withdraw />,
+              },
+              {
+                path: "profile",
+                element: <Profile />,
+              },
+            ],
+          },
+        ],
+      },
+
+      // ==========================
+      // Admin Protected Routes
+      // ==========================
+      {
+        path: "admin",
+        element: (
+          <ProtectedRoute allowedRoles={["admin"]}>
+            <AdminLayout />
+          </ProtectedRoute>
+        ),
+        children: [
+          {
+            path: "dashboard",
+            element: <AdminDashboard />,
+          },
+          {
+            path: "products",
+            element: <AdminProducts />,
+          },
+          {
+            path: "products/add",
+            element: <AdminAddProduct />,
+          },
+          {
+            path: "categories",
+            element: <AdminCategories />,
+          },
+          {
+            path: "inventory",
+            element: <AdminInventory />,
+          },
+          {
+            path: "orders",
+            element: <AdminOrders />,
+          },
+          {
+            path: "customers",
+            element: <AdminCustomers />,
+          },
+          {
+            path: "delivery-partners",
+            element: <AdminDeliveryPartners />,
+          },
+          {
+            path: "users",
+            element: <AdminUsers />,
+          },
+          {
+            path: "reports",
+            element: <AdminReports />,
+          },
+          {
+            path: "coupons",
+            element: <AdminCoupons />,
+          },
+        ],
+      },
     ],
   },
 ]);

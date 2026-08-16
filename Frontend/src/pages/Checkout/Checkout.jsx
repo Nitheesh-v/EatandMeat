@@ -15,10 +15,13 @@ import {
   Truck,
   Check,
   ArrowRight,
+  Tag,
+  X,
 } from "lucide-react";
 import { useAuth } from "../../Context/AuthContext";
 
 import { createOrder } from "../../services/orderService";
+import API from "../../api/axios.js";
 import LocationPicker from "../../components/map/LocationPicker";
 
 const Checkout = () => {
@@ -45,7 +48,48 @@ const Checkout = () => {
 
 
   const deliveryCharge = cartItems.length > 0 ? 40 : 0;
-  const grandTotal = totalPrice + deliveryCharge;
+
+  // Coupon state
+  const [couponCode, setCouponCode] = useState("");
+  const [couponDiscount, setCouponDiscount] = useState(0);
+  const [couponApplied, setCouponApplied] = useState("");
+  const [couponMessage, setCouponMessage] = useState("");
+  const [couponLoading, setCouponLoading] = useState(false);
+
+  const handleApplyCoupon = async () => {
+    if (!couponCode.trim()) {
+      setCouponMessage("Enter a coupon code");
+      return;
+    }
+    setCouponLoading(true);
+    setCouponMessage("");
+    try {
+      const { data } = await API.post("/coupons/apply", {
+        code: couponCode,
+        orderAmount: totalPrice,
+      });
+      if (data.success) {
+        setCouponDiscount(data.discount);
+        setCouponApplied(data.couponCode);
+        setCouponMessage(data.message);
+      }
+    } catch (err) {
+      setCouponDiscount(0);
+      setCouponApplied("");
+      setCouponMessage(err.response?.data?.message || "Invalid coupon");
+    } finally {
+      setCouponLoading(false);
+    }
+  };
+
+  const handleRemoveCoupon = () => {
+    setCouponCode("");
+    setCouponDiscount(0);
+    setCouponApplied("");
+    setCouponMessage("");
+  };
+
+  const grandTotal = totalPrice + deliveryCharge - couponDiscount;
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   const handleChange = (field, value) => {
@@ -106,6 +150,10 @@ console.log(cartItems);
 
         tax,
 
+        discount: couponDiscount,
+
+        couponCode: couponApplied,
+
         totalAmount: grandTotal,
       };
       console.log(orderData);
@@ -159,7 +207,7 @@ console.log(cartItems);
           top: "-10%",
           right: "-5%",
           background:
-            "radial-gradient(circle, rgba(212,33,60,0.08) 0%, transparent 70%)",
+            "radial-gradient(circle, rgba(13,148,136,0.08) 0%, transparent 70%)",
           filter: "blur(60px)",
         }}
       />
@@ -171,7 +219,7 @@ console.log(cartItems);
           bottom: "10%",
           left: "-5%",
           background:
-            "radial-gradient(circle, rgba(212,175,55,0.06) 0%, transparent 70%)",
+            "radial-gradient(circle, rgba(245,158,11,0.06) 0%, transparent 70%)",
           filter: "blur(50px)",
         }}
       />
@@ -186,8 +234,8 @@ console.log(cartItems);
             <div
               className="w-10 h-10 rounded-xl flex items-center justify-center"
               style={{
-                background: "linear-gradient(135deg, #d4213c, #ff6b35)",
-                boxShadow: "0 4px 15px rgba(212,33,60,0.4)",
+                background: "linear-gradient(135deg, #0d9488, #14b8a6)",
+                boxShadow: "0 4px 15px rgba(13,148,136,0.4)",
               }}
             >
               <Shield size={20} color="white" />
@@ -217,7 +265,7 @@ console.log(cartItems);
             Complete Your{" "}
             <span
               style={{
-                background: "linear-gradient(135deg, #d4213c, #ff6b35)",
+                background: "linear-gradient(135deg, #0d9488, #14b8a6)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
               }}
@@ -245,7 +293,7 @@ console.log(cartItems);
                 <div
                   className="h-1"
                   style={{
-                    background: "linear-gradient(90deg, #d4213c, #ff6b35)",
+                    background: "linear-gradient(90deg, #0d9488, #14b8a6)",
                   }}
                 />
                 <div className="p-5 sm:p-6">
@@ -255,9 +303,9 @@ console.log(cartItems);
                   >
                     <div
                       className="w-9 h-9 rounded-lg flex items-center justify-center"
-                      style={{ background: "rgba(212,33,60,0.12)" }}
+                      style={{ background: "rgba(13,148,136,0.12)" }}
                     >
-                      <User size={18} style={{ color: "#d4213c" }} />
+                      <User size={18} style={{ color: "#0d9488" }} />
                     </div>
                     Customer Details
                   </h2>
@@ -286,9 +334,9 @@ console.log(cartItems);
                           outline: "none",
                         }}
                         onFocus={(e) => {
-                          e.currentTarget.style.borderColor = "#d4213c";
+                          e.currentTarget.style.borderColor = "#0d9488";
                           e.currentTarget.style.boxShadow =
-                            "0 0 0 3px rgba(212,33,60,0.15)";
+                            "0 0 0 3px rgba(13,148,136,0.15)";
                         }}
                         onBlur={(e) => {
                           e.currentTarget.style.borderColor =
@@ -319,9 +367,9 @@ console.log(cartItems);
                           outline: "none",
                         }}
                         onFocus={(e) => {
-                          e.currentTarget.style.borderColor = "#d4213c";
+                          e.currentTarget.style.borderColor = "#0d9488";
                           e.currentTarget.style.boxShadow =
-                            "0 0 0 3px rgba(212,33,60,0.15)";
+                            "0 0 0 3px rgba(13,148,136,0.15)";
                         }}
                         onBlur={(e) => {
                           e.currentTarget.style.borderColor =
@@ -351,9 +399,9 @@ console.log(cartItems);
                           outline: "none",
                         }}
                         onFocus={(e) => {
-                          e.currentTarget.style.borderColor = "#d4213c";
+                          e.currentTarget.style.borderColor = "#0d9488";
                           e.currentTarget.style.boxShadow =
-                            "0 0 0 3px rgba(212,33,60,0.15)";
+                            "0 0 0 3px rgba(13,148,136,0.15)";
                         }}
                         onBlur={(e) => {
                           e.currentTarget.style.borderColor =
@@ -380,7 +428,7 @@ console.log(cartItems);
                 <div
                   className="h-1"
                   style={{
-                    background: "linear-gradient(90deg, #d4af37, #f6e3a1)",
+                    background: "linear-gradient(90deg, #f59e0b, #f6e3a1)",
                   }}
                 />
                 <div className="p-5 sm:p-6">
@@ -390,9 +438,9 @@ console.log(cartItems);
                   >
                     <div
                       className="w-9 h-9 rounded-lg flex items-center justify-center"
-                      style={{ background: "rgba(212,175,55,0.12)" }}
+                      style={{ background: "rgba(245,158,11,0.12)" }}
                     >
-                      <MapPin size={18} style={{ color: "#d4af37" }} />
+                      <MapPin size={18} style={{ color: "#f59e0b" }} />
                     </div>
                     Delivery Address
                   </h2>
@@ -419,9 +467,9 @@ console.log(cartItems);
                         resize: "none",
                       }}
                       onFocus={(e) => {
-                        e.currentTarget.style.borderColor = "#d4af37";
+                        e.currentTarget.style.borderColor = "#f59e0b";
                         e.currentTarget.style.boxShadow =
-                          "0 0 0 3px rgba(212,175,55,0.15)";
+                          "0 0 0 3px rgba(245,158,11,0.15)";
                       }}
                       onBlur={(e) => {
                         e.currentTarget.style.borderColor =
@@ -447,9 +495,9 @@ console.log(cartItems);
                         outline: "none",
                       }}
                       onFocus={(e) => {
-                        e.currentTarget.style.borderColor = "#d4af37";
+                        e.currentTarget.style.borderColor = "#f59e0b";
                         e.currentTarget.style.boxShadow =
-                          "0 0 0 3px rgba(212,175,55,0.15)";
+                          "0 0 0 3px rgba(245,158,11,0.15)";
                       }}
                       onBlur={(e) => {
                         e.currentTarget.style.borderColor =
@@ -472,9 +520,9 @@ console.log(cartItems);
                         outline: "none",
                       }}
                       onFocus={(e) => {
-                        e.currentTarget.style.borderColor = "#d4af37";
+                        e.currentTarget.style.borderColor = "#f59e0b";
                         e.currentTarget.style.boxShadow =
-                          "0 0 0 3px rgba(212,175,55,0.15)";
+                          "0 0 0 3px rgba(245,158,11,0.15)";
                       }}
                       onBlur={(e) => {
                         e.currentTarget.style.borderColor =
@@ -622,7 +670,7 @@ console.log(cartItems);
                   className="h-1"
                   style={{
                     background:
-                      "linear-gradient(90deg, #d4213c, #ff6b35, #d4af37)",
+                      "linear-gradient(90deg, #0d9488, #14b8a6, #f59e0b)",
                   }}
                 />
                 <div className="p-5 sm:p-6">
@@ -630,8 +678,8 @@ console.log(cartItems);
                     <div
                       className="w-10 h-10 rounded-xl flex items-center justify-center"
                       style={{
-                        background: "linear-gradient(135deg, #d4213c, #ff6b35)",
-                        boxShadow: "0 4px 15px rgba(212,33,60,0.4)",
+                        background: "linear-gradient(135deg, #0d9488, #14b8a6)",
+                        boxShadow: "0 4px 15px rgba(13,148,136,0.4)",
                       }}
                     >
                       <IndianRupee size={20} color="white" />
@@ -645,7 +693,7 @@ console.log(cartItems);
                       </h2>
                       <p
                         className="text-[10px] font-bold uppercase tracking-wider"
-                        style={{ color: "#d4af37" }}
+                        style={{ color: "#f59e0b" }}
                       >
                         {cartItems.length} items
                       </p>
@@ -680,9 +728,93 @@ console.log(cartItems);
                     className="my-4 h-px"
                     style={{
                       background:
-                        "linear-gradient(90deg, transparent, rgba(212,175,55,0.3), transparent)",
+                        "linear-gradient(90deg, transparent, rgba(245,158,11,0.3), transparent)",
                     }}
                   />
+
+                  {/* Coupon Section */}
+                  <div style={{ marginBottom: 16 }}>
+                    {couponApplied ? (
+                      <div
+                        className="flex items-center justify-between p-3 rounded-xl"
+                        style={{
+                          background: "rgba(16,185,129,0.08)",
+                          border: "1px solid rgba(16,185,129,0.2)",
+                        }}
+                      >
+                        <div className="flex items-center gap-2">
+                          <Tag size={14} style={{ color: "#10b981" }} />
+                          <div>
+                            <span className="text-xs font-bold" style={{ color: "#10b981" }}>
+                              {couponApplied}
+                            </span>
+                            <p className="text-[10px]" style={{ color: "rgba(255,255,255,0.4)" }}>
+                              You save ₹{couponDiscount}
+                            </p>
+                          </div>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={handleRemoveCoupon}
+                          style={{
+                            background: "none", border: "none", cursor: "pointer",
+                            color: "#ef4444", padding: 4,
+                          }}
+                        >
+                          <X size={16} />
+                        </button>
+                      </div>
+                    ) : (
+                      <div>
+                        <div className="flex gap-2">
+                          <input
+                            type="text"
+                            placeholder="Enter coupon code"
+                            value={couponCode}
+                            onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                            className="flex-1 rounded-xl text-sm font-medium transition-all duration-300"
+                            style={{
+                              background: "rgba(255,255,255,0.04)",
+                              border: "1px solid rgba(255,255,255,0.1)",
+                              color: "#fff",
+                              padding: "10px 12px",
+                              outline: "none",
+                            }}
+                            onFocus={(e) => {
+                              e.currentTarget.style.borderColor = "#0d9488";
+                            }}
+                            onBlur={(e) => {
+                              e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
+                            }}
+                          />
+                          <button
+                            type="button"
+                            onClick={handleApplyCoupon}
+                            disabled={couponLoading}
+                            className="rounded-xl text-xs font-bold px-4 cursor-pointer transition-all duration-300"
+                            style={{
+                              background: "linear-gradient(135deg, #0d9488, #14b8a6)",
+                              color: "white",
+                              border: "none",
+                              boxShadow: "0 2px 10px rgba(13,148,136,0.3)",
+                            }}
+                          >
+                            {couponLoading ? "..." : "Apply"}
+                          </button>
+                        </div>
+                        {couponMessage && (
+                          <p
+                            className="text-[11px] mt-1.5 font-semibold"
+                            style={{
+                              color: couponDiscount > 0 ? "#10b981" : "#ef4444",
+                            }}
+                          >
+                            {couponMessage}
+                          </p>
+                        )}
+                      </div>
+                    )}
+                  </div>
 
                   {/* Totals */}
                   <div className="space-y-3">
@@ -730,11 +862,24 @@ console.log(cartItems);
                     </div>
                   </div>
 
+                  {/* Coupon Discount */}
+                  {couponDiscount > 0 && (
+                    <div className="flex justify-between items-center text-sm" style={{ marginTop: 12 }}>
+                      <div className="flex items-center gap-1.5" style={{ color: "#10b981" }}>
+                        <Tag size={13} />
+                        Coupon ({couponApplied})
+                      </div>
+                      <span className="font-bold" style={{ color: "#10b981" }}>
+                        -₹{couponDiscount}
+                      </span>
+                    </div>
+                  )}
+
                   <div
                     className="my-5 h-px"
                     style={{
                       background:
-                        "linear-gradient(90deg, transparent, rgba(212,175,55,0.3), transparent)",
+                        "linear-gradient(90deg, transparent, rgba(245,158,11,0.3), transparent)",
                     }}
                   />
 
@@ -749,7 +894,7 @@ console.log(cartItems);
                     <div className="text-right">
                       <p
                         className="font-extrabold text-2xl"
-                        style={{ color: "#d4af37" }}
+                        style={{ color: "#f59e0b" }}
                       >
                         ₹{grandTotal}
                       </p>
@@ -768,19 +913,19 @@ console.log(cartItems);
                     className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl text-sm font-bold mt-6 transition-all duration-300 cursor-pointer"
                     style={{
                       background:
-                        "linear-gradient(135deg, #d4213c 0%, #ff6b35 100%)",
+                        "linear-gradient(135deg, #0d9488 0%, #14b8a6 100%)",
                       color: "white",
-                      boxShadow: "0 4px 20px rgba(212,33,60,0.4)",
+                      boxShadow: "0 4px 20px rgba(13,148,136,0.4)",
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.transform = "translateY(-2px)";
                       e.currentTarget.style.boxShadow =
-                        "0 8px 30px rgba(212,33,60,0.6)";
+                        "0 8px 30px rgba(13,148,136,0.6)";
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.transform = "translateY(0)";
                       e.currentTarget.style.boxShadow =
-                        "0 4px 20px rgba(212,33,60,0.4)";
+                        "0 4px 20px rgba(13,148,136,0.4)";
                     }}
                   >
                     <Shield size={18} />

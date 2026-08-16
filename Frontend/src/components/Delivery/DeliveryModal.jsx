@@ -96,7 +96,7 @@ const deliveryModalStyles = `
   line-height: 1.2;
 }
 .dm-title .accent {
-  background: linear-gradient(135deg, #ef4444, #d4af37);
+  background: linear-gradient(135deg, #ef4444, #f59e0b);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
 }

@@ -59,7 +59,7 @@ export const TrackOrder = () => {
             top: "10%",
             left: "50%",
             transform: "translateX(-50%)",
-            background: "radial-gradient(circle, rgba(212,33,60,0.08) 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(13,148,136,0.08) 0%, transparent 70%)",
             filter: "blur(60px)",
           }}
         />
@@ -75,11 +75,11 @@ export const TrackOrder = () => {
           <div
             className="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6"
             style={{
-              background: "linear-gradient(135deg, rgba(212,33,60,0.1), rgba(212,175,55,0.05))",
-              border: "1px solid rgba(212,33,60,0.2)",
+              background: "linear-gradient(135deg, rgba(13,148,136,0.1), rgba(245,158,11,0.05))",
+              border: "1px solid rgba(13,148,136,0.2)",
             }}
           >
-            <Package size={36} style={{ color: "rgba(212,33,60,0.7)" }} />
+            <Package size={36} style={{ color: "rgba(13,148,136,0.7)" }} />
           </div>
           <h1
             className="font-extrabold text-2xl mb-2"
@@ -152,7 +152,7 @@ export const TrackOrder = () => {
           height: 500,
           top: "-10%",
           right: "-10%",
-          background: "radial-gradient(circle, rgba(212,33,60,0.06) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(13,148,136,0.06) 0%, transparent 70%)",
           filter: "blur(80px)",
         }}
       />
@@ -163,7 +163,7 @@ export const TrackOrder = () => {
           height: 400,
           bottom: "0%",
           left: "-10%",
-          background: "radial-gradient(circle, rgba(212,175,55,0.05) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(245,158,11,0.05) 0%, transparent 70%)",
           filter: "blur(70px)",
         }}
       />
@@ -176,8 +176,8 @@ export const TrackOrder = () => {
               <div
                 className="w-10 h-10 rounded-xl flex items-center justify-center"
                 style={{
-                  background: "linear-gradient(135deg, #d4213c, #ff6b35)",
-                  boxShadow: "0 4px 15px rgba(212,33,60,0.4)",
+                  background: "linear-gradient(135deg, #0d9488, #14b8a6)",
+                  boxShadow: "0 4px 15px rgba(13,148,136,0.4)",
                 }}
               >
                 <Flame size={20} color="white" />
@@ -205,7 +205,7 @@ export const TrackOrder = () => {
               Track Your{" "}
               <span
                 style={{
-                  background: "linear-gradient(135deg, #d4213c, #ff6b35)",
+                  background: "linear-gradient(135deg, #0d9488, #14b8a6)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                 }}
@@ -266,22 +266,22 @@ export const TrackOrder = () => {
           }}
         >
           {/* Rainbow accent */}
-          <div className="h-1" style={{ background: "linear-gradient(90deg, #d4213c, #ff6b35, #d4af37, #10b981, #8b5cf6)" }} />
+          <div className="h-1" style={{ background: "linear-gradient(90deg, #0d9488, #14b8a6, #f59e0b, #10b981, #8b5cf6)" }} />
 
           <div className="p-5 sm:p-6 lg:p-8 space-y-8">
             {/* Order ID */}
             <div
               className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl"
               style={{
-                background: "linear-gradient(135deg, rgba(212,175,55,0.08), rgba(212,175,55,0.02))",
-                border: "1px solid rgba(212,175,55,0.2)",
+                background: "linear-gradient(135deg, rgba(245,158,11,0.08), rgba(245,158,11,0.02))",
+                border: "1px solid rgba(245,158,11,0.2)",
               }}
             >
               <div>
                 <p className="text-[10px] font-bold uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.4)" }}>
                   Order ID
                 </p>
-                <p className="font-extrabold text-xl sm:text-2xl mt-1" style={{ color: "#d4af37" }}>
+                <p className="font-extrabold text-xl sm:text-2xl mt-1" style={{ color: "#f59e0b" }}>
                   {order.id}
                 </p>
               </div>
@@ -296,9 +296,9 @@ export const TrackOrder = () => {
             {/* Info Grid */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
               {[
-                { icon: User, label: "Customer", value: order.customer?.fullname || order.customer?.name || "—", color: "#d4213c" },
+                { icon: User, label: "Customer", value: order.customer?.fullName || order.customer?.name || "—", color: "#0d9488" },
                 { icon: IndianRupee, label: "Payment", value: order.paymentMethod?.toUpperCase() || "Paid", color: "#10b981" },
-                { icon: Package, label: "Order Total", value: `₹${order.total}`, color: "#d4af37" },
+                { icon: Package, label: "Order Total", value: `₹${order.total}`, color: "#f59e0b" },
                 { icon: Truck, label: "Delivery", value: order.deliveryStatus, color: "#8b5cf6" },
               ].map((info, i) => (
                 <div
@@ -334,9 +334,9 @@ export const TrackOrder = () => {
               <h2 className="font-extrabold text-lg flex items-center gap-2 mb-4" style={{ color: "#fff" }}>
                 <div
                   className="w-8 h-8 rounded-lg flex items-center justify-center"
-                  style={{ background: "rgba(212,175,55,0.12)" }}
+                  style={{ background: "rgba(245,158,11,0.12)" }}
                 >
-                  <Package size={16} style={{ color: "#d4af37" }} />
+                  <Package size={16} style={{ color: "#f59e0b" }} />
                 </div>
                 Ordered Items
               </h2>
@@ -351,8 +351,8 @@ export const TrackOrder = () => {
                       animation: `fadeSlideUp 0.4s ease ${0.4 + i * 0.05}s both`,
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = "rgba(212,175,55,0.15)";
-                      e.currentTarget.style.background = "rgba(212,175,55,0.04)";
+                      e.currentTarget.style.borderColor = "rgba(245,158,11,0.15)";
+                      e.currentTarget.style.background = "rgba(245,158,11,0.04)";
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.borderColor = "rgba(255,255,255,0.04)";
@@ -363,8 +363,8 @@ export const TrackOrder = () => {
                       <div
                         className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-extrabold"
                         style={{
-                          background: "linear-gradient(135deg, rgba(212,33,60,0.15), rgba(212,175,55,0.1))",
-                          color: "#d4213c",
+                          background: "linear-gradient(135deg, rgba(13,148,136,0.15), rgba(245,158,11,0.1))",
+                          color: "#0d9488",
                         }}
                       >
                         {item.quantity}×
@@ -378,7 +378,7 @@ export const TrackOrder = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="font-extrabold text-sm" style={{ color: "#d4af37" }}>
+                    <div className="font-extrabold text-sm" style={{ color: "#f59e0b" }}>
                       ₹{item.price * item.quantity}
                     </div>
                   </div>
@@ -409,8 +409,8 @@ export const TrackOrder = () => {
                   className="absolute left-6 sm:left-7 top-0 w-0.5"
                   style={{
                     height: `${((currentStepIdx + 1) / 5) * 100}%`,
-                    background: "linear-gradient(180deg, #d4213c, #ff6b35, #d4af37)",
-                    boxShadow: "0 0 10px rgba(212,33,60,0.4)",
+                    background: "linear-gradient(180deg, #0d9488, #14b8a6, #f59e0b)",
+                    boxShadow: "0 0 10px rgba(13,148,136,0.4)",
                     transition: "height 1s ease",
                   }}
                 />
@@ -598,8 +598,8 @@ export const TrackOrder = () => {
             >
               {[
                 { icon: Shield, label: "100% Secure", color: "#10b981" },
-                { icon: Zap, label: "Fresh Quality", color: "#d4213c" },
-                { icon: Star, label: "Top Rated", color: "#d4af37" },
+                { icon: Zap, label: "Fresh Quality", color: "#0d9488" },
+                { icon: Star, label: "Top Rated", color: "#f59e0b" },
               ].map((badge) => (
                 <div key={badge.label} className="flex items-center gap-1.5">
                   <badge.icon size={13} style={{ color: badge.color }} />
