@@ -360,52 +360,73 @@ export const getMyDeliveries = async (req, res) => {
 
 
 export const pickupOrder = async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id);
 
-  const order = await Order.findById(req.params.id);
+    if (!order) {
+      return res.status(404).json({ success: false, message: "Order not found" });
+    }
 
-  order.orderStatus = "Picked Up";
-  order.pickedAt = new Date();
+    if (order.orderStatus !== "Assigned") {
+      return res.status(400).json({ success: false, message: "Order must be Assigned first" });
+    }
 
-  await order.save();
+    order.orderStatus = "Picked Up";
+    order.pickedAt = new Date();
+    await order.save();
 
-  res.json({
-    success: true,
-    message: "Order Picked Up",
-  });
-
+    res.json({ success: true, message: "Order Picked Up", order });
+  } catch (error) {
+    console.error("Pickup Error:", error);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
 };
 
-
 export const outForDelivery = async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id);
 
-  const order = await Order.findById(req.params.id);
+    if (!order) {
+      return res.status(404).json({ success: false, message: "Order not found" });
+    }
 
-  order.orderStatus = "Out For Delivery";
+    if (order.orderStatus !== "Picked Up") {
+      return res.status(400).json({ success: false, message: "Order must be Picked Up first" });
+    }
 
-  await order.save();
+    order.orderStatus = "Out For Delivery";
+    await order.save();
 
-  res.json({
-    success: true,
-    message: "Out For Delivery",
-  });
-
+    res.json({ success: true, message: "Out For Delivery", order });
+  } catch (error) {
+    console.error("Out For Delivery Error:", error);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
 };
 
 
 export const deliveredOrder = async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id);
 
-  const order = await Order.findById(req.params.id);
+    if (!order) {
+      return res.status(404).json({ success: false, message: "Order not found" });
+    }
 
-  order.orderStatus = "Delivered";
-  order.deliveredAt = new Date();
+    if (order.orderStatus !== "Out For Delivery") {
+      return res.status(400).json({ success: false, message: "Order must be Out For Delivery first" });
+    }
 
-  await order.save();
+    order.orderStatus = "Delivered";
+    order.deliveredAt = new Date();
+    order.paymentStatus = "Paid";
+    await order.save();
 
-  res.json({
-    success: true,
-    message: "Order Delivered",
-  });
-
+    res.json({ success: true, message: "Order Delivered", order });
+  } catch (error) {
+    console.error("Delivered Error:", error);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
 };
 
 // Delivery Dashboard Stats
