@@ -10,6 +10,8 @@ export const createOrder = async (req, res) => {
       subtotal,
       deliveryCharge,
       tax,
+      discount,
+      couponCode,
       totalAmount,
     } = req.body;
 
@@ -22,30 +24,27 @@ export const createOrder = async (req, res) => {
     }
 
     // Generate Order Number
-    const orderNumber =
-      "ORD" +
-      Date.now().toString().slice(-8);
+    const orderNumber = "ORD" + Date.now().toString().slice(-8);
 
     // Create Order
     const order = await Order.create({
       orderNumber,
-
       customer: req.user._id,
-
-      items,
-
-      deliveryAddress,
-
-      paymentMethod,
-
+      items: items.map((item) => ({
+        product: item.product || "",
+        name: item.name,
+        image: item.image || "",
+        quantity: item.quantity,
+        price: item.price,
+      })),
+      deliveryAddress: deliveryAddress || {},
+      paymentMethod: paymentMethod || "COD",
       subtotal,
-
-      deliveryCharge,
-
-      tax,
-
+      deliveryCharge: deliveryCharge || 0,
+      tax: tax || 0,
+      discount: discount || 0,
+      couponCode: couponCode || "",
       totalAmount,
-
       placedAt: new Date(),
     });
 
@@ -55,11 +54,12 @@ export const createOrder = async (req, res) => {
       order,
     });
   } catch (error) {
-    console.error("Create Order Error:", error);
+    console.error("Create Order Error:", error.message);
+    console.error("Full error:", error);
 
     res.status(500).json({
       success: false,
-      message: "Server Error",
+      message: error.message || "Server Error",
     });
   }
 };
