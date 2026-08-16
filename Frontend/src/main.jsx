@@ -20,7 +20,7 @@ import Checkout from "./pages/Checkout/Checkout";
 import OrderSuccess from "./pages/OrderSuccess/OrderSuccess";
 import { TrackOrder } from "./pages/TrackOrder/TrackOrder";
 import Login from "./pages/Login/Login";
-import { Register } from "./pages/register/Register";
+import Register from "./pages/register/Register";
 import { Contact } from "./pages/Contact/Contact";
 
 // Company Pages
