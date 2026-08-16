@@ -11,6 +11,7 @@ const primary = "#B4232C";
 const gold = "#C9A227";
 const deep = "#24140F";
 const cream = "#FAF7F2";
+const beige = "#F5F0E8";
 const text = "#30231E";
 
 const statusColors = {
