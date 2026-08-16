@@ -24,7 +24,7 @@ const myOrdersStyles = `
 .mo-page {
   position: relative; overflow: hidden;
   padding: 32px 16px 80px; min-height: 100vh;
-  background: linear-gradient(180deg, #0a0a0a 0%, #0f0808 40%, #0a0a0a 100%);
+  background: linear-gradient(180deg, #FAF7F2 0%, #FAF7F2 40%, #FAF7F2 100%);
 }
 @media (min-width: 768px) { .mo-page { padding: 48px 24px 80px; } }
 @media (min-width: 1024px) { .mo-page { padding: 64px 32px 80px; } }
@@ -33,14 +33,14 @@ const myOrdersStyles = `
   position: fixed; border-radius: 50%;
   width: 500px; height: 500px;
   top: -100px; right: -150px;
-  background: radial-gradient(circle, rgba(13,148,136,0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(180,35,44,0.08) 0%, transparent 70%);
   filter: blur(80px); pointer-events: none;
 }
 .mo-glow-2 {
   position: fixed; border-radius: 50%;
   width: 400px; height: 400px;
   bottom: -100px; left: -150px;
-  background: radial-gradient(circle, rgba(245,158,11,0.06) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(201,162,39,0.06) 0%, transparent 70%);
   filter: blur(80px); pointer-events: none;
 }
 
@@ -55,14 +55,14 @@ const myOrdersStyles = `
 .mo-logo-icon {
   width: 44px; height: 44px; border-radius: 14px;
   display: flex; align-items: center; justify-content: center;
-  background: linear-gradient(135deg, #0d9488, #14b8a6);
-  box-shadow: 0 6px 20px rgba(13,148,136,0.4);
+  background: linear-gradient(135deg, #B4232C, #D4354A);
+  box-shadow: 0 6px 20px rgba(180,35,44,0.4);
   position: relative;
 }
 .mo-logo-icon::after {
   content: ''; position: absolute; inset: -2px;
   border-radius: 16px;
-  background: linear-gradient(135deg, #0d9488, #14b8a6);
+  background: linear-gradient(135deg, #B4232C, #D4354A);
   z-index: -1; filter: blur(10px); opacity: 0.4;
 }
 .mo-header-tag {
@@ -70,14 +70,14 @@ const myOrdersStyles = `
   font-size: 0.7rem; font-weight: 700;
   text-transform: uppercase; letter-spacing: 0.08em;
   padding: 6px 14px; border-radius: 999px;
-  background: rgba(245,158,11,0.1);
-  color: #f59e0b;
-  border: 1px solid rgba(245,158,11,0.25);
+  background: rgba(201,162,39,0.1);
+  color: #C9A227;
+  border: 1px solid rgba(201,162,39,0.25);
 }
 .mo-title {
   font-size: clamp(2rem, 5vw, 2.75rem);
   font-weight: 900; letter-spacing: -0.03em; line-height: 1.1;
-  background: linear-gradient(135deg, #ffffff 0%, #f5e6e6 50%, #f59e0b 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #f5e6e6 50%, #C9A227 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-size: 200% 200%;
   animation: moShimmer 4s ease-in-out infinite;
@@ -147,9 +147,9 @@ const myOrdersStyles = `
 }
 .mo-filter-pill:hover { color: #fff; }
 .mo-filter-pill.active {
-  background: linear-gradient(135deg, #0d9488, #14b8a6);
+  background: linear-gradient(135deg, #B4232C, #D4354A);
   color: white;
-  box-shadow: 0 4px 15px rgba(13,148,136,0.4);
+  box-shadow: 0 4px 15px rgba(180,35,44,0.4);
 }
 
 .mo-result-count {
@@ -172,8 +172,8 @@ const myOrdersStyles = `
   left: 11px; top: 8px; bottom: 0;
   width: 2px;
   background: linear-gradient(180deg, 
-    rgba(13,148,136,0.6) 0%, 
-    rgba(245,158,11,0.3) 40%, 
+    rgba(180,35,44,0.6) 0%, 
+    rgba(201,162,39,0.3) 40%, 
     rgba(255,255,255,0.06) 100%
   );
 }
@@ -188,9 +188,9 @@ const myOrdersStyles = `
   margin-bottom: 20px; margin-left: -4px;
   font-size: 0.75rem; font-weight: 700;
   text-transform: uppercase; letter-spacing: 0.06em;
-  background: rgba(13,148,136,0.12);
-  color: #0d9488;
-  border: 1px solid rgba(13,148,136,0.2);
+  background: rgba(180,35,44,0.12);
+  color: #B4232C;
+  border: 1px solid rgba(180,35,44,0.2);
   z-index: 2;
 }
 
@@ -229,7 +229,7 @@ const myOrdersStyles = `
 }
 .mo-node-card:hover {
   transform: translateX(4px);
-  border-color: rgba(13,148,136,0.2);
+  border-color: rgba(180,35,44,0.2);
   box-shadow: 0 12px 40px rgba(0,0,0,0.4);
 }
 
@@ -279,7 +279,7 @@ const myOrdersStyles = `
 
 .mo-node-amount {
   font-size: 1.25rem; font-weight: 900;
-  color: #f59e0b;
+  color: #C9A227;
   margin-bottom: 16px;
   letter-spacing: -0.02em;
 }
@@ -319,12 +319,12 @@ const myOrdersStyles = `
 }
 .mo-item-row:hover {
   background: rgba(255,255,255,0.04);
-  border-color: rgba(245,158,11,0.15);
+  border-color: rgba(201,162,39,0.15);
 }
 .mo-item-img {
   width: 44px; height: 44px; border-radius: 8px;
   object-fit: cover; flex-shrink: 0;
-  border: 1px solid rgba(245,158,11,0.2);
+  border: 1px solid rgba(201,162,39,0.2);
 }
 .mo-item-info { flex: 1; min-width: 0; }
 .mo-item-name {
@@ -339,7 +339,7 @@ const myOrdersStyles = `
 }
 .mo-item-price {
   font-weight: 800; font-size: 0.85rem;
-  color: #f59e0b; margin: 0;
+  color: #C9A227; margin: 0;
 }
 
 /* Node action bar */
@@ -366,14 +366,14 @@ const myOrdersStyles = `
   position: relative; overflow: hidden;
   display: flex; align-items: center; justify-content: center;
   min-height: 100vh; padding: 32px 16px;
-  background: linear-gradient(180deg, #0a0a0a 0%, #0f0808 40%, #0a0a0a 100%);
+  background: linear-gradient(180deg, #FAF7F2 0%, #FAF7F2 40%, #FAF7F2 100%);
 }
 .mo-empty-glow {
   position: absolute; border-radius: 50%;
   width: 400px; height: 400px;
   top: 10%; left: 50%;
   transform: translateX(-50%);
-  background: radial-gradient(circle, rgba(13,148,136,0.08), transparent 70%);
+  background: radial-gradient(circle, rgba(180,35,44,0.08), transparent 70%);
   filter: blur(60px); pointer-events: none;
 }
 .mo-empty-box {
@@ -385,14 +385,14 @@ const myOrdersStyles = `
   display: inline-flex; align-items: center; justify-content: center;
   width: 110px; height: 110px; border-radius: 28px;
   margin-bottom: 28px;
-  background: linear-gradient(135deg, rgba(13,148,136,0.12), rgba(245,158,11,0.06));
-  border: 1px solid rgba(13,148,136,0.2);
+  background: linear-gradient(135deg, rgba(180,35,44,0.12), rgba(201,162,39,0.06));
+  border: 1px solid rgba(180,35,44,0.2);
   position: relative;
 }
 .mo-empty-icon::before {
   content: ''; position: absolute; inset: -3px;
   border-radius: 30px;
-  background: linear-gradient(135deg, rgba(13,148,136,0.3), rgba(245,158,11,0.15));
+  background: linear-gradient(135deg, rgba(180,35,44,0.3), rgba(201,162,39,0.15));
   z-index: -1; filter: blur(15px); opacity: 0.5;
 }
 .mo-empty-title {
@@ -412,15 +412,15 @@ const myOrdersStyles = `
   min-height: 100vh;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center; gap: 16px;
-  background: linear-gradient(180deg, #0a0a0a 0%, #0f0808 40%, #0a0a0a 100%);
+  background: linear-gradient(180deg, #FAF7F2 0%, #FAF7F2 40%, #FAF7F2 100%);
   color: rgba(255,255,255,0.6);
   font-size: 0.95rem; font-weight: 600;
 }
 .mo-loader {
   width: 48px; height: 48px; border-radius: 50%;
-  border: 3px solid rgba(13,148,136,0.15);
-  border-top-color: #0d9488;
-  border-right-color: #f59e0b;
+  border: 3px solid rgba(180,35,44,0.15);
+  border-top-color: #B4232C;
+  border-right-color: #C9A227;
   animation: moSpin 1s linear infinite;
 }
 @keyframes moSpin { to { transform: rotate(360deg); } }
@@ -440,7 +440,7 @@ const statusConfig = {
   "Out for Delivery": { color: "#8b5cf6", label: "On the Way", bg: "rgba(139,92,246,0.12)", border: "rgba(139,92,246,0.3)" },
   Delivered: { color: "#10b981", label: "Delivered", bg: "rgba(16,185,129,0.12)", border: "rgba(16,185,129,0.3)" },
   Waiting: { color: "#64748b", label: "Waiting", bg: "rgba(100,116,139,0.12)", border: "rgba(100,116,139,0.3)" },
-  Pending: { color: "#f59e0b", label: "Pending", bg: "rgba(245,158,11,0.12)", border: "rgba(245,158,11,0.3)" },
+  Pending: { color: "#C9A227", label: "Pending", bg: "rgba(201,162,39,0.12)", border: "rgba(201,162,39,0.3)" },
   Confirmed: { color: "#3b82f6", label: "Confirmed", bg: "rgba(59,130,246,0.12)", border: "rgba(59,130,246,0.3)" },
   Processing: { color: "#fbbf24", label: "Preparing", bg: "rgba(251,191,36,0.12)", border: "rgba(251,191,36,0.3)" },
   Shipped: { color: "#8b5cf6", label: "On the Way", bg: "rgba(139,92,246,0.12)", border: "rgba(139,92,246,0.3)" },
@@ -524,7 +524,7 @@ export const MyOrders = () => {
           <div className="mo-empty-glow" />
           <div className="mo-empty-box ">
             <div className="mo-empty-icon">
-              <Package size={44} style={{ color: "#0d9488" }} />
+              <Package size={44} style={{ color: "#B4232C" }} />
             </div>
             <h1 className="mo-empty-title">No Orders Yet</h1>
             <p className="mo-empty-subtitle">
@@ -534,9 +534,9 @@ export const MyOrders = () => {
               <button className="mo-cta-btn" style={{
                 display: "inline-flex", alignItems: "center", gap: 8,
                 padding: "14px 28px", borderRadius: 12, border: "none",
-                background: "linear-gradient(135deg, #0d9488, #14b8a6)",
+                background: "linear-gradient(135deg, #B4232C, #D4354A)",
                 color: "white", fontWeight: 700, fontSize: "0.9rem",
-                cursor: "pointer", boxShadow: "0 4px 20px rgba(13,148,136,0.4)",
+                cursor: "pointer", boxShadow: "0 4px 20px rgba(180,35,44,0.4)",
                 transition: "all 0.3s ease",
               }}>
                 <ShoppingBag size={18} />
@@ -577,7 +577,7 @@ export const MyOrders = () => {
           {/* Stats */}
           <div className="mo-stats">
             {[
-              { label: "Total Orders", value: orders.length, color: "#f59e0b", icon: Package },
+              { label: "Total Orders", value: orders.length, color: "#C9A227", icon: Package },
               { label: "Active", value: activeCount, color: "#3b82f6", icon: TrendingUp },
               { label: "Completed", value: completedCount, color: "#10b981", icon: CircleCheckBig },
             ].map((stat) => (

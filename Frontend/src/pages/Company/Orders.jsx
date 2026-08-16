@@ -35,7 +35,7 @@ const companyOrdersStyles = `
   position: fixed; border-radius: 50%;
   width: 500px; height: 500px;
   top: -100px; left: -150px;
-  background: radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(100,31,40,0.08) 0%, transparent 70%);
   filter: blur(80px); pointer-events: none;
 }
 .co-glow-2 {
@@ -57,17 +57,17 @@ const companyOrdersStyles = `
 .co-logo-icon {
   width: 44px; height: 44px; border-radius: 14px;
   display: flex; align-items: center; justify-content: center;
-  background: linear-gradient(135deg, #3b82f6, #60a5fa);
-  box-shadow: 0 6px 20px rgba(59,130,246,0.4);
+  background: linear-gradient(135deg, #641F28, #60a5fa);
+  box-shadow: 0 6px 20px rgba(100,31,40,0.4);
 }
 .co-header-tag {
   display: inline-flex; align-items: center; gap: 6px;
   font-size: 0.7rem; font-weight: 700;
   text-transform: uppercase; letter-spacing: 0.08em;
   padding: 6px 14px; border-radius: 999px;
-  background: rgba(59,130,246,0.1);
-  color: #3b82f6;
-  border: 1px solid rgba(59,130,246,0.25);
+  background: rgba(100,31,40,0.1);
+  color: #641F28;
+  border: 1px solid rgba(100,31,40,0.25);
 }
 .co-title {
   font-size: clamp(2rem, 5vw, 2.75rem);
@@ -102,9 +102,9 @@ const companyOrdersStyles = `
   border-color: rgba(255,255,255,0.12);
 }
 .co-tab.active {
-  background: linear-gradient(135deg, #3b82f6, #60a5fa);
+  background: linear-gradient(135deg, #641F28, #60a5fa);
   color: white; border: none;
-  box-shadow: 0 4px 15px rgba(59,130,246,0.4);
+  box-shadow: 0 4px 15px rgba(100,31,40,0.4);
 }
 .co-tab-count {
   font-size: 0.7rem; font-weight: 800;
@@ -254,15 +254,15 @@ const companyOrdersStyles = `
   display: flex; align-items: center; justify-content: center; gap: 6px;
   padding: 9px 14px; border-radius: 10px;
   font-size: 0.75rem; font-weight: 600;
-  background: rgba(59,130,246,0.1);
-  border: 1px solid rgba(59,130,246,0.25);
+  background: rgba(100,31,40,0.1);
+  border: 1px solid rgba(100,31,40,0.25);
   color: #60a5fa;
   text-decoration: none;
   transition: all 0.3s ease;
   margin-bottom: 14px;
 }
 .co-map-link:hover {
-  background: rgba(59,130,246,0.18);
+  background: rgba(100,31,40,0.18);
   color: #93bbfc;
 }
 
@@ -291,8 +291,8 @@ const companyOrdersStyles = `
   width: 80px; height: 80px; border-radius: 20px;
   display: flex; align-items: center; justify-content: center;
   margin: 0 auto 20px;
-  background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(245,158,11,0.05));
-  border: 1px solid rgba(59,130,246,0.2);
+  background: linear-gradient(135deg, rgba(100,31,40,0.1), rgba(245,158,11,0.05));
+  border: 1px solid rgba(100,31,40,0.2);
 }
 .co-empty-title {
   font-size: 1.5rem; font-weight: 900;
@@ -311,8 +311,8 @@ const companyOrdersStyles = `
 }
 .co-loader {
   width: 48px; height: 48px; border-radius: 50%;
-  border: 3px solid rgba(59,130,246,0.15);
-  border-top-color: #3b82f6;
+  border: 3px solid rgba(100,31,40,0.15);
+  border-top-color: #641F28;
   border-right-color: #f59e0b;
   animation: coSpin 1s linear infinite;
 }
@@ -330,14 +330,14 @@ const statusConfig = {
     icon: AlertCircle,
     actionLabel: "Accept Order",
     actionIcon: CheckCircle2,
-    actionColor: "#3b82f6",
-    actionGradient: "linear-gradient(135deg, #3b82f6, #60a5fa)",
+    actionColor: "#641F28",
+    actionGradient: "linear-gradient(135deg, #641F28, #60a5fa)",
   },
   Accepted: {
-    color: "#3b82f6",
+    color: "#641F28",
     label: "Accepted",
-    bg: "rgba(59,130,246,0.12)",
-    border: "rgba(59,130,246,0.3)",
+    bg: "rgba(100,31,40,0.12)",
+    border: "rgba(100,31,40,0.3)",
     icon: CheckCircle2,
     actionLabel: "Start Preparing",
     actionIcon: ChefHat,
@@ -363,8 +363,8 @@ const statusConfig = {
     icon: PackageCheck,
     actionLabel: "Packed ✅",
     actionIcon: PackageCheck,
-    actionColor: "#64748b",
-    actionGradient: "linear-gradient(135deg, #64748b, #94a3b8)",
+    actionColor: "#8B7355",
+    actionGradient: "linear-gradient(135deg, #8B7355, #94a3b8)",
   },
 };
 
@@ -468,7 +468,7 @@ const Orders = () => {
           {orders.length === 0 ? (
             <div className="co-empty">
               <div className="co-empty-icon">
-                <Package size={36} style={{ color: "#3b82f6" }} />
+                <Package size={36} style={{ color: "#641F28" }} />
               </div>
               <h2 className="co-empty-title">No {status} Orders</h2>
               <p className="co-empty-subtitle">

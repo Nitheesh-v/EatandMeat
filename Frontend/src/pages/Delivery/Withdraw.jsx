@@ -98,8 +98,8 @@ const Withdraw = () => {
       title: "Total Earned",
       value: `₹${wallet?.totalEarned || 0}`,
       icon: TrendingUp,
-      accent: "#9333ea",
-      bg: "rgba(147,51,234,0.08)",
+      accent: "#5B3A57",
+      bg: "rgba(91,58,87,0.08)",
     },
     {
       title: "Available Balance",
@@ -129,10 +129,10 @@ const Withdraw = () => {
       {/* Header */}
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
-          <h1 className="text-2xl font-extrabold" style={{ color: "#1e293b" }}>
+          <h1 className="text-2xl font-extrabold" style={{ color: "#352832" }}>
             Wallet & Withdraw
           </h1>
-          <p className="text-sm mt-1" style={{ color: "#94a3b8" }}>
+          <p className="text-sm mt-1" style={{ color: "#8B7585" }}>
             Manage your earnings and withdrawals
           </p>
         </div>
@@ -144,12 +144,12 @@ const Withdraw = () => {
           style={{
             background:
               wallet?.availableBalance > 0
-                ? "linear-gradient(135deg, #9333ea, #ec4899)"
+                ? "linear-gradient(135deg, #5B3A57, #D9829B)"
                 : "rgba(255,255,255,0.05)",
-            color: wallet?.availableBalance > 0 ? "white" : "#94a3b8",
+            color: wallet?.availableBalance > 0 ? "white" : "#8B7585",
             boxShadow:
               wallet?.availableBalance > 0
-                ? "0 4px 20px rgba(147,51,234,0.35)"
+                ? "0 4px 20px rgba(91,58,87,0.35)"
                 : "none",
             border:
               wallet?.availableBalance > 0
@@ -170,8 +170,8 @@ const Withdraw = () => {
             className="relative rounded-2xl overflow-hidden transition-all duration-500 group"
             style={{
               background:
-                "linear-gradient(135deg, rgba(147,51,234,0.03) 0%, rgba(147,51,234,0.01) 100%)",
-              border: "1px solid rgba(147,51,234,0.1)",
+                "linear-gradient(135deg, rgba(91,58,87,0.03) 0%, rgba(91,58,87,0.01) 100%)",
+              border: "1px solid rgba(91,58,87,0.1)",
               backdropFilter: "blur(20px)",
               animation: `fadeSlideUp 0.5s ease ${i * 0.1}s both`,
             }}
@@ -187,10 +187,10 @@ const Withdraw = () => {
             <div className="h-1" style={{ background: card.gradient }} />
             <div className="p-6 flex items-center justify-between">
               <div>
-                <p className="text-xs font-medium mb-2" style={{ color: "#94a3b8" }}>
+                <p className="text-xs font-medium mb-2" style={{ color: "#8B7585" }}>
                   {card.title}
                 </p>
-                <h2 className="text-2xl font-extrabold" style={{ color: "#1e293b" }}>
+                <h2 className="text-2xl font-extrabold" style={{ color: "#352832" }}>
                   {card.value}
                 </h2>
               </div>
@@ -214,20 +214,20 @@ const Withdraw = () => {
           className="rounded-2xl overflow-hidden"
           style={{
             background:
-              "linear-gradient(135deg, rgba(147,51,234,0.03) 0%, rgba(147,51,234,0.01) 100%)",
-            border: "1px solid rgba(147,51,234,0.15)",
+              "linear-gradient(135deg, rgba(91,58,87,0.03) 0%, rgba(91,58,87,0.01) 100%)",
+            border: "1px solid rgba(91,58,87,0.15)",
             backdropFilter: "blur(20px)",
             animation: "fadeSlideUp 0.3s ease",
           }}
         >
-          <div className="h-1" style={{ background: "linear-gradient(90deg, #9333ea, #ec4899)" }} />
+          <div className="h-1" style={{ background: "linear-gradient(90deg, #5B3A57, #D9829B)" }} />
           <form onSubmit={handleSubmit} className="p-6 space-y-5">
-            <h2 className="font-extrabold text-lg" style={{ color: "#1e293b" }}>
+            <h2 className="font-extrabold text-lg" style={{ color: "#352832" }}>
               Request Withdrawal
             </h2>
 
             <div>
-              <label className="block text-xs font-semibold mb-2" style={{ color: "#64748b" }}>
+              <label className="block text-xs font-semibold mb-2" style={{ color: "#6B5A65" }}>
                 Amount (₹) — Max: ₹{wallet?.availableBalance || 0}
               </label>
               <input
@@ -240,15 +240,15 @@ const Withdraw = () => {
                 required
                 className="w-full rounded-xl text-sm font-medium transition-all duration-300"
                 style={{
-                  background: "rgba(147,51,234,0.03)",
+                  background: "rgba(91,58,87,0.03)",
                   border: "1px solid rgba(0,0,0,0.08)",
-                  color: "#1e293b",
+                  color: "#352832",
                   padding: "12px 16px",
                   outline: "none",
                 }}
                 onFocus={(e) => {
-                  e.currentTarget.style.borderColor = "#9333ea";
-                  e.currentTarget.style.boxShadow = "0 0 0 3px rgba(147,51,234,0.15)";
+                  e.currentTarget.style.borderColor = "#5B3A57";
+                  e.currentTarget.style.boxShadow = "0 0 0 3px rgba(91,58,87,0.15)";
                 }}
                 onBlur={(e) => {
                   e.currentTarget.style.borderColor = "rgba(0,0,0,0.08)";
@@ -258,7 +258,7 @@ const Withdraw = () => {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold mb-2" style={{ color: "#64748b" }}>
+              <label className="block text-xs font-semibold mb-2" style={{ color: "#6B5A65" }}>
                 Withdrawal Method
               </label>
               <div className="flex gap-3">
@@ -271,15 +271,15 @@ const Withdraw = () => {
                     style={{
                       background:
                         form.method === m
-                          ? "linear-gradient(135deg, #9333ea, #ec4899)"
-                          : "rgba(147,51,234,0.03)",
-                      color: form.method === m ? "white" : "#64748b",
+                          ? "linear-gradient(135deg, #5B3A57, #D9829B)"
+                          : "rgba(91,58,87,0.03)",
+                      color: form.method === m ? "white" : "#6B5A65",
                       border:
                         form.method === m
                           ? "none"
                           : "1px solid rgba(0,0,0,0.08)",
                       boxShadow:
-                        form.method === m ? "0 4px 15px rgba(147,51,234,0.3)" : "none",
+                        form.method === m ? "0 4px 15px rgba(91,58,87,0.3)" : "none",
                     }}
                   >
                     {m}
@@ -290,7 +290,7 @@ const Withdraw = () => {
 
             {form.method === "UPI" && (
               <div>
-                <label className="block text-xs font-semibold mb-2" style={{ color: "#64748b" }}>
+                <label className="block text-xs font-semibold mb-2" style={{ color: "#6B5A65" }}>
                   UPI ID
                 </label>
                 <input
@@ -301,15 +301,15 @@ const Withdraw = () => {
                   required
                   className="w-full rounded-xl text-sm font-medium transition-all duration-300"
                   style={{
-                    background: "rgba(147,51,234,0.03)",
+                    background: "rgba(91,58,87,0.03)",
                     border: "1px solid rgba(0,0,0,0.08)",
-                    color: "#1e293b",
+                    color: "#352832",
                     padding: "12px 16px",
                     outline: "none",
                   }}
                   onFocus={(e) => {
-                    e.currentTarget.style.borderColor = "#9333ea";
-                    e.currentTarget.style.boxShadow = "0 0 0 3px rgba(147,51,234,0.15)";
+                    e.currentTarget.style.borderColor = "#5B3A57";
+                    e.currentTarget.style.boxShadow = "0 0 0 3px rgba(91,58,87,0.15)";
                   }}
                   onBlur={(e) => {
                     e.currentTarget.style.borderColor = "rgba(0,0,0,0.08)";
@@ -325,9 +325,9 @@ const Withdraw = () => {
                 onClick={() => setShowForm(false)}
                 className="flex-1 py-3 rounded-xl text-sm font-bold cursor-pointer"
                 style={{
-                  background: "rgba(147,51,234,0.03)",
+                  background: "rgba(91,58,87,0.03)",
                   border: "1px solid rgba(0,0,0,0.08)",
-                  color: "#64748b",
+                  color: "#6B5A65",
                 }}
               >
                 Cancel
@@ -337,9 +337,9 @@ const Withdraw = () => {
                 disabled={submitting}
                 className="flex-1 py-3 rounded-xl text-sm font-bold cursor-pointer flex items-center justify-center gap-2"
                 style={{
-                  background: "linear-gradient(135deg, #9333ea, #ec4899)",
+                  background: "linear-gradient(135deg, #5B3A57, #D9829B)",
                   color: "white",
-                  boxShadow: "0 4px 15px rgba(147,51,234,0.35)",
+                  boxShadow: "0 4px 15px rgba(91,58,87,0.35)",
                 }}
               >
                 <Send size={16} />
@@ -355,23 +355,23 @@ const Withdraw = () => {
         className="rounded-2xl overflow-hidden"
         style={{
           background:
-            "linear-gradient(135deg, rgba(147,51,234,0.03) 0%, rgba(147,51,234,0.01) 100%)",
-          border: "1px solid rgba(147,51,234,0.1)",
+            "linear-gradient(135deg, rgba(91,58,87,0.03) 0%, rgba(91,58,87,0.01) 100%)",
+          border: "1px solid rgba(91,58,87,0.1)",
           backdropFilter: "blur(20px)",
         }}
       >
-        <div className="h-1" style={{ background: "linear-gradient(90deg, #9333ea, #ec4899)" }} />
+        <div className="h-1" style={{ background: "linear-gradient(90deg, #5B3A57, #D9829B)" }} />
         <div className="p-5" style={{ borderBottom: "1px solid rgba(0,0,0,0.06)" }}>
-          <h2 className="font-extrabold text-xl" style={{ color: "#1e293b" }}>
+          <h2 className="font-extrabold text-xl" style={{ color: "#352832" }}>
             Withdrawal History
           </h2>
-          <p className="text-xs mt-1" style={{ color: "#94a3b8" }}>
+          <p className="text-xs mt-1" style={{ color: "#8B7585" }}>
             Your withdrawal requests and their status
           </p>
         </div>
 
         {withdrawals.length === 0 ? (
-          <p className="text-center py-8" style={{ color: "#94a3b8" }}>
+          <p className="text-center py-8" style={{ color: "#8B7585" }}>
             No withdrawals yet
           </p>
         ) : (
@@ -383,7 +383,7 @@ const Withdraw = () => {
                     <th
                       key={h}
                       className="p-4 text-left text-xs font-bold uppercase tracking-wider"
-                      style={{ color: "#94a3b8" }}
+                      style={{ color: "#8B7585" }}
                     >
                       {h}
                     </th>
@@ -397,9 +397,9 @@ const Withdraw = () => {
                     <tr
                       key={w._id}
                       className="transition-all duration-300"
-                      style={{ borderTop: "1px solid rgba(147,51,234,0.03)" }}
+                      style={{ borderTop: "1px solid rgba(91,58,87,0.03)" }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.background = "rgba(147,51,234,0.03)";
+                        e.currentTarget.style.background = "rgba(91,58,87,0.03)";
                       }}
                       onMouseLeave={(e) => {
                         e.currentTarget.style.background = "transparent";
@@ -409,7 +409,7 @@ const Withdraw = () => {
                         {new Date(w.createdAt).toLocaleDateString("en-IN")}
                       </td>
                       <td className="p-4">
-                        <span className="font-extrabold text-sm" style={{ color: "#a78bfa" }}>
+                        <span className="font-extrabold text-sm" style={{ color: "#7B5A77" }}>
                           ₹{w.amount}
                         </span>
                       </td>
@@ -417,9 +417,9 @@ const Withdraw = () => {
                         <span
                           className="text-xs font-bold px-2.5 py-1 rounded-full"
                           style={{
-                            background: w.method === "UPI" ? "rgba(59,130,246,0.12)" : "rgba(147,51,234,0.12)",
-                            color: w.method === "UPI" ? "#60a5fa" : "#a78bfa",
-                            border: `1px solid ${w.method === "UPI" ? "rgba(59,130,246,0.25)" : "rgba(147,51,234,0.25)"}`,
+                            background: w.method === "UPI" ? "rgba(59,130,246,0.12)" : "rgba(91,58,87,0.12)",
+                            color: w.method === "UPI" ? "#60a5fa" : "#7B5A77",
+                            border: `1px solid ${w.method === "UPI" ? "rgba(59,130,246,0.25)" : "rgba(91,58,87,0.25)"}`,
                           }}
                         >
                           {w.method}
@@ -440,7 +440,7 @@ const Withdraw = () => {
                           {w.status}
                         </span>
                       </td>
-                      <td className="p-4 text-xs" style={{ color: "#94a3b8" }}>
+                      <td className="p-4 text-xs" style={{ color: "#8B7585" }}>
                         {w.adminNote || "—"}
                       </td>
                     </tr>

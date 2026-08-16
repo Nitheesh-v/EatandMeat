@@ -35,18 +35,18 @@ const aiStyles = `
   padding: 8px 16px; border-radius: 10px;
   font-size: 0.8rem; font-weight: 700;
   cursor: pointer; transition: all 0.25s ease;
-  background: rgba(255,255,255,0.04);
-  color: rgba(255,255,255,0.5);
+  background: rgba(0,0,0,0.02);
+  color: #64748B;
   border: 1px solid rgba(255,255,255,0.08);
 }
 .ai-filter-btn:hover { border-color: rgba(212,175,55,0.3); color: #fff; }
 .ai-filter-btn.active {
-  background: linear-gradient(135deg, #d4af37, #d4213c);
+  background: linear-gradient(135deg, #2563EB, #2563EB);
   border-color: transparent; color: white;
 }
 .ai-table-wrap {
-  background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
-  border: 1px solid rgba(255,255,255,0.06);
+  background: linear-gradient(135deg, rgba(0,0,0,0.02), rgba(0,0,0,0.01));
+  border: 1px solid #E2E8F0;
   border-radius: 14px;
   overflow: hidden;
   overflow-x: auto;
@@ -54,10 +54,10 @@ const aiStyles = `
 .ai-tbl { width: 100%; border-collapse: collapse; min-width: 700px; }
 .ai-tbl th {
   text-align: left; padding: 14px 16px; font-size: 0.68rem; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.4);
-  background: rgba(255,255,255,0.02); border-bottom: 1px solid rgba(255,255,255,0.06);
+  text-transform: uppercase; letter-spacing: 0.5px; color: #94A3B8;
+  background: #F8FAFC; border-bottom: 1px solid #E2E8F0;
 }
-.ai-tbl td { padding: 12px 16px; font-size: 0.88rem; color: rgba(255,255,255,0.8); border-bottom: 1px solid rgba(255,255,255,0.04); }
+.ai-tbl td { padding: 12px 16px; font-size: 0.88rem; color: #172033; border-bottom: 1px solid rgba(0,0,0,0.02); }
 .ai-tbl tbody tr:hover { background: rgba(212,175,55,0.04); }
 .ai-tbl tbody tr:last-child td { border-bottom: none; }
 .ai-badge {
@@ -69,23 +69,23 @@ const aiStyles = `
 .ai-badge.low-stock { background: rgba(234,179,8,0.12); color: #eab308; border: 1px solid rgba(234,179,8,0.25); }
 .ai-badge.out-of-stock { background: rgba(226,55,68,0.12); color: #e23744; border: 1px solid rgba(226,55,68,0.25); }
 .ai-stock-input {
-  width: 80px; background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.1);
+  width: 80px; background: rgba(0,0,0,0.02);
+  border: 1px solid #E2E8F0;
   border-radius: 8px; padding: 6px 10px;
   color: #fff; font-size: 0.85rem; font-weight: 600;
   text-align: center;
 }
-.ai-stock-input:focus { outline: none; border-color: #d4af37; }
+.ai-stock-input:focus { outline: none; border-color: #2563EB; }
 .ai-save-stock {
   padding: 6px 12px; border-radius: 8px;
-  background: linear-gradient(135deg, #d4af37, #d4213c);
+  background: linear-gradient(135deg, #2563EB, #2563EB);
   border: none; color: white;
   font-size: 0.75rem; font-weight: 700;
   cursor: pointer;
 }
 .ai-save-stock:hover { opacity: 0.9; }
-.ai-loading { display: flex; align-items: center; justify-content: center; min-height: 200px; color: rgba(255,255,255,0.5); }
-.ai-empty { text-align: center; padding: 48px 20px; color: rgba(255,255,255,0.4); }
+.ai-loading { display: flex; align-items: center; justify-content: center; min-height: 200px; color: #64748B; }
+.ai-empty { text-align: center; padding: 48px 20px; color: #94A3B8; }
 .ai-alert-bar {
   display: flex; align-items: center; gap: 10px;
   padding: 12px 18px; border-radius: 12px;
@@ -234,7 +234,7 @@ const AdminInventory = () => {
                       : "In Stock");
                   return (
                     <tr key={p._id}>
-                      <td style={{ fontWeight: 600, color: "#fff" }}>
+                      <td style={{ fontWeight: 600, color: "#172033" }}>
                         {p.name}
                       </td>
                       <td>

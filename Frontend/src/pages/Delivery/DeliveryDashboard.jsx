@@ -49,17 +49,17 @@ export const DeliveryDashboard = () => {
       title: "Available Orders",
       value: stats?.availableOrders || 0,
       icon: Package,
-      gradient: "linear-gradient(135deg, #9333ea, #a855f7)",
-      bg: "rgba(147,51,234,0.08)",
-      accent: "#9333ea",
+      gradient: "linear-gradient(135deg, #5B3A57, #7B5A77)",
+      bg: "rgba(91,58,87,0.08)",
+      accent: "#5B3A57",
     },
     {
       title: "Active Delivery",
       value: stats?.activeDeliveries || 0,
       icon: Bike,
-      gradient: "linear-gradient(135deg, #ec4899, #f472b6)",
-      bg: "rgba(236,72,153,0.08)",
-      accent: "#ec4899",
+      gradient: "linear-gradient(135deg, #D9829B, #D9829B)",
+      bg: "rgba(217,130,155,0.08)",
+      accent: "#D9829B",
     },
     {
       title: "Delivered Today",
@@ -85,11 +85,11 @@ export const DeliveryDashboard = () => {
       <div>
         <h1
           className="text-2xl font-extrabold tracking-tight"
-          style={{ color: "#1e293b" }}
+          style={{ color: "#352832" }}
         >
           Hello, {currentUser?.fullName} 👋
         </h1>
-        <p className="text-sm mt-1" style={{ color: "#94a3b8" }}>
+        <p className="text-sm mt-1" style={{ color: "#8B7585" }}>
           Here's your delivery overview for today
         </p>
       </div>
@@ -102,23 +102,23 @@ export const DeliveryDashboard = () => {
             className="rounded-2xl overflow-hidden transition-all duration-300"
             style={{
               background: "#ffffff",
-              border: "1px solid rgba(147,51,234,0.08)",
-              boxShadow: "0 1px 8px rgba(147,51,234,0.04)",
+              border: "1px solid rgba(91,58,87,0.08)",
+              boxShadow: "0 1px 8px rgba(91,58,87,0.04)",
               animation: `fadeSlideUp 0.4s ease ${i * 0.08}s both`,
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = "translateY(-3px)";
-              e.currentTarget.style.boxShadow = "0 8px 25px rgba(147,51,234,0.1)";
+              e.currentTarget.style.boxShadow = "0 8px 25px rgba(91,58,87,0.1)";
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.boxShadow = "0 1px 8px rgba(147,51,234,0.04)";
+              e.currentTarget.style.boxShadow = "0 1px 8px rgba(91,58,87,0.04)";
             }}
           >
             <div className="h-1" style={{ background: card.gradient }} />
             <div className="p-5">
               <div className="flex items-center justify-between mb-3">
-                <p className="text-xs font-semibold" style={{ color: "#94a3b8" }}>
+                <p className="text-xs font-semibold" style={{ color: "#8B7585" }}>
                   {card.title}
                 </p>
                 <div
@@ -128,7 +128,7 @@ export const DeliveryDashboard = () => {
                   <card.icon size={20} style={{ color: card.accent }} />
                 </div>
               </div>
-              <h2 className="text-2xl font-extrabold" style={{ color: "#1e293b" }}>
+              <h2 className="text-2xl font-extrabold" style={{ color: "#352832" }}>
                 {card.value}
               </h2>
             </div>
@@ -141,18 +141,18 @@ export const DeliveryDashboard = () => {
         className="rounded-2xl overflow-hidden"
         style={{
           background: "#ffffff",
-          border: "1px solid rgba(147,51,234,0.08)",
-          boxShadow: "0 1px 8px rgba(147,51,234,0.04)",
+          border: "1px solid rgba(91,58,87,0.08)",
+          boxShadow: "0 1px 8px rgba(91,58,87,0.04)",
         }}
       >
-        <div className="h-1" style={{ background: "linear-gradient(90deg, #9333ea, #ec4899)" }} />
+        <div className="h-1" style={{ background: "linear-gradient(90deg, #5B3A57, #D9829B)" }} />
         <div className="p-5">
-          <h2 className="font-bold text-lg" style={{ color: "#1e293b" }}>
+          <h2 className="font-bold text-lg" style={{ color: "#352832" }}>
             Recent Deliveries
           </h2>
 
           {recentDeliveries.length === 0 ? (
-            <p className="text-center py-6" style={{ color: "#94a3b8" }}>
+            <p className="text-center py-6" style={{ color: "#8B7585" }}>
               No deliveries completed yet
             </p>
           ) : (
@@ -162,31 +162,31 @@ export const DeliveryDashboard = () => {
                   key={order._id}
                   className="flex items-center justify-between p-3 rounded-xl transition-all duration-200"
                   style={{
-                    background: "rgba(147,51,234,0.02)",
-                    border: "1px solid rgba(147,51,234,0.05)",
+                    background: "rgba(91,58,87,0.02)",
+                    border: "1px solid rgba(91,58,87,0.05)",
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.background = "rgba(147,51,234,0.05)";
+                    e.currentTarget.style.background = "rgba(91,58,87,0.05)";
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.background = "rgba(147,51,234,0.02)";
+                    e.currentTarget.style.background = "rgba(91,58,87,0.02)";
                   }}
                 >
                   <div className="flex items-center gap-3">
                     <div
                       className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold"
                       style={{
-                        background: "rgba(147,51,234,0.08)",
-                        color: "#9333ea",
+                        background: "rgba(91,58,87,0.08)",
+                        color: "#5B3A57",
                       }}
                     >
                       {order.orderNumber?.slice(-3) || "000"}
                     </div>
                     <div>
-                      <p className="font-semibold text-sm" style={{ color: "#1e293b" }}>
+                      <p className="font-semibold text-sm" style={{ color: "#352832" }}>
                         {order.customer?.fullName || "Customer"}
                       </p>
-                      <p className="text-[11px]" style={{ color: "#94a3b8" }}>
+                      <p className="text-[11px]" style={{ color: "#8B7585" }}>
                         {order.deliveredAt
                           ? new Date(order.deliveredAt).toLocaleTimeString("en-IN", {
                               hour: "2-digit",

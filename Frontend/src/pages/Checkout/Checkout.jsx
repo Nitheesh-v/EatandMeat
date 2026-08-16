@@ -194,7 +194,7 @@ console.log(cartItems);
       className=" mt-10 relative overflow-hidden px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16"
       style={{
         background:
-          "linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 50%, #0a0a0a 100%)",
+          "#FAF7F2",
         minHeight: "100vh",
       }}
     >
@@ -207,7 +207,7 @@ console.log(cartItems);
           top: "-10%",
           right: "-5%",
           background:
-            "radial-gradient(circle, rgba(13,148,136,0.08) 0%, transparent 70%)",
+            "radial-gradient(circle, rgba(180,35,44,0.08) 0%, transparent 70%)",
           filter: "blur(60px)",
         }}
       />
@@ -219,7 +219,7 @@ console.log(cartItems);
           bottom: "10%",
           left: "-5%",
           background:
-            "radial-gradient(circle, rgba(245,158,11,0.06) 0%, transparent 70%)",
+            "radial-gradient(circle, rgba(201,162,39,0.06) 0%, transparent 70%)",
           filter: "blur(50px)",
         }}
       />
@@ -234,8 +234,8 @@ console.log(cartItems);
             <div
               className="w-10 h-10 rounded-xl flex items-center justify-center"
               style={{
-                background: "linear-gradient(135deg, #0d9488, #14b8a6)",
-                boxShadow: "0 4px 15px rgba(13,148,136,0.4)",
+                background: "linear-gradient(135deg, #B4232C, #D4354A)",
+                boxShadow: "0 4px 15px rgba(180,35,44,0.4)",
               }}
             >
               <Shield size={20} color="white" />
@@ -265,7 +265,7 @@ console.log(cartItems);
             Complete Your{" "}
             <span
               style={{
-                background: "linear-gradient(135deg, #0d9488, #14b8a6)",
+                background: "linear-gradient(135deg, #B4232C, #D4354A)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
               }}
@@ -293,7 +293,7 @@ console.log(cartItems);
                 <div
                   className="h-1"
                   style={{
-                    background: "linear-gradient(90deg, #0d9488, #14b8a6)",
+                    background: "linear-gradient(90deg, #B4232C, #D4354A)",
                   }}
                 />
                 <div className="p-5 sm:p-6">
@@ -303,9 +303,9 @@ console.log(cartItems);
                   >
                     <div
                       className="w-9 h-9 rounded-lg flex items-center justify-center"
-                      style={{ background: "rgba(13,148,136,0.12)" }}
+                      style={{ background: "rgba(180,35,44,0.12)" }}
                     >
-                      <User size={18} style={{ color: "#0d9488" }} />
+                      <User size={18} style={{ color: "#B4232C" }} />
                     </div>
                     Customer Details
                   </h2>
@@ -334,9 +334,9 @@ console.log(cartItems);
                           outline: "none",
                         }}
                         onFocus={(e) => {
-                          e.currentTarget.style.borderColor = "#0d9488";
+                          e.currentTarget.style.borderColor = "#B4232C";
                           e.currentTarget.style.boxShadow =
-                            "0 0 0 3px rgba(13,148,136,0.15)";
+                            "0 0 0 3px rgba(180,35,44,0.15)";
                         }}
                         onBlur={(e) => {
                           e.currentTarget.style.borderColor =
@@ -367,9 +367,9 @@ console.log(cartItems);
                           outline: "none",
                         }}
                         onFocus={(e) => {
-                          e.currentTarget.style.borderColor = "#0d9488";
+                          e.currentTarget.style.borderColor = "#B4232C";
                           e.currentTarget.style.boxShadow =
-                            "0 0 0 3px rgba(13,148,136,0.15)";
+                            "0 0 0 3px rgba(180,35,44,0.15)";
                         }}
                         onBlur={(e) => {
                           e.currentTarget.style.borderColor =
@@ -399,9 +399,9 @@ console.log(cartItems);
                           outline: "none",
                         }}
                         onFocus={(e) => {
-                          e.currentTarget.style.borderColor = "#0d9488";
+                          e.currentTarget.style.borderColor = "#B4232C";
                           e.currentTarget.style.boxShadow =
-                            "0 0 0 3px rgba(13,148,136,0.15)";
+                            "0 0 0 3px rgba(180,35,44,0.15)";
                         }}
                         onBlur={(e) => {
                           e.currentTarget.style.borderColor =
@@ -428,7 +428,7 @@ console.log(cartItems);
                 <div
                   className="h-1"
                   style={{
-                    background: "linear-gradient(90deg, #f59e0b, #f6e3a1)",
+                    background: "linear-gradient(90deg, #C9A227, #f6e3a1)",
                   }}
                 />
                 <div className="p-5 sm:p-6">
@@ -438,9 +438,9 @@ console.log(cartItems);
                   >
                     <div
                       className="w-9 h-9 rounded-lg flex items-center justify-center"
-                      style={{ background: "rgba(245,158,11,0.12)" }}
+                      style={{ background: "rgba(201,162,39,0.12)" }}
                     >
-                      <MapPin size={18} style={{ color: "#f59e0b" }} />
+                      <MapPin size={18} style={{ color: "#C9A227" }} />
                     </div>
                     Delivery Address
                   </h2>
@@ -467,9 +467,9 @@ console.log(cartItems);
                         resize: "none",
                       }}
                       onFocus={(e) => {
-                        e.currentTarget.style.borderColor = "#f59e0b";
+                        e.currentTarget.style.borderColor = "#C9A227";
                         e.currentTarget.style.boxShadow =
-                          "0 0 0 3px rgba(245,158,11,0.15)";
+                          "0 0 0 3px rgba(201,162,39,0.15)";
                       }}
                       onBlur={(e) => {
                         e.currentTarget.style.borderColor =
@@ -495,9 +495,9 @@ console.log(cartItems);
                         outline: "none",
                       }}
                       onFocus={(e) => {
-                        e.currentTarget.style.borderColor = "#f59e0b";
+                        e.currentTarget.style.borderColor = "#C9A227";
                         e.currentTarget.style.boxShadow =
-                          "0 0 0 3px rgba(245,158,11,0.15)";
+                          "0 0 0 3px rgba(201,162,39,0.15)";
                       }}
                       onBlur={(e) => {
                         e.currentTarget.style.borderColor =
@@ -520,9 +520,9 @@ console.log(cartItems);
                         outline: "none",
                       }}
                       onFocus={(e) => {
-                        e.currentTarget.style.borderColor = "#f59e0b";
+                        e.currentTarget.style.borderColor = "#C9A227";
                         e.currentTarget.style.boxShadow =
-                          "0 0 0 3px rgba(245,158,11,0.15)";
+                          "0 0 0 3px rgba(201,162,39,0.15)";
                       }}
                       onBlur={(e) => {
                         e.currentTarget.style.borderColor =
@@ -670,7 +670,7 @@ console.log(cartItems);
                   className="h-1"
                   style={{
                     background:
-                      "linear-gradient(90deg, #0d9488, #14b8a6, #f59e0b)",
+                      "linear-gradient(90deg, #B4232C, #D4354A, #C9A227)",
                   }}
                 />
                 <div className="p-5 sm:p-6">
@@ -678,8 +678,8 @@ console.log(cartItems);
                     <div
                       className="w-10 h-10 rounded-xl flex items-center justify-center"
                       style={{
-                        background: "linear-gradient(135deg, #0d9488, #14b8a6)",
-                        boxShadow: "0 4px 15px rgba(13,148,136,0.4)",
+                        background: "linear-gradient(135deg, #B4232C, #D4354A)",
+                        boxShadow: "0 4px 15px rgba(180,35,44,0.4)",
                       }}
                     >
                       <IndianRupee size={20} color="white" />
@@ -693,7 +693,7 @@ console.log(cartItems);
                       </h2>
                       <p
                         className="text-[10px] font-bold uppercase tracking-wider"
-                        style={{ color: "#f59e0b" }}
+                        style={{ color: "#C9A227" }}
                       >
                         {cartItems.length} items
                       </p>
@@ -728,7 +728,7 @@ console.log(cartItems);
                     className="my-4 h-px"
                     style={{
                       background:
-                        "linear-gradient(90deg, transparent, rgba(245,158,11,0.3), transparent)",
+                        "linear-gradient(90deg, transparent, rgba(201,162,39,0.3), transparent)",
                     }}
                   />
 
@@ -781,7 +781,7 @@ console.log(cartItems);
                               outline: "none",
                             }}
                             onFocus={(e) => {
-                              e.currentTarget.style.borderColor = "#0d9488";
+                              e.currentTarget.style.borderColor = "#B4232C";
                             }}
                             onBlur={(e) => {
                               e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
@@ -793,10 +793,10 @@ console.log(cartItems);
                             disabled={couponLoading}
                             className="rounded-xl text-xs font-bold px-4 cursor-pointer transition-all duration-300"
                             style={{
-                              background: "linear-gradient(135deg, #0d9488, #14b8a6)",
+                              background: "linear-gradient(135deg, #B4232C, #D4354A)",
                               color: "white",
                               border: "none",
-                              boxShadow: "0 2px 10px rgba(13,148,136,0.3)",
+                              boxShadow: "0 2px 10px rgba(180,35,44,0.3)",
                             }}
                           >
                             {couponLoading ? "..." : "Apply"}
@@ -879,7 +879,7 @@ console.log(cartItems);
                     className="my-5 h-px"
                     style={{
                       background:
-                        "linear-gradient(90deg, transparent, rgba(245,158,11,0.3), transparent)",
+                        "linear-gradient(90deg, transparent, rgba(201,162,39,0.3), transparent)",
                     }}
                   />
 
@@ -894,7 +894,7 @@ console.log(cartItems);
                     <div className="text-right">
                       <p
                         className="font-extrabold text-2xl"
-                        style={{ color: "#f59e0b" }}
+                        style={{ color: "#C9A227" }}
                       >
                         ₹{grandTotal}
                       </p>
@@ -913,19 +913,19 @@ console.log(cartItems);
                     className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl text-sm font-bold mt-6 transition-all duration-300 cursor-pointer"
                     style={{
                       background:
-                        "linear-gradient(135deg, #0d9488 0%, #14b8a6 100%)",
+                        "linear-gradient(135deg, #B4232C 0%, #D4354A 100%)",
                       color: "white",
-                      boxShadow: "0 4px 20px rgba(13,148,136,0.4)",
+                      boxShadow: "0 4px 20px rgba(180,35,44,0.4)",
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.transform = "translateY(-2px)";
                       e.currentTarget.style.boxShadow =
-                        "0 8px 30px rgba(13,148,136,0.6)";
+                        "0 8px 30px rgba(180,35,44,0.6)";
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.transform = "translateY(0)";
                       e.currentTarget.style.boxShadow =
-                        "0 4px 20px rgba(13,148,136,0.4)";
+                        "0 4px 20px rgba(180,35,44,0.4)";
                     }}
                   >
                     <Shield size={18} />

@@ -34,7 +34,7 @@ const myDeliveriesStyles = `
   position: fixed; border-radius: 50%;
   width: 500px; height: 500px;
   top: -100px; right: -150px;
-  background: radial-gradient(circle, rgba(147,51,234,0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(91,58,87,0.08) 0%, transparent 70%);
   filter: blur(80px); pointer-events: none;
 }
 .md-glow-2 {
@@ -53,8 +53,8 @@ const myDeliveriesStyles = `
 .md-logo-icon {
   width: 44px; height: 44px; border-radius: 14px;
   display: flex; align-items: center; justify-content: center;
-  background: linear-gradient(135deg, #9333ea, #ec4899);
-  box-shadow: 0 6px 20px rgba(147,51,234,0.4);
+  background: linear-gradient(135deg, #5B3A57, #D9829B);
+  box-shadow: 0 6px 20px rgba(91,58,87,0.4);
 }
 .md-header-tag {
   display: inline-flex; align-items: center; gap: 6px;
@@ -62,7 +62,7 @@ const myDeliveriesStyles = `
   text-transform: uppercase; letter-spacing: 0.08em;
   padding: 6px 14px; border-radius: 999px;
   background: rgba(139,92,246,0.1);
-  color: #a78bfa;
+  color: #7B5A77;
   border: 1px solid rgba(139,92,246,0.25);
 }
 .md-title {
@@ -73,7 +73,7 @@ const myDeliveriesStyles = `
 }
 .md-subtitle {
   margin-top: 8px; font-size: 0.9rem;
-  color: #94a3b8;
+  color: #8B7585;
 }
 
 /* Stats */
@@ -84,7 +84,7 @@ const myDeliveriesStyles = `
 }
 .md-stat {
   padding: 14px; border-radius: 14px;
-  background: linear-gradient(135deg, rgba(147,51,234,0.03), rgba(147,51,234,0.01));
+  background: linear-gradient(135deg, rgba(91,58,87,0.03), rgba(91,58,87,0.01));
   border: 1px solid rgba(0,0,0,0.06);
   position: relative; overflow: hidden;
 }
@@ -96,7 +96,7 @@ const myDeliveriesStyles = `
 .md-stat-label {
   margin-top: 4px; font-size: 0.7rem; font-weight: 600;
   text-transform: uppercase; letter-spacing: 0.05em;
-  color: #94a3b8;
+  color: #8B7585;
 }
 
 /* Timeline */
@@ -138,7 +138,7 @@ const myDeliveriesStyles = `
 /* Card */
 .md-card {
   border-radius: 18px; overflow: hidden;
-  background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(147,51,234,0.02));
+  background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(91,58,87,0.02));
   border: 1px solid rgba(255,255,255,0.08);
   backdrop-filter: blur(20px);
   transition: all 0.4s cubic-bezier(.16,.84,.32,1);
@@ -165,7 +165,7 @@ const myDeliveriesStyles = `
 .md-order-id { font-weight: 900; font-size: 1rem; color: #fff; }
 .md-order-time {
   display: flex; align-items: center; gap: 4px;
-  font-size: 0.7rem; color: #94a3b8;
+  font-size: 0.7rem; color: #8B7585;
   margin-top: 3px;
 }
 
@@ -203,7 +203,7 @@ const myDeliveriesStyles = `
 .md-customer-name { font-weight: 700; font-size: 0.9rem; color: #fff; margin: 0; }
 .md-customer-phone {
   display: flex; align-items: center; gap: 4px;
-  font-size: 0.75rem; color: #94a3b8;
+  font-size: 0.75rem; color: #8B7585;
   margin: 3px 0 0 0;
 }
 
@@ -275,7 +275,7 @@ const myDeliveriesStyles = `
 .md-empty {
   text-align: center; padding: 80px 20px;
   border-radius: 20px;
-  background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(147,51,234,0.01));
+  background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(91,58,87,0.01));
   border: 1px solid rgba(0,0,0,0.06);
   animation: mdFadeUp 0.5s ease both;
 }
@@ -292,7 +292,7 @@ const myDeliveriesStyles = `
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   margin-bottom: 8px;
 }
-.md-empty-subtitle { color: #94a3b8; font-size: 0.9rem; }
+.md-empty-subtitle { color: #8B7585; font-size: 0.9rem; }
 
 .md-loading {
   min-height: 100vh;
@@ -355,8 +355,8 @@ const statusConfig = {
     icon: CircleCheckBig,
     actionLabel: "Delivered ✅",
     actionIcon: CircleCheckBig,
-    actionGradient: "linear-gradient(135deg, #64748b, #94a3b8)",
-    actionColor: "#64748b",
+    actionGradient: "linear-gradient(135deg, #6B5A65, #8B7585)",
+    actionColor: "#6B5A65",
   },
 };
 
@@ -463,7 +463,7 @@ export const MyDeliveries = () => {
           {orders.length === 0 ? (
             <div className="md-empty">
               <div className="md-empty-icon">
-                <Bike size={36} style={{ color: "#a78bfa" }} />
+                <Bike size={36} style={{ color: "#7B5A77" }} />
               </div>
               <h2 className="md-empty-title">No Deliveries Assigned</h2>
               <p className="md-empty-subtitle">
@@ -601,7 +601,7 @@ export const MyDeliveries = () => {
                             background: isDone
                               ? "rgba(0,0,0,0.06)"
                               : config.actionGradient,
-                            color: isDone ? "#94a3b8" : "white",
+                            color: isDone ? "#8B7585" : "white",
                             boxShadow: isDone ? "none" : `0 4px 15px ${config.actionColor}40`,
                           }}
                           onMouseEnter={(e) => {

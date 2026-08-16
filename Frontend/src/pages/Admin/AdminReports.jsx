@@ -31,8 +31,8 @@ const arStyles = `
   display: flex; align-items: center; justify-content: center;
 }
 .ar-section {
-  background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
-  border: 1px solid rgba(255,255,255,0.06);
+  background: linear-gradient(135deg, rgba(0,0,0,0.02), rgba(0,0,0,0.01));
+  border: 1px solid #E2E8F0;
   border-radius: 14px;
   padding: 24px;
   margin-bottom: 24px;
@@ -53,8 +53,8 @@ const arStyles = `
   margin-bottom: 24px;
 }
 .ar-card {
-  background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
-  border: 1px solid rgba(255,255,255,0.06);
+  background: linear-gradient(135deg, rgba(0,0,0,0.02), rgba(0,0,0,0.01));
+  border: 1px solid #E2E8F0;
   border-radius: 14px;
   padding: 18px;
   transition: all 0.25s ease;
@@ -68,14 +68,14 @@ const arStyles = `
   display: flex; align-items: center; justify-content: center;
   margin-bottom: 10px;
 }
-.ar-card-icon.gold { background: rgba(212, 175, 55, 0.15); color: #d4af37; }
+.ar-card-icon.gold { background: rgba(212, 175, 55, 0.15); color: #2563EB; }
 .ar-card-icon.red { background: rgba(226, 55, 68, 0.12); color: #e23744; }
 .ar-card-icon.blue { background: rgba(59, 130, 246, 0.12); color: #3b82f6; }
 .ar-card-icon.green { background: rgba(34, 197, 94, 0.12); color: #22c55e; }
 .ar-card-icon.orange { background: rgba(249, 115, 22, 0.12); color: #f97316; }
 .ar-card-icon.purple { background: rgba(139, 92, 246, 0.12); color: #8b5cf6; }
 .ar-card-label {
-  color: rgba(255,255,255,0.5); font-size: 0.65rem; font-weight: 700;
+  color: #64748B; font-size: 0.65rem; font-weight: 700;
   text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;
 }
 .ar-card-value { color: #fff; font-size: 1.4rem; font-weight: 800; line-height: 1; }
@@ -84,26 +84,26 @@ const arStyles = `
 .ar-funnel { display: flex; flex-direction: column; gap: 10px; }
 .ar-funnel-row { display: flex; align-items: center; gap: 12px; }
 .ar-funnel-label { width: 120px; font-size: 0.82rem; color: rgba(255,255,255,0.6); font-weight: 600; flex-shrink: 0; }
-.ar-funnel-track { flex: 1; height: 12px; background: rgba(255,255,255,0.04); border-radius: 999px; overflow: hidden; }
+.ar-funnel-track { flex: 1; height: 12px; background: rgba(0,0,0,0.02); border-radius: 999px; overflow: hidden; }
 .ar-funnel-fill { height: 100%; border-radius: 999px; transition: width 0.8s cubic-bezier(.16,.84,.32,1); }
 .ar-funnel-value { width: 40px; text-align: right; font-size: 0.82rem; font-weight: 700; color: #fff; flex-shrink: 0; }
 
 /* Table */
 .ar-table-wrap {
-  border: 1px solid rgba(255,255,255,0.04);
+  border: 1px solid rgba(0,0,0,0.02);
   border-radius: 12px;
   overflow: hidden;
 }
 .ar-tbl { width: 100%; border-collapse: collapse; }
 .ar-tbl th {
   text-align: left; padding: 12px 16px; font-size: 0.65rem; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.4);
-  background: rgba(255,255,255,0.02); border-bottom: 1px solid rgba(255,255,255,0.04);
+  text-transform: uppercase; letter-spacing: 0.5px; color: #94A3B8;
+  background: #F8FAFC; border-bottom: 1px solid rgba(0,0,0,0.02);
 }
-.ar-tbl td { padding: 10px 16px; font-size: 0.82rem; color: rgba(255,255,255,0.7); border-bottom: 1px solid rgba(255,255,255,0.03); }
+.ar-tbl td { padding: 10px 16px; font-size: 0.82rem; color: rgba(255,255,255,0.7); border-bottom: 1px solid #F8FAFC; }
 .ar-tbl tbody tr:hover { background: rgba(212,175,55,0.03); }
 .ar-tbl tbody tr:last-child td { border-bottom: none; }
-.ar-loading { display: flex; align-items: center; justify-content: center; min-height: 200px; color: rgba(255,255,255,0.5); }
+.ar-loading { display: flex; align-items: center; justify-content: center; min-height: 200px; color: #64748B; }
 `;
 
 const AdminReports = () => {
@@ -174,7 +174,7 @@ const AdminReports = () => {
         {/* Revenue */}
         <div className="ar-section">
           <h2 className="ar-section-title">
-            <IndianRupee size={16} style={{ color: "#d4af37" }} />
+            <IndianRupee size={16} style={{ color: "#2563EB" }} />
             Revenue Overview
           </h2>
           <div className="ar-grid">
@@ -198,7 +198,7 @@ const AdminReports = () => {
         {/* Order Funnel */}
         <div className="ar-section">
           <h2 className="ar-section-title">
-            <ShoppingBag size={16} style={{ color: "#d4213c" }} />
+            <ShoppingBag size={16} style={{ color: "#2563EB" }} />
             Order Funnel
           </h2>
           <div className="ar-funnel">
@@ -251,7 +251,7 @@ const AdminReports = () => {
             Recent Orders
           </h2>
           {recentOrders.length === 0 ? (
-            <p style={{ color: "rgba(255,255,255,0.4)", textAlign: "center", padding: 20 }}>
+            <p style={{ color: "#94A3B8", textAlign: "center", padding: 20 }}>
               No orders yet
             </p>
           ) : (
@@ -269,7 +269,7 @@ const AdminReports = () => {
                 <tbody>
                   {recentOrders.map((order) => (
                     <tr key={order._id}>
-                      <td style={{ fontWeight: 600, color: "#d4af37" }}>
+                      <td style={{ fontWeight: 600, color: "#2563EB" }}>
                         #{order.orderNumber}
                       </td>
                       <td>{order.customer?.fullName || "—"}</td>
@@ -292,7 +292,7 @@ const AdminReports = () => {
                           {order.orderStatus}
                         </span>
                       </td>
-                      <td style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.4)" }}>
+                      <td style={{ fontSize: "0.78rem", color: "#94A3B8" }}>
                         {new Date(order.createdAt).toLocaleDateString("en-IN")}
                       </td>
                     </tr>

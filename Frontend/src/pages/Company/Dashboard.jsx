@@ -18,16 +18,16 @@ const dashboardStyles = `
   font-family: 'Fraunces', serif;
   font-size: 1.6rem;
   font-weight: 800;
-  color: #1e293b;
+  color: #2B1B14;
   margin: 0 0 4px 0;
 }
 .dash-welcome .accent {
-  background: linear-gradient(135deg, #3b82f6, #60a5fa);
+  background: linear-gradient(135deg, #641F28, #60a5fa);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
-.dash-desc { color: #64748b; font-size: 0.85rem; margin: 0 0 22px 0; }
+.dash-desc { color: #8B7355; font-size: 0.85rem; margin: 0 0 22px 0; }
 .dash-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -51,36 +51,36 @@ const dashboardStyles = `
   display: flex; align-items: center; justify-content: center;
   margin-bottom: 12px;
 }
-.dash-card-icon.blue { background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
+.dash-card-icon.blue { background: rgba(59, 130, 246, 0.1); color: #641F28; }
 .dash-card-icon.red { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
 .dash-card-icon.orange { background: rgba(249, 115, 22, 0.1); color: #f97316; }
 .dash-card-icon.green { background: rgba(34, 197, 94, 0.1); color: #22c55e; }
 .dash-card-icon.gold { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
 .dash-card-label {
-  color: #64748b; font-size: 0.68rem; font-weight: 700;
+  color: #8B7355; font-size: 0.68rem; font-weight: 700;
   text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;
 }
-.dash-card-value { color: #1e293b; font-size: 1.6rem; font-weight: 800; line-height: 1; }
+.dash-card-value { color: #2B1B14; font-size: 1.6rem; font-weight: 800; line-height: 1; }
 .dash-card-trend {
   display: inline-flex; align-items: center; gap: 3px; margin-top: 8px;
   font-size: 0.68rem; font-weight: 600; color: #16a34a;
   background: rgba(34, 197, 94, 0.08); padding: 3px 9px; border-radius: 14px;
 }
 .dash-section-head { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
-.dash-section-head h2 { font-size: 1.1rem; font-weight: 700; color: #1e293b; margin: 0; }
+.dash-section-head h2 { font-size: 1.1rem; font-weight: 700; color: #2B1B14; margin: 0; }
 .dash-table-box { background: white; border: 1px solid rgba(59, 130, 246, 0.08); border-radius: 14px; overflow: hidden; }
 .dash-tbl { width: 100%; border-collapse: collapse; }
 .dash-tbl th {
   text-align: left; padding: 12px 16px; font-size: 0.68rem; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.5px; color: #64748b;
-  background: #f8fafc; border-bottom: 1px solid rgba(59, 130, 246, 0.06);
+  text-transform: uppercase; letter-spacing: 0.5px; color: #8B7355;
+  background: #F6F3EF; border-bottom: 1px solid rgba(59, 130, 246, 0.06);
 }
 .dash-tbl td { padding: 12px 16px; font-size: 0.88rem; color: #334155; border-bottom: 1px solid rgba(59, 130, 246, 0.04); }
 .dash-tbl tbody tr:hover { background: rgba(59, 130, 246, 0.02); }
 .dash-tbl tbody tr:last-child td { border-bottom: none; }
 .dash-badge { display: inline-flex; align-items: center; padding: 4px 11px; border-radius: 14px; font-size: 0.72rem; font-weight: 600; }
 .dash-badge.Pending { background: rgba(245, 158, 11, 0.1); color: #d97706; }
-.dash-badge.Accepted { background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
+.dash-badge.Accepted { background: rgba(59, 130, 246, 0.1); color: #641F28; }
 .dash-badge.Preparing { background: rgba(249, 115, 22, 0.1); color: #ea580c; }
 .dash-badge.Packed { background: rgba(34, 197, 94, 0.1); color: #16a34a; }
 .dash-badge.Delivered { background: rgba(16, 185, 129, 0.1); color: #10b981; }
@@ -163,7 +163,7 @@ const Dashboard = () => {
         </div>
 
         <div className="dash-section-head">
-          <ShoppingBag size={16} style={{ color: "#3b82f6" }} />
+          <ShoppingBag size={16} style={{ color: "#641F28" }} />
           <h2>Recent Orders</h2>
         </div>
         <div className="dash-table-box">
@@ -183,7 +183,7 @@ const Dashboard = () => {
                 {orders.slice(0, 10).map((order) => (
                   <tr key={order._id}>
                     <td>
-                      <span style={{ color: "#3b82f6", fontWeight: 600 }}>
+                      <span style={{ color: "#641F28", fontWeight: 600 }}>
                         #{order.orderNumber}
                       </span>
                     </td>

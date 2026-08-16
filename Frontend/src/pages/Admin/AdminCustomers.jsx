@@ -34,19 +34,19 @@ const acuStyles = `
 .acu-search-wrap { position: relative; flex: 1; min-width: 250px; max-width: 400px; }
 .acu-search-input {
   width: 100%;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(0,0,0,0.02);
+  border: 1px solid #E2E8F0;
   border-radius: 10px;
   padding: 10px 14px 10px 40px;
   color: #fff; font-size: 0.9rem;
   transition: all 0.25s ease; box-sizing: border-box;
 }
-.acu-search-input::placeholder { color: rgba(255,255,255,0.3); }
-.acu-search-input:focus { outline: none; border-color: #d4af37; box-shadow: 0 0 0 3px rgba(212,175,55,0.12); }
-.acu-search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.3); }
+.acu-search-input::placeholder { color: #CBD5E1; }
+.acu-search-input:focus { outline: none; border-color: #2563EB; box-shadow: 0 0 0 3px rgba(212,175,55,0.12); }
+.acu-search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #CBD5E1; }
 .acu-table-wrap {
-  background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
-  border: 1px solid rgba(255,255,255,0.06);
+  background: linear-gradient(135deg, rgba(0,0,0,0.02), rgba(0,0,0,0.01));
+  border: 1px solid #E2E8F0;
   border-radius: 14px;
   overflow: hidden;
   overflow-x: auto;
@@ -54,10 +54,10 @@ const acuStyles = `
 .acu-tbl { width: 100%; border-collapse: collapse; min-width: 700px; }
 .acu-tbl th {
   text-align: left; padding: 14px 16px; font-size: 0.68rem; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.4);
-  background: rgba(255,255,255,0.02); border-bottom: 1px solid rgba(255,255,255,0.06);
+  text-transform: uppercase; letter-spacing: 0.5px; color: #94A3B8;
+  background: #F8FAFC; border-bottom: 1px solid #E2E8F0;
 }
-.acu-tbl td { padding: 12px 16px; font-size: 0.88rem; color: rgba(255,255,255,0.8); border-bottom: 1px solid rgba(255,255,255,0.04); }
+.acu-tbl td { padding: 12px 16px; font-size: 0.88rem; color: #172033; border-bottom: 1px solid rgba(0,0,0,0.02); }
 .acu-tbl tbody tr:hover { background: rgba(212,175,55,0.04); }
 .acu-tbl tbody tr:last-child td { border-bottom: none; }
 .acu-status-badge {
@@ -69,14 +69,14 @@ const acuStyles = `
 .acu-action-btn {
   width: 32px; height: 32px; border-radius: 8px;
   display: flex; align-items: center; justify-content: center;
-  border: 1px solid rgba(255,255,255,0.1);
-  background: rgba(255,255,255,0.03);
-  color: rgba(255,255,255,0.5);
+  border: 1px solid #E2E8F0;
+  background: #F8FAFC;
+  color: #64748B;
   cursor: pointer; transition: all 0.2s ease;
 }
-.acu-action-btn:hover { background: rgba(212,175,55,0.12); color: #d4af37; border-color: rgba(212,175,55,0.3); }
-.acu-empty { text-align: center; padding: 48px 20px; color: rgba(255,255,255,0.4); }
-.acu-loading { display: flex; align-items: center; justify-content: center; min-height: 200px; color: rgba(255,255,255,0.5); }
+.acu-action-btn:hover { background: rgba(212,175,55,0.12); color: #2563EB; border-color: rgba(212,175,55,0.3); }
+.acu-empty { text-align: center; padding: 48px 20px; color: #94A3B8; }
+.acu-loading { display: flex; align-items: center; justify-content: center; min-height: 200px; color: #64748B; }
 `;
 
 const AdminCustomers = () => {
@@ -154,7 +154,7 @@ const AdminCustomers = () => {
               <tbody>
                 {customers.map((c) => (
                   <tr key={c._id}>
-                    <td style={{ fontWeight: 600, color: "#fff" }}>
+                    <td style={{ fontWeight: 600, color: "#172033" }}>
                       {c.fullName}
                     </td>
                     <td>
@@ -162,18 +162,18 @@ const AdminCustomers = () => {
                         <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: "0.8rem" }}>
                           <Mail size={11} /> {c.email}
                         </span>
-                        <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: "0.8rem", color: "rgba(255,255,255,0.5)" }}>
+                        <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: "0.8rem", color: "#64748B" }}>
                           <Phone size={11} /> {c.phone}
                         </span>
                       </div>
                     </td>
                     <td>
                       <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                        <ShoppingBag size={13} style={{ color: "#d4af37" }} />
+                        <ShoppingBag size={13} style={{ color: "#2563EB" }} />
                         {c.totalOrders || 0}
                       </span>
                     </td>
-                    <td style={{ fontWeight: 700, color: "#d4af37" }}>
+                    <td style={{ fontWeight: 700, color: "#2563EB" }}>
                       ₹{c.totalSpent || 0}
                     </td>
                     <td>

@@ -85,8 +85,8 @@ export const DeliveryPartners = () => {
                   </span>
                   <span style={{
                     fontSize: "0.7rem", fontWeight: 600, padding: "3px 8px", borderRadius: 8,
-                    background: "rgba(59,130,246,0.1)", color: "#3b82f6",
-                    border: "1px solid rgba(59,130,246,0.2)",
+                    background: "rgba(100,31,40,0.1)", color: "#641F28",
+                    border: "1px solid rgba(100,31,40,0.2)",
                   }}>
                     {p.completedDeliveries || 0} deliveries
                   </span>

@@ -19,28 +19,28 @@ const companyLayoutStyles = `
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background: #f0f4f8;
+  background: #F6F3EF;
   display: flex;
   overflow: hidden;
   font-family: 'Inter', sans-serif;
 }
 .cl-sidebar {
   width: 240px;
-  background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+  background: linear-gradient(180deg, #2B1B14 0%, #1A0F0A 100%);
   color: white;
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
-  border-right: 1px solid rgba(59, 130, 246, 0.15);
+  border-right: 1px solid rgba(100,31,40, 0.15);
 }
 .cl-sidebar-line {
   height: 3px;
-  background: linear-gradient(90deg, #3b82f6, #60a5fa, #93c5fd);
+  background: linear-gradient(90deg, #641F28, #C9A227, #93c5fd);
   flex-shrink: 0;
 }
 .cl-logo-area {
   padding: 22px 18px;
-  border-bottom: 1px solid rgba(59, 130, 246, 0.15);
+  border-bottom: 1px solid rgba(100,31,40, 0.15);
   display: flex;
   align-items: center;
   gap: 12px;
@@ -67,17 +67,17 @@ const companyLayoutStyles = `
   border: 1px solid transparent;
 }
 .cl-nav-link:hover {
-  background: rgba(59, 130, 246, 0.12);
+  background: rgba(100,31,40, 0.12);
   color: white;
 }
 .cl-nav-link.active {
-  background: rgba(59, 130, 246, 0.18);
+  background: rgba(100,31,40, 0.18);
   color: white;
-  border-color: rgba(59, 130, 246, 0.35);
+  border-color: rgba(100,31,40, 0.35);
 }
 .cl-logout-area {
   padding: 14px 10px;
-  border-top: 1px solid rgba(59, 130, 246, 0.15);
+  border-top: 1px solid rgba(100,31,40, 0.15);
 }
 .cl-logout-btn {
   display: flex;
@@ -108,7 +108,7 @@ const companyLayoutStyles = `
 }
 .cl-topbar {
   background: white;
-  border-bottom: 1px solid rgba(59, 130, 246, 0.08);
+  border-bottom: 1px solid rgba(100,31,40, 0.08);
   padding: 14px 24px;
   display: flex;
   justify-content: space-between;
@@ -119,11 +119,11 @@ const companyLayoutStyles = `
   font-family: 'Fraunces', serif;
   font-size: 1.25rem;
   font-weight: 800;
-  color: #1e293b;
+  color: #2B1B14;
   margin: 0;
 }
 .cl-topbar-sub {
-  color: #64748b;
+  color: #8B7355;
   font-size: 0.8rem;
   margin: 2px 0 0 0;
 }
@@ -161,7 +161,7 @@ const companyLayoutStyles = `
   gap: 8px;
   padding: 5px 12px 5px 5px;
   border-radius: 20px;
-  border: 1px solid rgba(59, 130, 246, 0.15);
+  border: 1px solid rgba(100,31,40, 0.15);
   background: white;
 }
 .flicker {
@@ -174,7 +174,7 @@ const companyLayoutStyles = `
 .cl-user-avatar {
   width: 28px;
   height: 28px;
-  background: linear-gradient(135deg, #3b82f6, #60a5fa);
+  background: linear-gradient(135deg, #641F28, #C9A227);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -185,7 +185,7 @@ const companyLayoutStyles = `
 }
 .cl-user-label {
   font-weight: 600;
-  color: #1e293b;
+  color: #2B1B14;
   font-size: 0.8rem;
 }
 .cl-body {
@@ -228,9 +228,9 @@ const CompanyLayout = () => {
 
           <div className="cl-logo-area">
             <Link to="/" className="flex items-center gap-2 shrink-0">
-              <Flame size={24} className="flicker" style={{ color: "#3b82f6" }} />
+              <Flame size={24} className="flicker" style={{ color: "#641F28" }} />
               <span className="text-xl font-black tracking-tight text-white cl-logo-text">
-                Eat And<span style={{ color: "#3b82f6" }}>Meat</span>
+                Eat And<span style={{ color: "#641F28" }}>Meat</span>
               </span>
             </Link>
           </div>

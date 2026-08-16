@@ -3,106 +3,11 @@ import { Mail, Lock, Eye, EyeOff, LogIn, Shield, Flame, User, Briefcase, Bike, C
 import { useState } from "react";
 import { useAuth } from "../../Context/AuthContext";
 
-const loginStyles = `
-.login-page { min-height: 100vh; width: 100%; display: flex; background: linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 50%, #0a0a0a 100%); }
-
-.login-visual {
-  position: relative; overflow: hidden; flex: 1;
-  background: linear-gradient(150deg, #0f0a0a 0%, #1a0e0e 40%, #2a1015 100%);
-  display: flex; flex-direction: column; justify-content: space-between;
-  padding: 56px 48px;
-}
-.login-visual-glow { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; }
-.login-visual-glow-1 { width: 380px; height: 380px; top: -10%; left: -10%; background: radial-gradient(circle, rgba(13,148,136,0.3), transparent 70%); animation: loginGlow1 20s ease-in-out infinite; }
-.login-visual-glow-2 { width: 340px; height: 340px; bottom: -10%; right: -10%; background: radial-gradient(circle, rgba(245,158,11,0.2), transparent 70%); animation: loginGlow2 24s ease-in-out infinite; }
-@keyframes loginGlow1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(30px,20px) scale(1.08); } }
-@keyframes loginGlow2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-25px,-20px) scale(1.05); } }
-
-.login-ember {
-  position: absolute; border-radius: 50%; pointer-events: none;
-  background: radial-gradient(circle at 35% 30%, #ffc98a, #0d9488 55%, transparent 75%);
-  opacity: .5; animation: loginEmberFloat ease-in-out infinite;
-}
-@keyframes loginEmberFloat {
-  0% { transform: translateY(0) translateX(0) scale(1); opacity: .1; }
-  50% { opacity: .55; }
-  100% { transform: translateY(-70px) translateX(16px) scale(1.15); opacity: 0; }
-}
-
-.login-form-side {
-  flex: 1; display: flex; align-items: center; justify-content: center;
-  padding: 40px 24px; min-height: 100vh;
-}
-.login-form-wrap { width: 100%; max-width: 420px; animation: loginFormIn .7s cubic-bezier(.16,.84,.32,1); }
-@keyframes loginFormIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-
-.login-title {
-  font-size: clamp(1.75rem, 4vw, 2rem); font-weight: 800; line-height: 1.2;
-  background: linear-gradient(135deg, #ffffff 0%, #e0d0d0 100%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-}
-.login-title .accent {
-  background: linear-gradient(135deg, #0d9488, #14b8a6);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-}
-.login-subtitle { color: rgba(255,255,255,0.4); font-size: 0.9rem; margin-top: 8px; }
-
-.login-role-btn {
-  padding: 10px 14px; border-radius: 10px; font-size: 0.8rem; font-weight: 600;
-  transition: all 0.25s ease; cursor: pointer; flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
-  background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.5);
-  border: 1px solid rgba(255,255,255,0.08);
-}
-.login-role-btn:hover { border-color: rgba(13,148,136,0.3); color: #fff; background: rgba(13,148,136,0.08); }
-.login-role-btn.active {
-  background: linear-gradient(135deg, #0d9488 0%, #96101f 100%);
-  border-color: transparent; color: white;
-  box-shadow: 0 4px 14px rgba(13,148,136,0.4);
-}
-
-.login-input-group { position: relative; margin-top: 18px; }
-.login-input-label { display: block; color: rgba(255,255,255,0.5); font-size: 0.8rem; font-weight: 600; margin-bottom: 8px; }
-.login-input {
-  width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
-  padding: 13px 16px 13px 46px; color: #fff; font-size: 0.95rem; transition: all 0.25s ease; box-sizing: border-box;
-}
-.login-input::placeholder { color: rgba(255,255,255,0.25); }
-.login-input:focus { outline: none; border-color: #0d9488; box-shadow: 0 0 0 3px rgba(13,148,136,0.15); }
-.login-input-icon { position: absolute; left: 15px; top: 41px; color: rgba(255,255,255,0.3); pointer-events: none; }
-.login-toggle-pw { position: absolute; right: 14px; top: 39px; color: rgba(255,255,255,0.3); cursor: pointer; background: none; border: none; padding: 4px; transition: color 0.2s; }
-.login-toggle-pw:hover { color: #0d9488; }
-
-.login-remember-row { display: flex; align-items: center; justify-content: space-between; margin-top: 18px; }
-.login-checkbox-wrap { display: flex; align-items: center; gap: 8px; cursor: pointer; }
-.login-checkbox-wrap input[type="checkbox"] { accent-color: #0d9488; width: 17px; height: 17px; cursor: pointer; }
-.login-checkbox-wrap span { color: rgba(255,255,255,0.5); font-size: 0.85rem; }
-.login-forgot-link { color: #f59e0b; font-size: 0.85rem; font-weight: 600; text-decoration: none; }
-.login-forgot-link:hover { text-decoration: underline; }
-
-.login-submit-btn {
-  width: 100%; background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
-  border: none; border-radius: 14px; color: white; font-weight: 700; font-size: 1rem; padding: 15px;
-  cursor: pointer; box-shadow: 0 6px 20px rgba(13,148,136,0.35); transition: all 0.3s ease;
-  display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 24px;
-}
-.login-submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(13,148,136,0.5); }
-
-.login-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent); margin: 22px 0; }
-
-.login-signup-text { color: rgba(255,255,255,0.4); font-size: 0.9rem; text-align: center; }
-.login-signup-link { color: #f59e0b; font-weight: 700; text-decoration: none; margin-left: 6px; }
-.login-signup-link:hover { text-decoration: underline; }
-
-.login-secure-badge { display: flex; align-items: center; justify-content: center; gap: 6px; color: rgba(255,255,255,0.3); font-size: 0.75rem; margin-top: 18px; }
-
-@keyframes fadeSlideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes pulse-dot { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.2); } }
-
-@media (max-width: 900px) {
-  .login-visual { display: none; }
-  .login-form-side { padding: 32px 20px; }
-}
-`;
+const primary = "#B4232C";
+const gold = "#C9A227";
+const deep = "#24140F";
+const cream = "#FAF7F2";
+const text = "#30231E";
 
 const Login = () => {
   const { login } = useAuth();
@@ -110,14 +15,15 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [selectedRole, setSelectedRole] = useState("customer");
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const result = await login(formData.email, formData.password, selectedRole);
+    setLoading(false);
     if (!result.success) { alert(result.message); return; }
     if (result.user.role !== selectedRole) { alert(`Please login using the ${result.user.role} button.`); return; }
     switch (result.user.role) {
@@ -136,133 +42,114 @@ const Login = () => {
     { value: "admin", label: "Admin", icon: Crown },
   ];
 
-  return (
-    <>
-      <style>{loginStyles}</style>
-      <div className="login-page mt-20">
-        {/* Visual side */}
-        <div className="login-visual">
-          <div className="login-visual-glow login-visual-glow-1" />
-          <div className="login-visual-glow login-visual-glow-2" />
-          <span className="login-ember" style={{ width: 14, height: 14, top: "20%", left: "70%", animationDuration: "11s" }} />
-          <span className="login-ember" style={{ width: 9, height: 9, top: "55%", left: "85%", animationDelay: "1.5s", animationDuration: "13s" }} />
-          <span className="login-ember" style={{ width: 20, height: 20, top: "72%", left: "60%", animationDelay: "2.5s", animationDuration: "12s" }} />
+  const inputStyle = {
+    width: "100%", background: "#FFFFFF", border: "1px solid #E2E8F0",
+    borderRadius: 10, padding: "11px 14px 11px 42px", color: text,
+    fontSize: "0.9rem", boxSizing: "border-box", outline: "none",
+  };
 
-          <div className="relative z-10 flex items-center gap-2">
-            <div
-              className="w-10 h-10 rounded-xl flex items-center justify-center"
-              style={{ background: "linear-gradient(135deg, #0d9488, #14b8a6)", boxShadow: "0 4px 15px rgba(13,148,136,0.5)" }}
-            >
-              <Flame size={22} color="white" />
+  return (
+    <div style={{ minHeight: "100vh", display: "flex", background: cream }}>
+      {/* Visual side */}
+      <div style={{
+        flex: 1, display: "flex", flexDirection: "column", justifyContent: "center",
+        padding: "60px 48px", position: "relative", overflow: "hidden",
+        background: `linear-gradient(150deg, ${deep} 0%, #3D1A1A 40%, #4A1F1F 100%)`,
+      }} className="login-visual">
+        <div style={{ position: "absolute", width: 400, height: 400, top: -100, left: -100, borderRadius: "50%", background: `radial-gradient(circle, rgba(180,35,44,0.2), transparent 70%)`, filter: "blur(60px)" }} />
+        <div style={{ position: "absolute", width: 300, height: 300, bottom: -80, right: -80, borderRadius: "50%", background: `radial-gradient(circle, rgba(201,162,39,0.15), transparent 70%)`, filter: "blur(50px)" }} />
+
+        <div style={{ position: "relative", zIndex: 1 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 40 }}>
+            <div style={{ width: 36, height: 36, borderRadius: 8, background: primary, display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <Flame size={20} color="white" />
             </div>
-            <span className="text-2xl font-black">
-              <span style={{ color: "#fff" }}>Eat</span>
-              <span style={{ color: "#0d9488" }}>And</span>
-              <span style={{ color: "#f59e0b" }}>Meat</span>
+            <span style={{ fontSize: "1.25rem", fontWeight: 800 }}>
+              <span style={{ color: "#fff" }}>Eat</span><span style={{ color: primary }}>And</span><span style={{ color: gold }}>Meat</span>
             </span>
           </div>
 
-          <div className="relative z-10">
-            <h2 className="text-4xl font-black text-white leading-tight" style={{ fontFamily: "'Fraunces', serif" }}>
-              Fresh cuts,<br />delivered with care.
-            </h2>
-            <p className="text-white/60 mt-4 max-w-sm">
-              Premium quality chicken and authentic masalas, delivered fresh across Coimbatore.
-            </p>
-          </div>
+          <h2 style={{ fontSize: "2rem", fontWeight: 800, color: "#FFFFFF", lineHeight: 1.2, margin: "0 0 12px", fontFamily: "'Fraunces', serif" }}>
+            Fresh cuts,<br />delivered with care.
+          </h2>
+          <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.9rem", maxWidth: 340, lineHeight: 1.5, margin: "0 0 32px" }}>
+            Premium quality chicken and authentic masalas, delivered fresh across Coimbatore.
+          </p>
 
-          <div className="relative z-10 flex gap-8 text-white/70 text-sm">
-            <div><span className="text-white font-bold text-xl block">500+</span>Customers</div>
-            <div><span className="text-white font-bold text-xl block">50+</span>Products</div>
-            <div><span className="text-white font-bold text-xl block">4.9★</span>Rating</div>
-          </div>
-        </div>
-
-        {/* Form side */}
-        <div className="login-form-side mt-10">
-          <div className="login-form-wrap">
-            <h1 className="login-title">
-              Welcome <span className="accent">Back</span>
-            </h1>
-            <p className="login-subtitle">Sign in to your EatAndMeat account</p>
-
-            <form className="mt-6" onSubmit={handleLogin}>
-              {/* Role Selector */}
-              <div className="flex gap-2 mb-2">
-                {roles.map((role) => (
-                  <button
-                    key={role.value}
-                    type="button"
-                    onClick={() => setSelectedRole(role.value)}
-                    className={`login-role-btn ${selectedRole === role.value ? "active" : ""}`}
-                  >
-                    <role.icon size={15} />
-                    {role.label}
-                  </button>
-                ))}
+          <div style={{ display: "flex", gap: 28 }}>
+            {[{ v: "500+", l: "Customers" }, { v: "50+", l: "Products" }, { v: "4.9★", l: "Rating" }].map((s) => (
+              <div key={s.l} style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.82rem" }}>
+                <span style={{ color: "#FFFFFF", fontWeight: 800, fontSize: "1.1rem", display: "block" }}>{s.v}</span>{s.l}
               </div>
-
-              <div className="login-input-group">
-                <label htmlFor="email" className="login-input-label">Email Address</label>
-                <Mail size={18} className="login-input-icon" />
-                <input
-                  type="email"
-                  name="email"
-                  className="login-input"
-                  placeholder="name@example.com"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-
-              <div className="login-input-group">
-                <label htmlFor="password" className="login-input-label">Password</label>
-                <Lock size={18} className="login-input-icon" />
-                <input
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  className="login-input"
-                  placeholder="••••••••"
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                  style={{ paddingRight: 46 }}
-                />
-                <button type="button" className="login-toggle-pw" onClick={() => setShowPassword(!showPassword)} tabIndex={-1}>
-                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                </button>
-              </div>
-
-              <div className="login-remember-row">
-                <label className="login-checkbox-wrap">
-                  <input type="checkbox" id="remember" />
-                  <span>Remember me</span>
-                </label>
-                <a href="#" className="login-forgot-link">Forgot password?</a>
-              </div>
-
-              <button type="submit" className="login-submit-btn">
-                <LogIn size={20} />
-                Sign In
-              </button>
-            </form>
-
-            <div className="login-divider"></div>
-
-            <p className="login-signup-text">
-              Don't have an account?
-              <Link to="/register" className="login-signup-link">Sign Up</Link>
-            </p>
-
-            <div className="login-secure-badge">
-              <Shield size={12} />
-              Secured with 256-bit encryption
-            </div>
+            ))}
           </div>
         </div>
       </div>
-    </>
+
+      {/* Form side */}
+      <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "40px 24px" }}>
+        <div style={{ width: "100%", maxWidth: 400 }}>
+          <h1 style={{ fontSize: "1.5rem", fontWeight: 800, color: deep, margin: "0 0 4px" }}>
+            Welcome <span style={{ color: primary }}>Back</span>
+          </h1>
+          <p style={{ color: "#94A3B8", fontSize: "0.85rem", margin: "0 0 20px" }}>Sign in to your account</p>
+
+          <form onSubmit={handleLogin}>
+            <div style={{ display: "flex", gap: 6, marginBottom: 16 }}>
+              {roles.map((role) => (
+                <button key={role.value} type="button" onClick={() => setSelectedRole(role.value)} style={{
+                  flex: 1, padding: "8px 6px", borderRadius: 8, fontSize: "0.72rem", fontWeight: 600,
+                  cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 4,
+                  background: selectedRole === role.value ? primary : "#FFFFFF",
+                  color: selectedRole === role.value ? "white" : "#64748B",
+                  border: `1px solid ${selectedRole === role.value ? primary : "#E2E8F0"}`,
+                  transition: "all 0.2s",
+                }}>
+                  <role.icon size={13} />
+                  {role.label}
+                </button>
+              ))}
+            </div>
+
+            <div style={{ position: "relative", marginBottom: 14 }}>
+              <Mail size={16} style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "#CBD5E1" }} />
+              <input type="email" name="email" placeholder="Email Address" value={formData.email} onChange={handleChange} required style={inputStyle} />
+            </div>
+
+            <div style={{ position: "relative", marginBottom: 14 }}>
+              <Lock size={16} style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "#CBD5E1" }} />
+              <input type={showPassword ? "text" : "password"} name="password" placeholder="Password" value={formData.password} onChange={handleChange} required style={{ ...inputStyle, paddingRight: 42 }} />
+              <button type="button" onClick={() => setShowPassword(!showPassword)} style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", color: "#CBD5E1" }}>
+                {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
+            </div>
+
+            <button type="submit" disabled={loading} style={{
+              width: "100%", padding: "12px", borderRadius: 10, border: "none",
+              background: primary, color: "white", fontWeight: 700, fontSize: "0.9rem",
+              cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+              marginTop: 16, boxShadow: "0 4px 12px rgba(180,35,44,0.25)", transition: "all 0.2s",
+            }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = "#9A1D25"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = primary; }}
+            >
+              <LogIn size={18} />
+              {loading ? "Signing in..." : "Sign In"}
+            </button>
+          </form>
+
+          <div style={{ height: 1, background: "#F1F5F9", margin: "20px 0" }} />
+
+          <p style={{ textAlign: "center", fontSize: "0.85rem", color: "#94A3B8" }}>
+            Don't have an account? <Link to="/register" style={{ color: gold, fontWeight: 700, textDecoration: "none" }}>Sign Up</Link>
+          </p>
+        </div>
+      </div>
+
+      <style>{`
+        @media (max-width: 900px) { .login-visual { display: none !important; } }
+      `}</style>
+    </div>
   );
 };
 

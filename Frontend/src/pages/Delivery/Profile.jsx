@@ -20,7 +20,7 @@ import {
 export const Profile = () => {
   const achievements = [
     { icon: Trophy, label: "Top Performer", desc: "Aug 2026", color: "#f59e0b" },
-    { icon: Zap, label: "Fast Delivery", desc: "50 orders", color: "#9333ea" },
+    { icon: Zap, label: "Fast Delivery", desc: "50 orders", color: "#5B3A57" },
     { icon: Award, label: "5-Star Rated", desc: "100 reviews", color: "#10b981" },
   ];
 
@@ -31,8 +31,8 @@ export const Profile = () => {
         <div
           className="w-10 h-10 rounded-xl flex items-center justify-center"
           style={{
-            background: "linear-gradient(135deg, #9333ea 0%, #ec4899 100%)",
-            boxShadow: "0 4px 15px rgba(147,51,234,0.4)",
+            background: "linear-gradient(135deg, #5B3A57 0%, #D9829B 100%)",
+            boxShadow: "0 4px 15px rgba(91,58,87,0.4)",
           }}
         >
           <User size={20} color="white" />
@@ -48,7 +48,7 @@ export const Profile = () => {
           >
             My Profile
           </h1>
-          <p className="text-sm" style={{ color: "#94a3b8" }}>
+          <p className="text-sm" style={{ color: "#8B7585" }}>
             Manage your delivery partner profile
           </p>
         </div>
@@ -59,7 +59,7 @@ export const Profile = () => {
         <div
           className="rounded-2xl overflow-hidden transition-all duration-300"
           style={{
-            background: "linear-gradient(135deg, rgba(147,51,234,0.03) 0%, rgba(147,51,234,0.01) 100%)",
+            background: "linear-gradient(135deg, rgba(91,58,87,0.03) 0%, rgba(91,58,87,0.01) 100%)",
             border: "1px solid rgba(0,0,0,0.06)",
             backdropFilter: "blur(20px)",
             animation: "fadeSlideUp 0.5s ease both",
@@ -69,7 +69,7 @@ export const Profile = () => {
           <div
             className="h-28 relative"
             style={{
-              background: "linear-gradient(135deg, #9333ea 0%, #ec4899 50%, #f59e0b 100%)",
+              background: "linear-gradient(135deg, #5B3A57 0%, #D9829B 50%, #f59e0b 100%)",
             }}
           >
             {/* Pattern overlay */}
@@ -99,7 +99,7 @@ export const Profile = () => {
                   className="w-28 h-28 rounded-full"
                   style={{
                     border: "4px solid #0f0a0a",
-                    boxShadow: "0 8px 30px rgba(147,51,234,0.3)",
+                    boxShadow: "0 8px 30px rgba(91,58,87,0.3)",
                   }}
                 />
                 <div
@@ -116,7 +116,7 @@ export const Profile = () => {
             </div>
 
             <div className="text-center mt-4">
-              <h2 className="text-2xl font-extrabold" style={{ color: "#1e293b" }}>
+              <h2 className="text-2xl font-extrabold" style={{ color: "#352832" }}>
                 Rahul Kumar
               </h2>
               <p
@@ -138,10 +138,10 @@ export const Profile = () => {
                     />
                   ))}
                 </div>
-                <span className="font-bold text-sm" style={{ color: "#1e293b" }}>
+                <span className="font-bold text-sm" style={{ color: "#352832" }}>
                   4.9
                 </span>
-                <span className="text-xs" style={{ color: "#94a3b8" }}>
+                <span className="text-xs" style={{ color: "#8B7585" }}>
                   (246 reviews)
                 </span>
               </div>
@@ -150,17 +150,17 @@ export const Profile = () => {
               <button
                 className="mt-5 w-full flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-sm font-bold transition-all duration-300 cursor-pointer"
                 style={{
-                  background: "linear-gradient(135deg, #9333ea 0%, #7c3aed 60%, #6d28d9 100%)",
+                  background: "linear-gradient(135deg, #5B3A57 0%, #7c3aed 60%, #6d28d9 100%)",
                   color: "white",
-                  boxShadow: "0 4px 20px rgba(147,51,234,0.4)",
+                  boxShadow: "0 4px 20px rgba(91,58,87,0.4)",
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = "translateY(-2px)";
-                  e.currentTarget.style.boxShadow = "0 8px 30px rgba(147,51,234,0.6)";
+                  e.currentTarget.style.boxShadow = "0 8px 30px rgba(91,58,87,0.6)";
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = "translateY(0)";
-                  e.currentTarget.style.boxShadow = "0 4px 20px rgba(147,51,234,0.4)";
+                  e.currentTarget.style.boxShadow = "0 4px 20px rgba(91,58,87,0.4)";
                 }}
               >
                 <Pencil size={16} />
@@ -173,7 +173,7 @@ export const Profile = () => {
               {[
                 { label: "Deliveries", value: "256", icon: CircleCheckBig, color: "#10b981" },
                 { label: "Rating", value: "4.9", icon: Star, color: "#f59e0b" },
-                { label: "Status", value: "Online", icon: Zap, color: "#9333ea" },
+                { label: "Status", value: "Online", icon: Zap, color: "#5B3A57" },
               ].map((stat) => (
                 <div
                   key={stat.label}
@@ -184,10 +184,10 @@ export const Profile = () => {
                   }}
                 >
                   <stat.icon size={16} style={{ color: stat.color, margin: "0 auto" }} />
-                  <p className="text-lg font-extrabold mt-1" style={{ color: "#1e293b" }}>
+                  <p className="text-lg font-extrabold mt-1" style={{ color: "#352832" }}>
                     {stat.value}
                   </p>
-                  <p className="text-[9px] font-medium" style={{ color: "#94a3b8" }}>
+                  <p className="text-[9px] font-medium" style={{ color: "#8B7585" }}>
                     {stat.label}
                   </p>
                 </div>
@@ -202,29 +202,29 @@ export const Profile = () => {
           <div
             className="rounded-2xl overflow-hidden transition-all duration-300"
             style={{
-              background: "linear-gradient(135deg, rgba(147,51,234,0.03) 0%, rgba(147,51,234,0.01) 100%)",
+              background: "linear-gradient(135deg, rgba(91,58,87,0.03) 0%, rgba(91,58,87,0.01) 100%)",
               border: "1px solid rgba(0,0,0,0.06)",
               backdropFilter: "blur(20px)",
               animation: "fadeSlideUp 0.5s ease 0.1s both",
             }}
           >
-            <div className="h-1" style={{ background: "linear-gradient(90deg, #9333ea, #ec4899)" }} />
+            <div className="h-1" style={{ background: "linear-gradient(90deg, #5B3A57, #D9829B)" }} />
             <div className="p-6">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="font-extrabold text-xl" style={{ color: "#1e293b" }}>
+                <h2 className="font-extrabold text-xl" style={{ color: "#352832" }}>
                   Personal Information
                 </h2>
-                <Pencil size={16} style={{ color: "#94a3b8" }} />
+                <Pencil size={16} style={{ color: "#8B7585" }} />
               </div>
 
               <div className="grid md:grid-cols-2 gap-4">
                 {[
-                  { icon: User, label: "Full Name", value: "Rahul Kumar", color: "#9333ea" },
+                  { icon: User, label: "Full Name", value: "Rahul Kumar", color: "#5B3A57" },
                   { icon: Mail, label: "Email", value: "rahul@gmail.com", color: "#3b82f6" },
                   { icon: Phone, label: "Phone", value: "+91 9876543210", color: "#10b981" },
                   { icon: Bike, label: "Vehicle", value: "Bike", color: "#f59e0b" },
                   { icon: FileBadge, label: "License No", value: "TN123456789", color: "#8b5cf6" },
-                  { icon: MapPin, label: "Service Area", value: "Coimbatore", color: "#ec4899" },
+                  { icon: MapPin, label: "Service Area", value: "Coimbatore", color: "#D9829B" },
                   { icon: Calendar, label: "Joined", value: "15 Mar 2025", color: "#06b6d4" },
                   { icon: Shield, label: "Verified", value: "KYC Complete", color: "#10b981" },
                 ].map((info, i) => (
@@ -232,8 +232,8 @@ export const Profile = () => {
                     key={info.label}
                     className="flex items-center gap-4 p-4 rounded-xl transition-all duration-300"
                     style={{
-                      background: "rgba(147,51,234,0.02)",
-                      border: "1px solid rgba(147,51,234,0.03)",
+                      background: "rgba(91,58,87,0.02)",
+                      border: "1px solid rgba(91,58,87,0.03)",
                       animation: `fadeSlideUp 0.4s ease ${0.2 + i * 0.05}s both`,
                     }}
                     onMouseEnter={(e) => {
@@ -241,8 +241,8 @@ export const Profile = () => {
                       e.currentTarget.style.background = `${info.color}08`;
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor = "rgba(147,51,234,0.03)";
-                      e.currentTarget.style.background = "rgba(147,51,234,0.02)";
+                      e.currentTarget.style.borderColor = "rgba(91,58,87,0.03)";
+                      e.currentTarget.style.background = "rgba(91,58,87,0.02)";
                     }}
                   >
                     <div
@@ -258,7 +258,7 @@ export const Profile = () => {
                       <p className="text-[10px] font-bold uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.35)" }}>
                         {info.label}
                       </p>
-                      <h3 className="font-bold text-sm mt-0.5" style={{ color: "#1e293b" }}>
+                      <h3 className="font-bold text-sm mt-0.5" style={{ color: "#352832" }}>
                         {info.value}
                       </h3>
                     </div>
@@ -272,7 +272,7 @@ export const Profile = () => {
           <div
             className="rounded-2xl overflow-hidden transition-all duration-300"
             style={{
-              background: "linear-gradient(135deg, rgba(147,51,234,0.03) 0%, rgba(147,51,234,0.01) 100%)",
+              background: "linear-gradient(135deg, rgba(91,58,87,0.03) 0%, rgba(91,58,87,0.01) 100%)",
               border: "1px solid rgba(0,0,0,0.06)",
               backdropFilter: "blur(20px)",
               animation: "fadeSlideUp 0.5s ease 0.3s both",
@@ -281,7 +281,7 @@ export const Profile = () => {
             <div className="h-1" style={{ background: "linear-gradient(90deg, #f59e0b, #f6e3a1)" }} />
             <div className="p-6">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="font-extrabold text-xl" style={{ color: "#1e293b" }}>
+                <h2 className="font-extrabold text-xl" style={{ color: "#352832" }}>
                   Achievements
                 </h2>
                 <span className="text-xs font-bold px-3 py-1 rounded-full" style={{ background: "rgba(245,158,11,0.15)", color: "#f59e0b" }}>
@@ -319,10 +319,10 @@ export const Profile = () => {
                     >
                       <badge.icon size={24} color="white" />
                     </div>
-                    <h3 className="font-extrabold text-sm" style={{ color: "#1e293b" }}>
+                    <h3 className="font-extrabold text-sm" style={{ color: "#352832" }}>
                       {badge.label}
                     </h3>
-                    <p className="text-[10px] mt-1" style={{ color: "#94a3b8" }}>
+                    <p className="text-[10px] mt-1" style={{ color: "#8B7585" }}>
                       {badge.desc}
                     </p>
                   </div>
@@ -352,10 +352,10 @@ export const Profile = () => {
                   <Zap size={22} color="white" />
                 </div>
                 <div>
-                  <h3 className="font-extrabold" style={{ color: "#1e293b" }}>
+                  <h3 className="font-extrabold" style={{ color: "#352832" }}>
                     You&apos;re Online
                   </h3>
-                  <p className="text-xs" style={{ color: "#94a3b8" }}>
+                  <p className="text-xs" style={{ color: "#8B7585" }}>
                     Ready to accept delivery orders
                   </p>
                 </div>
@@ -363,17 +363,17 @@ export const Profile = () => {
               <button
                 className="flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold transition-all duration-300 cursor-pointer"
                 style={{
-                  background: "linear-gradient(135deg, #9333ea, #7c3aed)",
+                  background: "linear-gradient(135deg, #5B3A57, #7c3aed)",
                   color: "white",
-                  boxShadow: "0 4px 20px rgba(147,51,234,0.4)",
+                  boxShadow: "0 4px 20px rgba(91,58,87,0.4)",
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = "translateY(-2px) scale(1.02)";
-                  e.currentTarget.style.boxShadow = "0 8px 30px rgba(147,51,234,0.6)";
+                  e.currentTarget.style.boxShadow = "0 8px 30px rgba(91,58,87,0.6)";
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = "translateY(0) scale(1)";
-                  e.currentTarget.style.boxShadow = "0 4px 20px rgba(147,51,234,0.4)";
+                  e.currentTarget.style.boxShadow = "0 4px 20px rgba(91,58,87,0.4)";
                 }}
               >
                 <Heart size={16} />

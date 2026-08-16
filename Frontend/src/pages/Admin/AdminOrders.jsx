@@ -27,7 +27,7 @@ const aoStyles = `
 }
 .ao-title-icon {
   width: 38px; height: 38px; border-radius: 10px;
-  background: linear-gradient(135deg, #d4213c, #ff6b35);
+  background: linear-gradient(135deg, #2563EB, #06B6D4);
   display: flex; align-items: center; justify-content: center;
 }
 .ao-filters { display: flex; gap: 8px; flex-wrap: wrap; }
@@ -35,13 +35,13 @@ const aoStyles = `
   padding: 8px 16px; border-radius: 10px;
   font-size: 0.8rem; font-weight: 700;
   cursor: pointer; transition: all 0.25s ease;
-  background: rgba(255,255,255,0.04);
-  color: rgba(255,255,255,0.5);
+  background: rgba(0,0,0,0.02);
+  color: #64748B;
   border: 1px solid rgba(255,255,255,0.08);
 }
 .ao-filter-btn:hover { border-color: rgba(212,175,55,0.3); color: #fff; }
 .ao-filter-btn.active {
-  background: linear-gradient(135deg, #d4213c, #ff6b35);
+  background: linear-gradient(135deg, #2563EB, #06B6D4);
   border-color: transparent; color: white;
   box-shadow: 0 4px 14px rgba(212,33,60,0.3);
 }
@@ -50,8 +50,8 @@ const aoStyles = `
 @media (min-width: 1024px) { .ao-grid { grid-template-columns: repeat(3, 1fr); } }
 .ao-card {
   border-radius: 16px; overflow: hidden;
-  background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
-  border: 1px solid rgba(255,255,255,0.06);
+  background: linear-gradient(135deg, rgba(0,0,0,0.02), rgba(0,0,0,0.01));
+  border: 1px solid #E2E8F0;
   backdrop-filter: blur(20px);
   transition: all 0.3s ease;
 }
@@ -60,7 +60,7 @@ const aoStyles = `
 .ao-card-body { padding: 18px; }
 .ao-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
 .ao-order-num { font-weight: 900; font-size: 1rem; letter-spacing: -0.02em; }
-.ao-order-time { display: flex; align-items: center; gap: 4px; font-size: 0.7rem; margin-top: 3px; color: rgba(255,255,255,0.4); }
+.ao-order-time { display: flex; align-items: center; gap: 4px; font-size: 0.7rem; margin-top: 3px; color: #94A3B8; }
 .ao-status-badge {
   display: inline-flex; align-items: center; gap: 5px;
   padding: 5px 12px; border-radius: 999px;
@@ -75,18 +75,18 @@ const aoStyles = `
 .ao-customer-info {
   display: flex; align-items: center; gap: 10px;
   padding: 10px; border-radius: 10px;
-  background: rgba(255,255,255,0.02);
-  border: 1px solid rgba(255,255,255,0.04);
+  background: #F8FAFC;
+  border: 1px solid rgba(0,0,0,0.02);
   margin-bottom: 12px;
 }
 .ao-avatar {
   width: 34px; height: 34px; border-radius: 8px;
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0; font-weight: 800; font-size: 0.8rem; color: white;
-  background: linear-gradient(135deg, #d4213c, #ff6b35);
+  background: linear-gradient(135deg, #2563EB, #06B6D4);
 }
 .ao-customer-name { font-weight: 700; font-size: 0.85rem; color: #fff; margin: 0; }
-.ao-customer-phone { display: flex; align-items: center; gap: 4px; font-size: 0.7rem; color: rgba(255,255,255,0.4); margin: 2px 0 0 0; }
+.ao-customer-phone { display: flex; align-items: center; gap: 4px; font-size: 0.7rem; color: #94A3B8; margin: 2px 0 0 0; }
 .ao-items-row { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 12px; }
 .ao-item-chip {
   display: inline-flex; align-items: center; gap: 4px;
@@ -94,7 +94,7 @@ const aoStyles = `
   font-size: 0.68rem; font-weight: 600;
   background: rgba(212,175,55,0.08);
   border: 1px solid rgba(212,175,55,0.15);
-  color: #d4af37;
+  color: #2563EB;
 }
 .ao-amount-row {
   display: flex; align-items: center; justify-content: space-between;
@@ -103,8 +103,8 @@ const aoStyles = `
   border: 1px solid rgba(212,175,55,0.15);
   margin-bottom: 12px;
 }
-.ao-amount-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: rgba(255,255,255,0.5); }
-.ao-amount-value { font-size: 1.2rem; font-weight: 900; color: #d4af37; }
+.ao-amount-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #64748B; }
+.ao-amount-value { font-size: 1.2rem; font-weight: 900; color: #2563EB; }
 .ao-map-link {
   display: flex; align-items: center; justify-content: center; gap: 6px;
   padding: 8px 14px; border-radius: 8px;
@@ -129,8 +129,8 @@ const aoStyles = `
 .ao-empty {
   text-align: center; padding: 60px 20px;
   border-radius: 16px;
-  background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-  border: 1px solid rgba(255,255,255,0.06);
+  background: linear-gradient(135deg, #F8FAFC, rgba(0,0,0,0.01));
+  border: 1px solid #E2E8F0;
 }
 .ao-empty-icon {
   width: 60px; height: 60px; border-radius: 16px;
@@ -140,8 +140,8 @@ const aoStyles = `
   border: 1px solid rgba(212,33,60,0.2);
 }
 .ao-empty-title { font-size: 1.2rem; font-weight: 900; color: #fff; margin-bottom: 6px; }
-.ao-empty-sub { color: rgba(255,255,255,0.4); font-size: 0.85rem; }
-.ao-loading { display: flex; align-items: center; justify-content: center; min-height: 200px; color: rgba(255,255,255,0.5); }
+.ao-empty-sub { color: #94A3B8; font-size: 0.85rem; }
+.ao-loading { display: flex; align-items: center; justify-content: center; min-height: 200px; color: #64748B; }
 `;
 
 const statusColors = {
@@ -234,7 +234,7 @@ const AdminOrders = () => {
         ) : orders.length === 0 ? (
           <div className="ao-empty">
             <div className="ao-empty-icon">
-              <ShoppingBag size={28} style={{ color: "#d4213c" }} />
+              <ShoppingBag size={28} style={{ color: "#2563EB" }} />
             </div>
             <h2 className="ao-empty-title">No Orders</h2>
             <p className="ao-empty-sub">

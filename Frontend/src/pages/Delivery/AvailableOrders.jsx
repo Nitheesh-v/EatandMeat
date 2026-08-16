@@ -63,8 +63,8 @@ export const AvailableOrders = () => {
           <div
             className="w-10 h-10 rounded-xl flex items-center justify-center"
             style={{
-              background: "linear-gradient(135deg, #9333ea, #ec4899)",
-              boxShadow: "0 4px 15px rgba(147,51,234,0.35)",
+              background: "linear-gradient(135deg, #5B3A57, #D9829B)",
+              boxShadow: "0 4px 15px rgba(91,58,87,0.35)",
             }}
           >
             <Package size={20} color="white" />
@@ -73,14 +73,14 @@ export const AvailableOrders = () => {
             <h1
               className="text-2xl font-extrabold tracking-tight"
               style={{
-                background: "linear-gradient(135deg, #a78bfa, #f472b6)",
+                background: "linear-gradient(135deg, #7B5A77, #D9829B)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
               }}
             >
               Available Orders
             </h1>
-            <p className="text-sm" style={{ color: "#94a3b8" }}>
+            <p className="text-sm" style={{ color: "#8B7585" }}>
               Accept nearby delivery requests
             </p>
           </div>
@@ -88,9 +88,9 @@ export const AvailableOrders = () => {
         <span
           className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold"
           style={{
-            background: "rgba(147,51,234,0.1)",
-            color: "#a78bfa",
-            border: "1px solid rgba(147,51,234,0.25)",
+            background: "rgba(91,58,87,0.1)",
+            color: "#7B5A77",
+            border: "1px solid rgba(91,58,87,0.25)",
           }}
         >
           {orders.length} Available
@@ -103,23 +103,23 @@ export const AvailableOrders = () => {
           className="text-center py-16 rounded-2xl"
           style={{
             background:
-              "linear-gradient(135deg, rgba(255,255,255,0.03), rgba(147,51,234,0.01))",
-            border: "1px solid rgba(147,51,234,0.1)",
+              "linear-gradient(135deg, rgba(255,255,255,0.03), rgba(91,58,87,0.01))",
+            border: "1px solid rgba(91,58,87,0.1)",
           }}
         >
           <div
             className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4"
             style={{
-              background: "rgba(147,51,234,0.08)",
-              border: "1px solid rgba(147,51,234,0.15)",
+              background: "rgba(91,58,87,0.08)",
+              border: "1px solid rgba(91,58,87,0.15)",
             }}
           >
-            <Package size={28} style={{ color: "#a78bfa" }} />
+            <Package size={28} style={{ color: "#7B5A77" }} />
           </div>
-          <h2 className="text-lg font-bold" style={{ color: "#1e293b" }}>
+          <h2 className="text-lg font-bold" style={{ color: "#352832" }}>
             No Available Orders
           </h2>
-          <p className="text-sm mt-1" style={{ color: "#94a3b8" }}>
+          <p className="text-sm mt-1" style={{ color: "#8B7585" }}>
             Check back soon for new delivery requests.
           </p>
         </div>
@@ -131,23 +131,23 @@ export const AvailableOrders = () => {
               className="rounded-2xl overflow-hidden transition-all duration-500"
               style={{
                 background:
-                  "linear-gradient(135deg, rgba(147,51,234,0.03) 0%, rgba(147,51,234,0.01) 100%)",
+                  "linear-gradient(135deg, rgba(91,58,87,0.03) 0%, rgba(91,58,87,0.01) 100%)",
                 border:
                   acceptedId === order._id
                     ? "1px solid rgba(16,185,129,0.4)"
-                    : "1px solid rgba(147,51,234,0.1)",
+                    : "1px solid rgba(91,58,87,0.1)",
                 backdropFilter: "blur(20px)",
                 animation: `fadeSlideUp 0.5s ease ${i * 0.1}s both`,
               }}
               onMouseEnter={(e) => {
                 if (acceptedId !== order._id) {
-                  e.currentTarget.style.borderColor = "rgba(147,51,234,0.25)";
+                  e.currentTarget.style.borderColor = "rgba(91,58,87,0.25)";
                   e.currentTarget.style.transform = "translateY(-2px)";
                 }
               }}
               onMouseLeave={(e) => {
                 if (acceptedId !== order._id) {
-                  e.currentTarget.style.borderColor = "rgba(147,51,234,0.1)";
+                  e.currentTarget.style.borderColor = "rgba(91,58,87,0.1)";
                   e.currentTarget.style.transform = "translateY(0)";
                 }
               }}
@@ -156,7 +156,7 @@ export const AvailableOrders = () => {
               <div
                 className="h-1"
                 style={{
-                  background: "linear-gradient(90deg, #9333ea, #ec4899, #f59e0b)",
+                  background: "linear-gradient(90deg, #5B3A57, #D9829B, #f59e0b)",
                 }}
               />
 
@@ -167,18 +167,18 @@ export const AvailableOrders = () => {
                     <div
                       className="w-12 h-12 rounded-xl flex items-center justify-center font-extrabold text-lg"
                       style={{
-                        background: "rgba(147,51,234,0.12)",
-                        border: "1px solid rgba(147,51,234,0.2)",
-                        color: "#a78bfa",
+                        background: "rgba(91,58,87,0.12)",
+                        border: "1px solid rgba(91,58,87,0.2)",
+                        color: "#7B5A77",
                       }}
                     >
                       {order.orderNumber?.slice(-2) || "01"}
                     </div>
                     <div>
-                      <h2 className="font-extrabold text-lg" style={{ color: "#1e293b" }}>
+                      <h2 className="font-extrabold text-lg" style={{ color: "#352832" }}>
                         #{order.orderNumber}
                       </h2>
-                      <p className="text-sm" style={{ color: "#94a3b8" }}>
+                      <p className="text-sm" style={{ color: "#8B7585" }}>
                         <User size={12} style={{ display: "inline", marginRight: 4 }} />
                         {order.customer?.fullName || "Customer"}
                       </p>
@@ -187,14 +187,14 @@ export const AvailableOrders = () => {
                   <div
                     className="text-right px-4 py-2 rounded-xl"
                     style={{
-                      background: "rgba(147,51,234,0.08)",
-                      border: "1px solid rgba(147,51,234,0.15)",
+                      background: "rgba(91,58,87,0.08)",
+                      border: "1px solid rgba(91,58,87,0.15)",
                     }}
                   >
-                    <p className="text-[10px] font-bold uppercase" style={{ color: "#a78bfa" }}>
+                    <p className="text-[10px] font-bold uppercase" style={{ color: "#7B5A77" }}>
                       Order Value
                     </p>
-                    <p className="font-extrabold text-lg" style={{ color: "#a78bfa" }}>
+                    <p className="font-extrabold text-lg" style={{ color: "#7B5A77" }}>
                       ₹{order.totalAmount}
                     </p>
                   </div>
@@ -204,19 +204,19 @@ export const AvailableOrders = () => {
                 <div
                   className="flex items-center gap-4 p-3 rounded-xl mb-4"
                   style={{
-                    background: "rgba(147,51,234,0.02)",
-                    border: "1px solid rgba(147,51,234,0.03)",
+                    background: "rgba(91,58,87,0.02)",
+                    border: "1px solid rgba(91,58,87,0.03)",
                   }}
                 >
                   <div className="flex items-center gap-2">
-                    <Phone size={14} style={{ color: "#a78bfa" }} />
+                    <Phone size={14} style={{ color: "#7B5A77" }} />
                     <span className="text-sm" style={{ color: "#475569" }}>
                       {order.customer?.phone || "—"}
                     </span>
                   </div>
                   {order.deliveryAddress?.address && (
                     <div className="flex items-center gap-2">
-                      <MapPin size={14} style={{ color: "#ec4899" }} />
+                      <MapPin size={14} style={{ color: "#D9829B" }} />
                       <span className="text-sm" style={{ color: "#475569" }}>
                         {order.deliveryAddress.address}
                       </span>
@@ -277,17 +277,17 @@ export const AvailableOrders = () => {
                     onClick={() => handleAccept(order._id)}
                     className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold cursor-pointer transition-all duration-300"
                     style={{
-                      background: "linear-gradient(135deg, #9333ea, #ec4899)",
+                      background: "linear-gradient(135deg, #5B3A57, #D9829B)",
                       color: "white",
-                      boxShadow: "0 4px 20px rgba(147,51,234,0.35)",
+                      boxShadow: "0 4px 20px rgba(91,58,87,0.35)",
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.transform = "translateY(-2px)";
-                      e.currentTarget.style.boxShadow = "0 8px 30px rgba(147,51,234,0.5)";
+                      e.currentTarget.style.boxShadow = "0 8px 30px rgba(91,58,87,0.5)";
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.transform = "translateY(0)";
-                      e.currentTarget.style.boxShadow = "0 4px 20px rgba(147,51,234,0.35)";
+                      e.currentTarget.style.boxShadow = "0 4px 20px rgba(91,58,87,0.35)";
                     }}
                   >
                     Accept Order

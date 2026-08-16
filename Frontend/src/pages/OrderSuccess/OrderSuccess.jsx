@@ -7,7 +7,7 @@ const OrderSuccess = () => {
   const location = useLocation();
   const order = location.state;
 
-  const confettiColors = ["#0d9488", "#f59e0b", "#14b8a6", "#10b981", "#8b5cf6"];
+  const confettiColors = ["#B4232C", "#C9A227", "#D4354A", "#10b981", "#8b5cf6"];
 
   useEffect(() => {
     const timer = setTimeout(() => setShowConfetti(false), 4000);
@@ -94,8 +94,8 @@ const OrderSuccess = () => {
             <div
               className="absolute -top-2 -right-2 w-6 h-6 rounded-full flex items-center justify-center"
               style={{
-                background: "linear-gradient(135deg, #f59e0b, #f6e3a1)",
-                boxShadow: "0 0 15px rgba(245,158,11,0.5)",
+                background: "linear-gradient(135deg, #C9A227, #f6e3a1)",
+                boxShadow: "0 0 15px rgba(201,162,39,0.5)",
                 animation: "float 3s ease-in-out infinite",
               }}
             >
@@ -198,8 +198,8 @@ const OrderSuccess = () => {
                     <div
                       className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-extrabold flex-shrink-0"
                       style={{
-                        background: "linear-gradient(135deg, rgba(13,148,136,0.15), rgba(245,158,11,0.1))",
-                        color: "#0d9488",
+                        background: "linear-gradient(135deg, rgba(180,35,44,0.15), rgba(201,162,39,0.1))",
+                        color: "#B4232C",
                       }}
                     >
                       {item.quantity}×
@@ -217,7 +217,7 @@ const OrderSuccess = () => {
 
             <div
               className="my-4 h-px"
-              style={{ background: "linear-gradient(90deg, transparent, rgba(245,158,11,0.3), transparent)" }}
+              style={{ background: "linear-gradient(90deg, transparent, rgba(201,162,39,0.3), transparent)" }}
             />
 
             {/* Payment & Delivery info */}
@@ -248,9 +248,9 @@ const OrderSuccess = () => {
               >
                 <div
                   className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
-                  style={{ background: "rgba(245,158,11,0.12)" }}
+                  style={{ background: "rgba(201,162,39,0.12)" }}
                 >
-                  <Clock size={16} style={{ color: "#f59e0b" }} />
+                  <Clock size={16} style={{ color: "#C9A227" }} />
                 </div>
                 <div className="min-w-0">
                   <p className="text-[10px] font-bold uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.35)" }}>
@@ -267,19 +267,19 @@ const OrderSuccess = () => {
             <div
               className="mt-5 p-4 rounded-xl"
               style={{
-                background: "linear-gradient(135deg, rgba(245,158,11,0.06), rgba(245,158,11,0.02))",
-                border: "1px solid rgba(245,158,11,0.15)",
+                background: "linear-gradient(135deg, rgba(201,162,39,0.06), rgba(201,162,39,0.02))",
+                border: "1px solid rgba(201,162,39,0.15)",
               }}
             >
               <div className="flex items-start gap-3">
                 <div
                   className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
-                  style={{ background: "rgba(245,158,11,0.12)" }}
+                  style={{ background: "rgba(201,162,39,0.12)" }}
                 >
-                  <User size={16} style={{ color: "#f59e0b" }} />
+                  <User size={16} style={{ color: "#C9A227" }} />
                 </div>
                 <div>
-                  <p className="text-[10px] font-bold uppercase tracking-wider" style={{ color: "#f59e0b" }}>
+                  <p className="text-[10px] font-bold uppercase tracking-wider" style={{ color: "#C9A227" }}>
                     Delivery Partner
                   </p>
                   <p className="text-xs mt-1" style={{ color: "rgba(255,255,255,0.5)" }}>
@@ -301,7 +301,7 @@ const OrderSuccess = () => {
             animation: "fadeSlideUp 0.6s ease 0.5s both",
           }}
         >
-          <div className="h-1" style={{ background: "linear-gradient(90deg, #0d9488, #14b8a6)" }} />
+          <div className="h-1" style={{ background: "linear-gradient(90deg, #B4232C, #D4354A)" }} />
           <div className="p-5 sm:p-6">
             <h3 className="font-extrabold text-base mb-6 text-center" style={{ color: "#fff" }}>
               Order Progress
@@ -366,17 +366,17 @@ const OrderSuccess = () => {
             <button
               className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl text-sm font-bold transition-all duration-300 cursor-pointer"
               style={{
-                background: "linear-gradient(135deg, #0d9488 0%, #14b8a6 100%)",
+                background: "linear-gradient(135deg, #B4232C 0%, #D4354A 100%)",
                 color: "white",
-                boxShadow: "0 4px 20px rgba(13,148,136,0.4)",
+                boxShadow: "0 4px 20px rgba(180,35,44,0.4)",
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = "translateY(-2px)";
-                e.currentTarget.style.boxShadow = "0 8px 30px rgba(13,148,136,0.6)";
+                e.currentTarget.style.boxShadow = "0 8px 30px rgba(180,35,44,0.6)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.boxShadow = "0 4px 20px rgba(13,148,136,0.4)";
+                e.currentTarget.style.boxShadow = "0 4px 20px rgba(180,35,44,0.4)";
               }}
             >
               Continue Shopping
@@ -393,8 +393,8 @@ const OrderSuccess = () => {
                 border: "1px solid rgba(255,255,255,0.1)",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = "rgba(245,158,11,0.12)";
-                e.currentTarget.style.borderColor = "rgba(245,158,11,0.3)";
+                e.currentTarget.style.background = "rgba(201,162,39,0.12)";
+                e.currentTarget.style.borderColor = "rgba(201,162,39,0.3)";
                 e.currentTarget.style.transform = "translateY(-2px)";
               }}
               onMouseLeave={(e) => {
