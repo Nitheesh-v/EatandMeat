@@ -43,13 +43,14 @@ const Login = () => {
   ];
 
   const inputStyle = {
-    width: "100%", background: "#FFFFFF", border: "1px solid #E2E8F0",
+    width: "100%", background: "rgba(255,255,255,0.5)", border: "1px solid #E2E8F0",
     borderRadius: 10, padding: "11px 14px 11px 42px", color: text,
     fontSize: "0.9rem", boxSizing: "border-box", outline: "none",
+    backdropFilter: "blur(10px)",
   };
 
   return (
-    <div style={{ minHeight: "100vh", display: "flex", background: cream }}>
+    <div style={{ minHeight: "100vh", display: "flex" }}>
       {/* Visual side */}
       <div style={{
         flex: 1, display: "flex", flexDirection: "column", justifyContent: "center",
@@ -61,7 +62,7 @@ const Login = () => {
 
         <div style={{ position: "relative", zIndex: 1 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 40 }}>
-            <div style={{ width: 36, height: 36, borderRadius: 8, background: primary, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <div style={{ width: 36, height: 36, borderRadius: 8, background: `linear-gradient(135deg, ${primary}, ${gold})`, display: "flex", alignItems: "center", justifyContent: "center" }}>
               <Flame size={20} color="white" />
             </div>
             <span style={{ fontSize: "1.25rem", fontWeight: 800 }}>
@@ -87,7 +88,10 @@ const Login = () => {
       </div>
 
       {/* Form side */}
-      <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "40px 24px" }}>
+      <div style={{
+        flex: 1, display: "flex", alignItems: "center", justifyContent: "center",
+        padding: "40px 24px", background: cream,
+      }}>
         <div style={{ width: "100%", maxWidth: 400 }}>
           <h1 style={{ fontSize: "1.5rem", fontWeight: 800, color: deep, margin: "0 0 4px" }}>
             Welcome <span style={{ color: primary }}>Back</span>
@@ -100,10 +104,11 @@ const Login = () => {
                 <button key={role.value} type="button" onClick={() => setSelectedRole(role.value)} style={{
                   flex: 1, padding: "8px 6px", borderRadius: 8, fontSize: "0.72rem", fontWeight: 600,
                   cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 4,
-                  background: selectedRole === role.value ? primary : "#FFFFFF",
+                  background: selectedRole === role.value ? primary : "rgba(255,255,255,0.5)",
                   color: selectedRole === role.value ? "white" : "#64748B",
                   border: `1px solid ${selectedRole === role.value ? primary : "#E2E8F0"}`,
                   transition: "all 0.2s",
+                  backdropFilter: "blur(10px)",
                 }}>
                   <role.icon size={13} />
                   {role.label}
@@ -112,33 +117,35 @@ const Login = () => {
             </div>
 
             <div style={{ position: "relative", marginBottom: 14 }}>
-              <Mail size={16} style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "#CBD5E1" }} />
+              <Mail size={16} style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "#94A3B8", zIndex: 1 }} />
               <input type="email" name="email" placeholder="Email Address" value={formData.email} onChange={handleChange} required style={inputStyle} />
             </div>
 
             <div style={{ position: "relative", marginBottom: 14 }}>
-              <Lock size={16} style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "#CBD5E1" }} />
+              <Lock size={16} style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "#94A3B8", zIndex: 1 }} />
               <input type={showPassword ? "text" : "password"} name="password" placeholder="Password" value={formData.password} onChange={handleChange} required style={{ ...inputStyle, paddingRight: 42 }} />
-              <button type="button" onClick={() => setShowPassword(!showPassword)} style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", color: "#CBD5E1" }}>
+              <button type="button" onClick={() => setShowPassword(!showPassword)} style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", color: "#94A3B8" }}>
                 {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>
             </div>
 
             <button type="submit" disabled={loading} style={{
-              width: "100%", padding: "12px", borderRadius: 10, border: "none",
-              background: primary, color: "white", fontWeight: 700, fontSize: "0.9rem",
-              cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-              marginTop: 16, boxShadow: "0 4px 12px rgba(180,35,44,0.25)", transition: "all 0.2s",
+              width: "100%", padding: "13px", borderRadius: 10, border: "none",
+              background: `linear-gradient(135deg, ${primary}, ${gold})`, color: "white",
+              fontWeight: 700, fontSize: "0.9rem", cursor: "pointer",
+              display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+              marginTop: 16, boxShadow: "0 4px 16px rgba(180,35,44,0.3)", transition: "all 0.2s",
+              opacity: loading ? 0.6 : 1,
             }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = "#9A1D25"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = primary; }}
+              onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-1px)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; }}
             >
               <LogIn size={18} />
               {loading ? "Signing in..." : "Sign In"}
             </button>
           </form>
 
-          <div style={{ height: 1, background: "#F1F5F9", margin: "20px 0" }} />
+          <div style={{ height: 1, background: "#E2E8F0", margin: "20px 0" }} />
 
           <p style={{ textAlign: "center", fontSize: "0.85rem", color: "#94A3B8" }}>
             Don't have an account? <Link to="/register" style={{ color: gold, fontWeight: 700, textDecoration: "none" }}>Sign Up</Link>
@@ -146,9 +153,7 @@ const Login = () => {
         </div>
       </div>
 
-      <style>{`
-        @media (max-width: 900px) { .login-visual { display: none !important; } }
-      `}</style>
+      <style>{`@media (max-width: 900px) { .login-visual { display: none !important; } }`}</style>
     </div>
   );
 };

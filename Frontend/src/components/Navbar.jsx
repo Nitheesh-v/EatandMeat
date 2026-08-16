@@ -12,6 +12,7 @@ const navLinks = [
 ];
 
 const Navbar = () => {
+  const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const routerLocation = useRouterLocation();
@@ -19,6 +20,12 @@ const Navbar = () => {
   const { totalItems } = useCart();
   const { currentUser, logout } = useAuth();
   const { location, setShowLocationModal } = useLocation();
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => { setMenuOpen(false); setProfileOpen(false); }, [routerLocation.pathname]);
 
@@ -28,19 +35,24 @@ const Navbar = () => {
     return () => document.removeEventListener("mousedown", onClick);
   }, []);
 
-  const deep = "#24140F";
   const primary = "#B4232C";
   const gold = "#C9A227";
+  const deep = "#24140F";
 
   return (
     <nav style={{
       position: "fixed", top: 0, left: 0, right: 0, zIndex: 50,
-      background: deep,
-      borderBottom: `1px solid rgba(201,162,39,0.15)`,
-      boxShadow: "0 2px 20px rgba(36,20,15,0.3)",
+      background: scrolled
+        ? "rgba(36, 20, 15, 0.85)"
+        : "rgba(36, 20, 15, 0.6)",
+      backdropFilter: scrolled ? "blur(20px) saturate(180%)" : "blur(12px) saturate(150%)",
+      WebkitBackdropFilter: scrolled ? "blur(20px) saturate(180%)" : "blur(12px) saturate(150%)",
+      borderBottom: scrolled ? "1px solid rgba(201,162,39,0.2)" : "1px solid rgba(255,255,255,0.06)",
+      boxShadow: scrolled ? "0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.04)" : "none",
+      transition: "all 0.3s ease",
     }}>
       {/* Gold accent line */}
-      <div style={{ height: 2, background: `linear-gradient(90deg, ${primary}, ${gold}, ${primary})` }} />
+      <div style={{ height: 2, background: `linear-gradient(90deg, transparent, ${gold}, ${primary}, ${gold}, transparent)` }} />
 
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 16px", display: "flex", alignItems: "center", justifyContent: "space-between", height: 56, gap: 16 }}>
         {/* Logo */}
@@ -49,7 +61,7 @@ const Navbar = () => {
             width: 32, height: 32, borderRadius: 8,
             background: `linear-gradient(135deg, ${primary}, ${gold})`,
             display: "flex", alignItems: "center", justifyContent: "center",
-            boxShadow: "0 2px 8px rgba(180,35,44,0.4)",
+            boxShadow: "0 2px 12px rgba(180,35,44,0.4), inset 0 1px 0 rgba(255,255,255,0.2)",
           }}>
             <Flame size={17} color="white" />
           </div>
@@ -62,10 +74,17 @@ const Navbar = () => {
 
         {/* Location — desktop */}
         <button onClick={() => setShowLocationModal(true)} style={{
-          display: "none", alignItems: "center", gap: 6, background: "rgba(255,255,255,0.05)",
-          border: "1px solid rgba(255,255,255,0.08)", cursor: "pointer",
-          padding: "5px 10px", borderRadius: 8, fontSize: "0.78rem", fontWeight: 600, color: "rgba(255,255,255,0.7)",
-        }} className="nav-location-btn">
+          display: "none", alignItems: "center", gap: 6,
+          background: "rgba(255,255,255,0.04)",
+          backdropFilter: "blur(10px)",
+          border: "1px solid rgba(255,255,255,0.08)",
+          cursor: "pointer", padding: "5px 10px", borderRadius: 8,
+          fontSize: "0.78rem", fontWeight: 600, color: "rgba(255,255,255,0.7)",
+          transition: "all 0.2s",
+        }} className="nav-location-btn"
+          onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.08)"; e.currentTarget.style.borderColor = "rgba(201,162,39,0.3)"; }}
+          onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.04)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; }}
+        >
           <MapPin size={13} style={{ color: gold }} />
           <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.68rem" }}>Delivering to</span>
           <span style={{ color: "#FFFFFF", fontWeight: 700 }}>{location?.area || "Select"}</span>
@@ -86,7 +105,7 @@ const Navbar = () => {
                 }}>
                   {link.label}
                   {isActive && (
-                    <span style={{ position: "absolute", bottom: -2, left: 0, right: 0, height: 2, background: gold, borderRadius: 1 }} />
+                    <span style={{ position: "absolute", bottom: -2, left: 0, right: 0, height: 2, background: gold, borderRadius: 1, boxShadow: `0 0 8px ${gold}60` }} />
                   )}
                 </Link>
               </li>
@@ -109,9 +128,14 @@ const Navbar = () => {
             <Link to="/cart" style={{
               position: "relative", width: 34, height: 34, borderRadius: 8,
               display: "flex", alignItems: "center", justifyContent: "center",
-              background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.08)",
+              background: "rgba(255,255,255,0.05)",
+              backdropFilter: "blur(10px)",
+              border: "1px solid rgba(255,255,255,0.08)",
               textDecoration: "none", transition: "all 0.2s",
-            }}>
+            }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.1)"; e.currentTarget.style.borderColor = "rgba(201,162,39,0.3)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.05)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; }}
+            >
               <ShoppingCart size={15} style={{ color: "rgba(255,255,255,0.7)" }} />
               {totalItems > 0 && (
                 <span style={{
@@ -119,7 +143,7 @@ const Navbar = () => {
                   borderRadius: "50%", background: primary, color: "white",
                   fontSize: "0.6rem", fontWeight: 800, display: "flex",
                   alignItems: "center", justifyContent: "center",
-                  boxShadow: `0 0 6px ${primary}80`,
+                  boxShadow: `0 0 8px ${primary}80`,
                 }}>{totalItems}</span>
               )}
             </Link>
@@ -130,10 +154,12 @@ const Navbar = () => {
             <button onClick={() => setProfileOpen((v) => !v)} style={{
               width: 34, height: 34, borderRadius: 8, display: "flex",
               alignItems: "center", justifyContent: "center", cursor: "pointer",
-              background: currentUser ? `linear-gradient(135deg, ${primary}, ${gold})` : "rgba(255,255,255,0.06)",
+              background: currentUser ? `linear-gradient(135deg, ${primary}, ${gold})` : "rgba(255,255,255,0.05)",
+              backdropFilter: "blur(10px)",
               border: currentUser ? "none" : "1px solid rgba(255,255,255,0.08)",
               color: "white", fontWeight: 700, fontSize: "0.72rem",
               transition: "all 0.2s",
+              boxShadow: currentUser ? `0 2px 12px ${primary}50` : "none",
             }}>
               {currentUser ? (currentUser.fullName?.charAt(0) || "U") : <User size={15} />}
             </button>
@@ -142,13 +168,17 @@ const Navbar = () => {
             {profileOpen && (
               <div style={{
                 position: "absolute", right: 0, marginTop: 8, width: 260,
-                background: "#FFFFFF", border: "1px solid #E2E8F0",
-                borderRadius: 12, boxShadow: "0 12px 40px rgba(0,0,0,0.12)",
+                background: "rgba(36, 20, 15, 0.9)",
+                backdropFilter: "blur(20px) saturate(180%)",
+                WebkitBackdropFilter: "blur(20px) saturate(180%)",
+                border: "1px solid rgba(201,162,39,0.15)",
+                borderRadius: 12,
+                boxShadow: "0 16px 48px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)",
                 overflow: "hidden",
               }}>
                 {currentUser ? (
                   <>
-                    <div style={{ padding: "14px 16px", borderBottom: "1px solid #F1F5F9" }}>
+                    <div style={{ padding: "14px 16px", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                         <div style={{
                           width: 32, height: 32, borderRadius: 8,
@@ -157,8 +187,8 @@ const Navbar = () => {
                           color: "white", fontWeight: 700, fontSize: "0.8rem",
                         }}>{currentUser.fullName?.charAt(0)}</div>
                         <div>
-                          <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "#30231E" }}>{currentUser.fullName}</div>
-                          <div style={{ fontSize: "0.72rem", color: "#94A3B8" }}>{currentUser.email}</div>
+                          <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "#FFFFFF" }}>{currentUser.fullName}</div>
+                          <div style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.4)" }}>{currentUser.email}</div>
                         </div>
                       </div>
                     </div>
@@ -166,22 +196,23 @@ const Navbar = () => {
                       {currentUser.role === "customer" && (
                         <Link to="/my-orders" style={{
                           display: "flex", alignItems: "center", gap: 8, padding: "8px 10px",
-                          borderRadius: 8, textDecoration: "none", fontSize: "0.82rem", color: "#30231E", fontWeight: 500,
-                        }}><Package size={15} style={{ color: "#94A3B8" }} />My Orders</Link>
+                          borderRadius: 8, textDecoration: "none", fontSize: "0.82rem",
+                          color: "rgba(255,255,255,0.6)", fontWeight: 500,
+                        }}><Package size={15} style={{ color: "rgba(255,255,255,0.3)" }} />My Orders</Link>
                       )}
                       <button onClick={logout} style={{
                         display: "flex", alignItems: "center", gap: 8, padding: "8px 10px",
                         borderRadius: 8, width: "100%", border: "none", background: "transparent",
-                        color: "#EF4444", fontSize: "0.82rem", fontWeight: 500, cursor: "pointer",
+                        color: "#FCA5A5", fontSize: "0.82rem", fontWeight: 500, cursor: "pointer",
                       }}><LogOut size={15} />Logout</button>
                     </div>
                   </>
                 ) : (
                   <div style={{ padding: 16 }}>
-                    <p style={{ fontSize: "0.85rem", fontWeight: 700, color: "#30231E", margin: "0 0 4px" }}>Welcome</p>
-                    <p style={{ fontSize: "0.75rem", color: "#94A3B8", margin: "0 0 12px" }}>Login to track orders</p>
+                    <p style={{ fontSize: "0.85rem", fontWeight: 700, color: "#FFFFFF", margin: "0 0 4px" }}>Welcome</p>
+                    <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.4)", margin: "0 0 12px" }}>Login to track orders</p>
                     <Link to="/login" style={{
-                      display: "block", textAlign: "center", background: primary, color: "white",
+                      display: "block", textAlign: "center", background: `linear-gradient(135deg, ${primary}, ${gold})`, color: "white",
                       padding: "8px 16px", borderRadius: 8, textDecoration: "none",
                       fontSize: "0.82rem", fontWeight: 700,
                     }}>Login</Link>
@@ -195,8 +226,9 @@ const Navbar = () => {
           <button onClick={() => setMenuOpen(!menuOpen)} style={{
             display: "none", width: 34, height: 34, borderRadius: 8,
             alignItems: "center", justifyContent: "center", cursor: "pointer",
-            background: menuOpen ? "rgba(255,255,255,0.08)" : "transparent",
-            border: `1px solid rgba(255,255,255,0.1)`,
+            background: menuOpen ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.04)",
+            backdropFilter: "blur(10px)",
+            border: "1px solid rgba(255,255,255,0.08)",
             color: "rgba(255,255,255,0.7)",
           }} className="nav-hamburger">
             {menuOpen ? <X size={18} /> : <Menu size={18} />}
@@ -207,7 +239,9 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {menuOpen && (
         <div style={{
-          background: deep, borderTop: `1px solid rgba(201,162,39,0.1)`,
+          background: "rgba(36, 20, 15, 0.95)",
+          backdropFilter: "blur(20px)",
+          borderTop: "1px solid rgba(201,162,39,0.1)",
           padding: "12px 16px",
         }}>
           {navLinks.map((link) => (
