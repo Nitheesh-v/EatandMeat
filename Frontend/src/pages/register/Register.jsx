@@ -46,7 +46,7 @@ export const Register = () => {
   };
 
   return (
-    <div className="eam-page">
+    <div className="eam-page mt-14">
       <div className="eam-card-glow" />
 
       <div className="eam-card">
