@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getCompanyOrders } from "../../services/orderService";
-import { getDeliveryPartners } from "../../services/adminService";
+import { getCompanyDeliveryPartners } from "../../services/adminService";
 import { Bike, User, Phone, IndianRupee, PackageCheck, CheckCircle2, Truck } from "lucide-react";
 
 const c = { red: "#641F28", gold: "#C9A227", bg: "#F6F3EF", card: "#FFFFFF", text: "#2B1B14", textSec: "#8B7355", border: "#E2D5C8" };
@@ -15,7 +15,7 @@ export const DeliveryPartners = () => {
       try {
         const [ordersRes, partnersRes] = await Promise.all([
           getCompanyOrders("Packed"),
-          getDeliveryPartners(),
+          getCompanyDeliveryPartners(),
         ]);
         setPackedOrders(ordersRes.orders || []);
         setPartners(partnersRes.deliveryPartners || []);

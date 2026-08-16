@@ -34,6 +34,12 @@ export const getDeliveryPartners = async () => {
   return data;
 };
 
+// Company: Get delivery partners (accessible by company + admin)
+export const getCompanyDeliveryPartners = async () => {
+  const { data } = await API.get("/users/delivery-partners");
+  return data;
+};
+
 // Orders
 export const getAdminOrders = async (params = {}) => {
   const { data } = await API.get("/admin/orders", { params });
