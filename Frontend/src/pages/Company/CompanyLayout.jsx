@@ -1,206 +1,23 @@
-import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
+import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import {
-  LayoutDashboard,
-  ShoppingBag,
-  ChefHat,
-  PackageCheck,
-  Bike,
-  BarChart3,
-  LogOut,
-  Flame,
+  LayoutDashboard, ShoppingBag, ChefHat, PackageCheck,
+  Bike, BarChart3, LogOut, Flame, Menu, X, Bell,
 } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useAuth } from "../../Context/AuthContext";
 
-const companyLayoutStyles = `
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap');
-
-/* Full page takeover — no navbar/footer leakage */
-.cl-page-wrapper {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  background: #F6F3EF;
-  display: flex;
-  overflow: hidden;
-  font-family: 'Inter', sans-serif;
-}
-.cl-sidebar {
-  width: 240px;
-  background: linear-gradient(180deg, #2B1B14 0%, #1A0F0A 100%);
-  color: white;
-  display: flex;
-  flex-direction: column;
-  flex-shrink: 0;
-  border-right: 1px solid rgba(100,31,40, 0.15);
-}
-.cl-sidebar-line {
-  height: 3px;
-  background: linear-gradient(90deg, #641F28, #C9A227, #93c5fd);
-  flex-shrink: 0;
-}
-.cl-logo-area {
-  padding: 22px 18px;
-  border-bottom: 1px solid rgba(100,31,40, 0.15);
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.cl-nav-area {
-  flex: 1;
-  padding: 14px 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  overflow-y: auto;
-}
-.cl-nav-link {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 11px 14px;
-  border-radius: 10px;
-  color: #d8cfc7;
-  text-decoration: none;
-  font-weight: 500;
-  font-size: 0.9rem;
-  transition: all 0.2s ease;
-  border: 1px solid transparent;
-}
-.cl-nav-link:hover {
-  background: rgba(100,31,40, 0.12);
-  color: white;
-}
-.cl-nav-link.active {
-  background: rgba(100,31,40, 0.18);
-  color: white;
-  border-color: rgba(100,31,40, 0.35);
-}
-.cl-logout-area {
-  padding: 14px 10px;
-  border-top: 1px solid rgba(100,31,40, 0.15);
-}
-.cl-logout-btn {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-  padding: 11px 14px;
-  background: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.25);
-  border-radius: 10px;
-  color: #fca5a5;
-  font-weight: 600;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-.cl-logout-btn:hover {
-  background: #ef4444;
-  color: white;
-  border-color: #ef4444;
-}
-.cl-main-area {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  min-width: 0;
-}
-.cl-topbar {
-  background: white;
-  border-bottom: 1px solid rgba(100,31,40, 0.08);
-  padding: 14px 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-shrink: 0;
-}
-.cl-topbar-title {
-  font-family: 'Fraunces', serif;
-  font-size: 1.25rem;
-  font-weight: 800;
-  color: #2B1B14;
-  margin: 0;
-}
-.cl-topbar-sub {
-  color: #8B7355;
-  font-size: 0.8rem;
-  margin: 2px 0 0 0;
-}
-.cl-topbar-right {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.cl-store-tag {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  background: rgba(34, 197, 94, 0.08);
-  border: 1px solid rgba(34, 197, 94, 0.25);
-  color: #16a34a;
-  padding: 7px 14px;
-  border-radius: 20px;
-  font-weight: 600;
-  font-size: 0.8rem;
-}
-.cl-store-dot {
-  width: 7px;
-  height: 7px;
-  background: #22c55e;
-  border-radius: 50%;
-  animation: clPulseDot 2s ease-in-out infinite;
-}
-@keyframes clPulseDot {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
-}
-.cl-user-tag {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 5px 12px 5px 5px;
-  border-radius: 20px;
-  border: 1px solid rgba(100,31,40, 0.15);
-  background: white;
-}
-.flicker {
-  animation: flicker 3s ease-in-out infinite;
-}
-@keyframes flicker {
-  0%,100% { opacity: 1; }
-  50%      { opacity: 0.65; }
-}
-.cl-user-avatar {
-  width: 28px;
-  height: 28px;
-  background: linear-gradient(135deg, #641F28, #C9A227);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: 700;
-  font-size: 0.7rem;
-}
-.cl-user-label {
-  font-weight: 600;
-  color: #2B1B14;
-  font-size: 0.8rem;
-}
-.cl-body {
-  flex: 1;
-  overflow-y: auto;
-  padding: 24px;
-}
-@media (max-width: 900px) {
-  .cl-sidebar { width: 64px; }
-  .cl-logo-text, .cl-nav-link span, .cl-logout-btn span { display: none; }
-  .cl-nav-link { justify-content: center; padding: 11px; }
-  .cl-logout-btn { justify-content: center; padding: 11px; }
-  .cl-logo-area { justify-content: center; padding: 18px 10px; }
-}
-`;
+const c = {
+  sidebar: "#2B1B14",
+  sidebarHover: "rgba(100,31,40,0.12)",
+  sidebarActive: "rgba(100,31,40,0.2)",
+  red: "#641F28",
+  gold: "#C9A227",
+  bg: "#F6F3EF",
+  card: "#FFFFFF",
+  text: "#2B1B14",
+  textSec: "#8B7355",
+  border: "#E2D5C8",
+};
 
 const navItems = [
   { to: "/company/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -213,77 +30,120 @@ const navItems = [
 
 const CompanyLayout = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { currentUser, logout } = useAuth();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [location.pathname]);
+  useEffect(() => { window.scrollTo(0, 0); setSidebarOpen(false); }, [location.pathname]);
 
-  return (
+  const handleLogout = async () => { await logout(); navigate("/login"); };
+
+  const SidebarContent = () => (
     <>
-      <style>{companyLayoutStyles}</style>
-      <div className="cl-page-wrapper">
-        {/* Sidebar */}
-        <aside className="cl-sidebar">
-          <div className="cl-sidebar-line"></div>
-
-          <div className="cl-logo-area">
-            <Link to="/" className="flex items-center gap-2 shrink-0">
-              <Flame size={24} className="flicker" style={{ color: "#641F28" }} />
-              <span className="text-xl font-black tracking-tight text-white cl-logo-text">
-                Eat And<span style={{ color: "#641F28" }}>Meat</span>
-              </span>
-            </Link>
+      <div style={{ padding: "20px 18px", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+        <Link to="/" style={{ display: "flex", alignItems: "center", gap: 8, textDecoration: "none" }}>
+          <div style={{ width: 32, height: 32, borderRadius: 8, background: `linear-gradient(135deg, ${c.red}, ${c.gold})`, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <Flame size={16} color="white" />
           </div>
+          <span style={{ fontSize: "1rem", fontWeight: 800, color: "#fff" }}>
+            EatAnd<span style={{ color: c.red }}>Meat</span>
+          </span>
+        </Link>
+      </div>
 
-          <nav className="cl-nav-area">
-            {navItems.map((item) => (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                className={({ isActive }) => `cl-nav-link ${isActive ? "active" : ""}`}
-              >
-                <item.icon size={18} />
-                <span>{item.label}</span>
-              </NavLink>
-            ))}
-          </nav>
+      <nav style={{ flex: 1, padding: "12px 10px", overflowY: "auto" }}>
+        {navItems.map((item) => {
+          const isActive = location.pathname === item.to;
+          return (
+            <NavLink key={item.to} to={item.to} style={{
+              display: "flex", alignItems: "center", gap: 10, padding: "10px 12px", borderRadius: 8,
+              textDecoration: "none", fontSize: "0.85rem", fontWeight: 500,
+              color: isActive ? "#FFFFFF" : "rgba(255,255,255,0.5)",
+              background: isActive ? c.sidebarActive : "transparent",
+              borderLeft: isActive ? `3px solid ${c.red}` : "3px solid transparent",
+              transition: "all 0.15s", marginBottom: 2,
+            }}
+              onMouseEnter={(e) => { if (!isActive) e.currentTarget.style.background = c.sidebarHover; }}
+              onMouseLeave={(e) => { if (!isActive) e.currentTarget.style.background = "transparent"; }}
+            >
+              <item.icon size={17} style={{ opacity: isActive ? 1 : 0.6 }} />
+              <span>{item.label}</span>
+            </NavLink>
+          );
+        })}
+      </nav>
 
-          <div className="cl-logout-area">
-            <Link to="/login">
-              <button className="cl-logout-btn">
-              <LogOut size={18} />
-              <span>Logout</span>
-            </button>
-            </Link>
-          
+      <div style={{ padding: "12px 10px", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 12px", borderRadius: 8, marginBottom: 8, background: "rgba(255,255,255,0.03)" }}>
+          <div style={{ width: 30, height: 30, borderRadius: 8, background: `linear-gradient(135deg, ${c.red}, ${c.gold})`, display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontWeight: 700, fontSize: "0.75rem" }}>
+            {currentUser?.fullName?.charAt(0) || "C"}
           </div>
-        </aside>
-
-        {/* Main */}
-        <div className="cl-main-area">
-          <header className="cl-topbar">
-            <div>
-              <h2 className="cl-topbar-title">Company Dashboard</h2>
-              <p className="cl-topbar-sub">Manage orders and monitor your business</p>
-            </div>
-            <div className="cl-topbar-right">
-              <div className="cl-store-tag">
-                <span className="cl-store-dot"></span>
-                Store Open
-              </div>
-              <div className="cl-user-tag">
-                <div className="cl-user-avatar">A</div>
-                <span className="cl-user-label">Admin</span>
-              </div>
-            </div>
-          </header>
-
-          <div className="cl-body">
-            <Outlet />
+          <div>
+            <div style={{ fontSize: "0.8rem", fontWeight: 600, color: "#fff" }}>{currentUser?.fullName || "Company"}</div>
+            <div style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.4)" }}>{currentUser?.email}</div>
           </div>
         </div>
+        <button onClick={handleLogout} style={{
+          display: "flex", alignItems: "center", gap: 8, width: "100%", padding: "9px 12px",
+          borderRadius: 8, border: "none", background: "rgba(239,68,68,0.08)", color: "#FCA5A5",
+          fontSize: "0.82rem", fontWeight: 600, cursor: "pointer",
+        }}
+          onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(239,68,68,0.15)"; }}
+          onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(239,68,68,0.08)"; }}
+        >
+          <LogOut size={16} /> Logout
+        </button>
       </div>
     </>
+  );
+
+  return (
+    <div style={{ position: "fixed", inset: 0, zIndex: 9999, background: c.bg, display: "flex", overflow: "hidden", fontFamily: "'Inter', sans-serif" }}>
+      <aside style={{ width: 240, background: c.sidebar, display: "flex", flexDirection: "column", flexShrink: 0, borderRight: "1px solid rgba(255,255,255,0.06)" }} className="company-sidebar">
+        <SidebarContent />
+      </aside>
+
+      {sidebarOpen && (
+        <div style={{ position: "fixed", inset: 0, zIndex: 100, background: "rgba(0,0,0,0.4)" }} onClick={() => setSidebarOpen(false)}>
+          <aside style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 260, background: c.sidebar, display: "flex", flexDirection: "column", boxShadow: "4px 0 20px rgba(0,0,0,0.3)" }} onClick={(e) => e.stopPropagation()}>
+            <div style={{ display: "flex", justifyContent: "flex-end", padding: 12 }}>
+              <button onClick={() => setSidebarOpen(false)} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.5)", cursor: "pointer" }}><X size={18} /></button>
+            </div>
+            <SidebarContent />
+          </aside>
+        </div>
+      )}
+
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden", minWidth: 0 }}>
+        <header style={{ background: c.card, borderBottom: `1px solid ${c.border}`, padding: "0 24px", height: 56, display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            <button onClick={() => setSidebarOpen(true)} style={{ display: "none", background: "none", border: "none", color: c.textSec, cursor: "pointer", padding: 4 }} className="company-menu-btn"><Menu size={20} /></button>
+            <div>
+              <h2 style={{ fontSize: "1.1rem", fontWeight: 800, color: c.text, margin: 0 }}>Company Dashboard</h2>
+              <p style={{ fontSize: "0.72rem", color: c.textSec, margin: 0 }}>Manage orders and operations</p>
+            </div>
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 5, padding: "5px 12px", borderRadius: 8, background: "rgba(34,197,94,0.06)", border: "1px solid rgba(34,197,94,0.2)", fontSize: "0.75rem", fontWeight: 600, color: "#16A34A" }}>
+              <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#22C55E" }} /> Store Open
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: 6, padding: "4px 10px 4px 4px", borderRadius: 8, border: `1px solid ${c.border}` }}>
+              <div style={{ width: 26, height: 26, borderRadius: 6, background: `linear-gradient(135deg, ${c.red}, ${c.gold})`, display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontWeight: 700, fontSize: "0.7rem" }}>
+                {currentUser?.fullName?.charAt(0) || "C"}
+              </div>
+              <span style={{ fontSize: "0.78rem", fontWeight: 600, color: c.text }}>{currentUser?.fullName || "Company"}</span>
+            </div>
+          </div>
+        </header>
+        <div style={{ flex: 1, overflowY: "auto", padding: 24, background: c.bg }}>
+          <Outlet />
+        </div>
+      </div>
+
+      <style>{`
+        @media (max-width: 1024px) { .company-sidebar { display: none !important; } .company-menu-btn { display: flex !important; } }
+      `}</style>
+    </div>
   );
 };
 

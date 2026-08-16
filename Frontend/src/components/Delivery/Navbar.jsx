@@ -2,90 +2,46 @@ import { Bell, MapPin, Power } from "lucide-react";
 import { useAuth } from "../../Context/AuthContext";
 import { useState } from "react";
 
+const c = { plum: "#5B3A57", rose: "#D9829B", bg: "#FCF8FA", text: "#352832", textSec: "#8B7585" };
+
 const Navbar = () => {
   const { currentUser } = useAuth();
   const [online, setOnline] = useState(true);
 
   return (
-    <header
-      className="h-16 flex items-center justify-between px-6"
-      style={{
-        background: "#ffffff",
-        borderBottom: "1px solid rgba(91,58,87,0.08)",
-        boxShadow: "0 1px 8px rgba(91,58,87,0.04)",
-      }}
-    >
-      {/* Left */}
+    <header style={{
+      background: "#FFFFFF", borderBottom: `1px solid rgba(91,58,87,0.08)`,
+      padding: "0 20px", height: 54, display: "flex", alignItems: "center", justifyContent: "space-between",
+    }}>
       <div>
-        <h2 className="text-lg font-extrabold tracking-tight" style={{ color: "#352832" }}>
-          Delivery{" "}
-          <span style={{
-            background: "linear-gradient(135deg, #5B3A57, #D9829B)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-          }}>
-            Dashboard
-          </span>
+        <h2 style={{ fontSize: "1rem", fontWeight: 800, color: c.text, margin: 0 }}>
+          Delivery <span style={{ color: c.plum }}>Dashboard</span>
         </h2>
-        <p className="text-[11px]" style={{ color: "#8B7585" }}>
-          Welcome, {currentUser?.fullName}
-        </p>
+        <p style={{ fontSize: "0.68rem", color: c.textSec, margin: 0 }}>Welcome, {currentUser?.fullName}</p>
       </div>
 
-      {/* Right */}
-      <div className="flex items-center gap-3">
-        <div
-          className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium"
-          style={{
-            background: "rgba(91,58,87,0.06)",
-            border: "1px solid rgba(91,58,87,0.12)",
-            color: "#5B3A57",
-          }}
-        >
-          <MapPin size={12} />
-          Coimbatore
-        </div>
+      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <div style={{ display: "none", alignItems: "center", gap: 4, padding: "4px 10px", borderRadius: 8, background: "rgba(91,58,87,0.05)", border: "1px solid rgba(91,58,87,0.1)", fontSize: "0.75rem", fontWeight: 600, color: c.plum }}
+          className="nav-location"><MapPin size={12} /> Coimbatore</div>
 
-        <button
-          onClick={() => setOnline(!online)}
-          className="flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold transition-all duration-300 cursor-pointer"
-          style={{
-            background: online
-              ? "linear-gradient(135deg, #5B3A57, #D9829B)"
-              : "rgba(0,0,0,0.04)",
-            color: online ? "white" : "#8B7585",
-            border: online ? "none" : "1px solid rgba(0,0,0,0.08)",
-            boxShadow: online ? "0 2px 10px rgba(91,58,87,0.3)" : "none",
-          }}
-        >
-          <span style={{
-            width: 6, height: 6, borderRadius: "50%",
-            background: online ? "#D9829B" : "#cbd5e1",
-            boxShadow: online ? "0 0 6px #D9829B" : "none",
-          }} />
-          <Power size={12} />
-          {online ? "Online" : "Offline"}
+        <button onClick={() => setOnline(!online)} style={{
+          display: "flex", alignItems: "center", gap: 5, padding: "5px 14px", borderRadius: 8,
+          fontSize: "0.75rem", fontWeight: 700, cursor: "pointer", border: "none", transition: "all 0.2s",
+          background: online ? `linear-gradient(135deg, ${c.plum}, ${c.rose})` : "#F1F5F9",
+          color: online ? "white" : c.textSec,
+        }}>
+          <span style={{ width: 6, height: 6, borderRadius: "50%", background: online ? "#D9829B" : "#CBD5E1" }} />
+          <Power size={12} /> {online ? "Online" : "Offline"}
         </button>
 
-        <div className="flex items-center gap-2 px-2 py-1 rounded-xl">
-          <div style={{
-            width: 32, height: 32, borderRadius: 10,
-            background: "linear-gradient(135deg, #5B3A57, #D9829B)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            color: "white", fontWeight: 700, fontSize: "0.75rem",
-          }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+          <div style={{ width: 28, height: 28, borderRadius: 8, background: `linear-gradient(135deg, ${c.plum}, ${c.rose})`, display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontWeight: 700, fontSize: "0.7rem" }}>
             {currentUser?.fullName?.charAt(0) || "D"}
-          </div>
-          <div className="hidden sm:block">
-            <p className="font-semibold text-xs" style={{ color: "#352832" }}>
-              {currentUser?.fullName}
-            </p>
-            <p className="text-[9px] font-bold uppercase tracking-wider" style={{ color: "#5B3A57" }}>
-              Partner
-            </p>
           </div>
         </div>
       </div>
+
+      <style>{`@media (min-width: 1024px) { .nav-location { display: flex !important; } }`}</style>
     </header>
   );
 };

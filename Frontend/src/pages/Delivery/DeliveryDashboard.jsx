@@ -1,17 +1,9 @@
-import {
-  Package,
-  Bike,
-  CircleCheckBig,
-  IndianRupee,
-  TrendingUp,
-  Clock,
-  MapPin,
-  Phone,
-  Heart,
-} from "lucide-react";
+import { Package, Bike, CircleCheckBig, IndianRupee, Clock, MapPin, Phone } from "lucide-react";
 import { useState, useEffect } from "react";
 import { getDeliveryStats } from "../../services/deliveryService";
 import { useAuth } from "../../Context/AuthContext";
+
+const c = { plum: "#5B3A57", rose: "#D9829B", softRose: "#F5E6EB", champagne: "#D6B77A", bg: "#FCF8FA", text: "#352832", textSec: "#8B7585" };
 
 export const DeliveryDashboard = () => {
   const { currentUser } = useAuth();
@@ -23,192 +15,79 @@ export const DeliveryDashboard = () => {
     const load = async () => {
       try {
         const res = await getDeliveryStats();
-        if (res.success) {
-          setStats(res.stats);
-          setRecentDeliveries(res.recentDeliveries || []);
-        }
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setLoading(false);
-      }
+        if (res.success) { setStats(res.stats); setRecentDeliveries(res.recentDeliveries || []); }
+      } catch (err) { console.log(err); }
+      finally { setLoading(false); }
     };
     load();
   }, []);
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-[300px]">
-        <div className="w-8 h-8 rounded-full border-3 border-purple-200 border-t-purple-600 animate-spin" />
-      </div>
-    );
-  }
+  if (loading) return <div style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: 200, color: c.textSec }}>Loading...</div>;
 
   const cards = [
-    {
-      title: "Available Orders",
-      value: stats?.availableOrders || 0,
-      icon: Package,
-      gradient: "linear-gradient(135deg, #5B3A57, #7B5A77)",
-      bg: "rgba(91,58,87,0.08)",
-      accent: "#5B3A57",
-    },
-    {
-      title: "Active Delivery",
-      value: stats?.activeDeliveries || 0,
-      icon: Bike,
-      gradient: "linear-gradient(135deg, #D9829B, #D9829B)",
-      bg: "rgba(217,130,155,0.08)",
-      accent: "#D9829B",
-    },
-    {
-      title: "Delivered Today",
-      value: stats?.todayDelivered || 0,
-      icon: CircleCheckBig,
-      gradient: "linear-gradient(135deg, #10b981, #34d399)",
-      bg: "rgba(16,185,129,0.08)",
-      accent: "#10b981",
-    },
-    {
-      title: "Today's Earnings",
-      value: `₹${stats?.todayEarnings || 0}`,
-      icon: IndianRupee,
-      gradient: "linear-gradient(135deg, #f59e0b, #fbbf24)",
-      bg: "rgba(245,158,11,0.08)",
-      accent: "#f59e0b",
-    },
+    { title: "Available Orders", value: stats?.availableOrders || 0, icon: Package, color: c.plum, bg: "rgba(91,58,87,0.08)" },
+    { title: "Active Delivery", value: stats?.activeDeliveries || 0, icon: Bike, color: c.rose, bg: "rgba(217,130,155,0.08)" },
+    { title: "Delivered Today", value: stats?.todayDelivered || 0, icon: CircleCheckBig, color: "#16A34A", bg: "rgba(22,163,74,0.08)" },
+    { title: "Today's Earnings", value: `₹${stats?.todayEarnings || 0}`, icon: IndianRupee, color: c.champagne, bg: "rgba(214,183,122,0.08)" },
   ];
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div>
-        <h1
-          className="text-2xl font-extrabold tracking-tight"
-          style={{ color: "#352832" }}
-        >
+    <div style={{ maxWidth: 1000, margin: "0 auto" }}>
+      <div style={{ marginBottom: 20 }}>
+        <h1 style={{ fontSize: "1.4rem", fontWeight: 800, color: c.text, margin: 0 }}>
           Hello, {currentUser?.fullName} 👋
         </h1>
-        <p className="text-sm mt-1" style={{ color: "#8B7585" }}>
-          Here's your delivery overview for today
-        </p>
+        <p style={{ fontSize: "0.82rem", color: c.textSec, margin: "2px 0 0" }}>Your delivery overview</p>
       </div>
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 14, marginBottom: 24 }}>
         {cards.map((card, i) => (
-          <div
-            key={card.title}
-            className="rounded-2xl overflow-hidden transition-all duration-300"
-            style={{
-              background: "#ffffff",
-              border: "1px solid rgba(91,58,87,0.08)",
-              boxShadow: "0 1px 8px rgba(91,58,87,0.04)",
-              animation: `fadeSlideUp 0.4s ease ${i * 0.08}s both`,
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "translateY(-3px)";
-              e.currentTarget.style.boxShadow = "0 8px 25px rgba(91,58,87,0.1)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.boxShadow = "0 1px 8px rgba(91,58,87,0.04)";
-            }}
+          <div key={card.title} style={{
+            background: "#FFFFFF", borderRadius: 12, overflow: "hidden",
+            border: "1px solid rgba(91,58,87,0.08)", transition: "all 0.2s",
+          }}
+            onMouseEnter={(e) => { e.currentTarget.style.boxShadow = `0 4px 12px ${card.color}15`; e.currentTarget.style.transform = "translateY(-2px)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.transform = "translateY(0)"; }}
           >
-            <div className="h-1" style={{ background: card.gradient }} />
-            <div className="p-5">
-              <div className="flex items-center justify-between mb-3">
-                <p className="text-xs font-semibold" style={{ color: "#8B7585" }}>
-                  {card.title}
-                </p>
-                <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center"
-                  style={{ background: card.bg }}
-                >
-                  <card.icon size={20} style={{ color: card.accent }} />
+            <div style={{ height: 3, background: card.color }} />
+            <div style={{ padding: 16 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+                <p style={{ fontSize: "0.72rem", fontWeight: 600, color: c.textSec }}>{card.title}</p>
+                <div style={{ width: 32, height: 32, borderRadius: 8, background: card.bg, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <card.icon size={16} style={{ color: card.color }} />
                 </div>
               </div>
-              <h2 className="text-2xl font-extrabold" style={{ color: "#352832" }}>
-                {card.value}
-              </h2>
+              <h2 style={{ fontSize: "1.5rem", fontWeight: 800, color: c.text, margin: 0 }}>{card.value}</h2>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Recent Deliveries */}
-      <div
-        className="rounded-2xl overflow-hidden"
-        style={{
-          background: "#ffffff",
-          border: "1px solid rgba(91,58,87,0.08)",
-          boxShadow: "0 1px 8px rgba(91,58,87,0.04)",
-        }}
-      >
-        <div className="h-1" style={{ background: "linear-gradient(90deg, #5B3A57, #D9829B)" }} />
-        <div className="p-5">
-          <h2 className="font-bold text-lg" style={{ color: "#352832" }}>
-            Recent Deliveries
-          </h2>
-
+      <div style={{ background: "#FFFFFF", borderRadius: 12, border: "1px solid rgba(91,58,87,0.08)", overflow: "hidden" }}>
+        <div style={{ height: 3, background: `linear-gradient(90deg, ${c.plum}, ${c.rose})` }} />
+        <div style={{ padding: 18 }}>
+          <h2 style={{ fontSize: "1rem", fontWeight: 700, color: c.text, margin: "0 0 14px" }}>Recent Deliveries</h2>
           {recentDeliveries.length === 0 ? (
-            <p className="text-center py-6" style={{ color: "#8B7585" }}>
-              No deliveries completed yet
-            </p>
+            <p style={{ textAlign: "center", padding: 20, color: c.textSec, fontSize: "0.85rem" }}>No deliveries completed yet</p>
           ) : (
-            <div className="mt-4 space-y-2">
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               {recentDeliveries.map((order) => (
-                <div
-                  key={order._id}
-                  className="flex items-center justify-between p-3 rounded-xl transition-all duration-200"
-                  style={{
-                    background: "rgba(91,58,87,0.02)",
-                    border: "1px solid rgba(91,58,87,0.05)",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = "rgba(91,58,87,0.05)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = "rgba(91,58,87,0.02)";
-                  }}
-                >
-                  <div className="flex items-center gap-3">
-                    <div
-                      className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold"
-                      style={{
-                        background: "rgba(91,58,87,0.08)",
-                        color: "#5B3A57",
-                      }}
-                    >
+                <div key={order._id} style={{
+                  display: "flex", alignItems: "center", justifyContent: "space-between",
+                  padding: "10px 12px", borderRadius: 8, background: "rgba(91,58,87,0.02)", border: "1px solid rgba(91,58,87,0.05)",
+                }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                    <div style={{ width: 30, height: 30, borderRadius: 8, background: "rgba(91,58,87,0.06)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.7rem", fontWeight: 700, color: c.plum }}>
                       {order.orderNumber?.slice(-3) || "000"}
                     </div>
                     <div>
-                      <p className="font-semibold text-sm" style={{ color: "#352832" }}>
-                        {order.customer?.fullName || "Customer"}
-                      </p>
-                      <p className="text-[11px]" style={{ color: "#8B7585" }}>
-                        {order.deliveredAt
-                          ? new Date(order.deliveredAt).toLocaleTimeString("en-IN", {
-                              hour: "2-digit",
-                              minute: "2-digit",
-                            })
-                          : ""}
-                      </p>
+                      <p style={{ fontWeight: 600, fontSize: "0.82rem", color: c.text, margin: 0 }}>{order.customer?.fullName || "Customer"}</p>
+                      <p style={{ fontSize: "0.68rem", color: c.textSec, margin: 0 }}>{order.deliveredAt ? new Date(order.deliveredAt).toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" }) : ""}</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <span className="font-bold text-sm" style={{ color: "#f59e0b" }}>
-                      ₹{order.totalAmount}
-                    </span>
-                    <span
-                      className="text-[10px] font-bold px-2 py-0.5 rounded-full"
-                      style={{
-                        background: "rgba(16,185,129,0.1)",
-                        color: "#10b981",
-                      }}
-                    >
-                      Delivered
-                    </span>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                    <span style={{ fontWeight: 700, fontSize: "0.82rem", color: c.champagne }}>₹{order.totalAmount}</span>
+                    <span style={{ fontSize: "0.65rem", fontWeight: 700, padding: "2px 8px", borderRadius: 4, background: "rgba(22,163,74,0.08)", color: "#16A34A" }}>Delivered</span>
                   </div>
                 </div>
               ))}
