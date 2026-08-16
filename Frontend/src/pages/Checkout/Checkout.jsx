@@ -1,652 +1,177 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../Context/CartContext";
-import {
-  User,
-  Phone,
-  Mail,
-  MapPin,
-  CreditCard,
-  Banknote,
-  Smartphone,
-  Shield,
-  Flame,
-  IndianRupee,
-  Truck,
-  Check,
-  ArrowRight,
-  Tag,
-  X,
-} from "lucide-react";
 import { useAuth } from "../../Context/AuthContext";
-
 import { createOrder } from "../../services/orderService";
 import API from "../../api/axios.js";
 import LocationPicker from "../../components/map/LocationPicker";
+import {
+  User, Phone, Mail, MapPin, CreditCard, Banknote, Smartphone,
+  Shield, IndianRupee, Truck, Check, Tag, X,
+} from "lucide-react";
+
+const primary = "#B4232C";
+const gold = "#C9A227";
+const deep = "#24140F";
+const cream = "#FAF7F2";
+const text = "#30231E";
 
 const Checkout = () => {
   const { cartItems, totalPrice, clearCart } = useCart();
-  const [location, setLocation] = useState({
-  latitude: "",
-  longitude: "",
-});
-
-  const tax = 0;
   const { currentUser } = useAuth();
   const navigate = useNavigate();
+  const [location, setLocation] = useState({ latitude: "", longitude: "" });
   const [paymentMethod, setPaymentMethod] = useState("COD");
-
-
   const [formData, setFormData] = useState({
-    fullName: currentUser?.fullName || "",
-    phone: "",
-    email: currentUser?.email || "",
-    address: "",
-    city: "",
-    pincode: "",
+    fullName: currentUser?.fullName || "", phone: "", email: currentUser?.email || "",
+    address: "", city: "", pincode: "",
   });
-
-
-  const deliveryCharge = cartItems.length > 0 ? 40 : 0;
-
-  // Coupon state
   const [couponCode, setCouponCode] = useState("");
   const [couponDiscount, setCouponDiscount] = useState(0);
   const [couponApplied, setCouponApplied] = useState("");
   const [couponMessage, setCouponMessage] = useState("");
   const [couponLoading, setCouponLoading] = useState(false);
 
+  const deliveryCharge = cartItems.length > 0 ? 40 : 0;
+  const grandTotal = totalPrice + deliveryCharge - couponDiscount;
+
+  const handleChange = (field, value) => setFormData((prev) => ({ ...prev, [field]: value }));
+
   const handleApplyCoupon = async () => {
-    if (!couponCode.trim()) {
-      setCouponMessage("Enter a coupon code");
-      return;
-    }
+    if (!couponCode.trim()) { setCouponMessage("Enter a coupon code"); return; }
     setCouponLoading(true);
     setCouponMessage("");
     try {
-      const { data } = await API.post("/coupons/apply", {
-        code: couponCode,
-        orderAmount: totalPrice,
-      });
-      if (data.success) {
-        setCouponDiscount(data.discount);
-        setCouponApplied(data.couponCode);
-        setCouponMessage(data.message);
-      }
+      const { data } = await API.post("/coupons/apply", { code: couponCode, orderAmount: totalPrice });
+      if (data.success) { setCouponDiscount(data.discount); setCouponApplied(data.couponCode); setCouponMessage(data.message); }
     } catch (err) {
-      setCouponDiscount(0);
-      setCouponApplied("");
-      setCouponMessage(err.response?.data?.message || "Invalid coupon");
-    } finally {
-      setCouponLoading(false);
-    }
+      setCouponDiscount(0); setCouponApplied(""); setCouponMessage(err.response?.data?.message || "Invalid coupon");
+    } finally { setCouponLoading(false); }
   };
 
-  const handleRemoveCoupon = () => {
-    setCouponCode("");
-    setCouponDiscount(0);
-    setCouponApplied("");
-    setCouponMessage("");
-  };
-
-  const grandTotal = totalPrice + deliveryCharge - couponDiscount;
-  const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
-
-  const handleChange = (field, value) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-  };
-
-
-  const getCurrentLocation = () => {
-  if (!navigator.geolocation) {
-    alert("Geolocation is not supported.");
-    return;
-  }
-
-  navigator.geolocation.getCurrentPosition(
-    (position) => {
-      setLocation({
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-      });
-
-      alert("Location selected successfully.");
-    },
-    () => {
-      alert("Unable to fetch your location.");
-    }
-  );
-};
+  const handleRemoveCoupon = () => { setCouponCode(""); setCouponDiscount(0); setCouponApplied(""); setCouponMessage(""); };
 
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
-console.log(cartItems);
     try {
       const orderData = {
-        items: cartItems.map((item) => ({
-          product: item.id.toString(),
-          name: item.name,
-          image: item.image,
-          quantity: item.quantity,
-          price: item.price,
-        })),
-
-        deliveryAddress: {
-          fullName: formData.fullName,
-          phone: formData.phone,
-          address: formData.address,
-          city: formData.city,
-          state: formData.state,
-          pincode: formData.pincode,
-           latitude: location.latitude,
-  longitude: location.longitude,
-        },
-
-        paymentMethod,
-
-        subtotal: totalPrice,
-
-        deliveryCharge,
-
-        tax,
-
-        discount: couponDiscount,
-
-        couponCode: couponApplied,
-
-        totalAmount: grandTotal,
+        items: cartItems.map((item) => ({ product: item.id.toString(), name: item.name, image: item.image, quantity: item.quantity, price: item.price })),
+        deliveryAddress: { fullName: formData.fullName, phone: formData.phone, address: formData.address, city: formData.city, pincode: formData.pincode, latitude: location.latitude, longitude: location.longitude },
+        paymentMethod, subtotal: totalPrice, deliveryCharge, tax: 0, discount: couponDiscount, couponCode: couponApplied, totalAmount: grandTotal,
       };
-      console.log(orderData);
-
-      const res = await createOrder(orderData);
-
-      console.log(res);
-
+      await createOrder(orderData);
       alert("Order Placed Successfully");
-
       clearCart();
-
       navigate("/my-orders");
-    } catch (err) {
-      console.log(err);
-
-      alert("Order Failed");
-    }
+    } catch (err) { alert("Order Failed"); }
   };
 
- const paymentOptions = [
-  {
-    value: "COD",
-    label: "Cash on Delivery",
-    icon: Banknote,
-    color: "#10b981",
-  },
-  {
-    value: "ONLINE",
-    label: "Online Payment (UPI / Card)",
-    icon: Smartphone,
-    color: "#8b5cf6",
-  },
-];
+  const input = { width: "100%", background: "#FFFFFF", border: "1px solid #E2E8F0", borderRadius: 10, padding: "11px 14px", color: text, fontSize: "0.85rem", boxSizing: "border-box", outline: "none" };
+  const inputIcon = { position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "#94A3B8" };
+  const card = { background: "#FFFFFF", border: "1px solid #E2E8F0", borderRadius: 12, overflow: "hidden" };
+  const sectionTitle = { fontSize: "0.95rem", fontWeight: 700, color: deep, display: "flex", alignItems: "center", gap: 8, marginBottom: 16 };
 
   return (
-    <section
-      className=" mt-10 relative overflow-hidden px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16"
-      style={{
-        background:
-          "#FAF7F2",
-        minHeight: "100vh",
-      }}
-    >
-      {/* Background glows */}
-      <div
-        className="absolute rounded-full"
-        style={{
-          width: 400,
-          height: 400,
-          top: "-10%",
-          right: "-5%",
-          background:
-            "radial-gradient(circle, rgba(180,35,44,0.08) 0%, transparent 70%)",
-          filter: "blur(60px)",
-        }}
-      />
-      <div
-        className="absolute rounded-full"
-        style={{
-          width: 300,
-          height: 300,
-          bottom: "10%",
-          left: "-5%",
-          background:
-            "radial-gradient(circle, rgba(201,162,39,0.06) 0%, transparent 70%)",
-          filter: "blur(50px)",
-        }}
-      />
-
-      <div className="relative z-10 max-w-7xl mx-auto">
+    <section style={{ background: cream, minHeight: "100vh", paddingTop: 88, paddingBottom: 40 }}>
+      <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 20px" }}>
         {/* Header */}
-        <div className="mb-8 sm:mb-10">
-          <div
-            className="flex items-center gap-3 mb-3"
-            style={{ animation: "fadeSlideUp 0.5s ease both" }}
-          >
-            <div
-              className="w-10 h-10 rounded-xl flex items-center justify-center"
-              style={{
-                background: "linear-gradient(135deg, #B4232C, #D4354A)",
-                boxShadow: "0 4px 15px rgba(180,35,44,0.4)",
-              }}
-            >
-              <Shield size={20} color="white" />
-            </div>
-            <span
-              className="text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-full"
-              style={{
-                background: "rgba(16,185,129,0.12)",
-                color: "#10b981",
-                border: "1px solid rgba(16,185,129,0.25)",
-              }}
-            >
-              Secure Checkout
-            </span>
+        <div style={{ marginBottom: 24 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
+            <Shield size={16} style={{ color: "#16A34A" }} />
+            <span style={{ fontSize: "0.72rem", fontWeight: 700, color: "#16A34A", textTransform: "uppercase", letterSpacing: "0.04em" }}>Secure Checkout</span>
           </div>
-
-          <h1
-            className="font-extrabold tracking-tight leading-tight"
-            style={{
-              fontSize: "clamp(1.75rem, 4vw, 2.5rem)",
-              background: "linear-gradient(135deg, #ffffff 0%, #e0d0d0 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              animation: "fadeSlideUp 0.5s ease 0.1s both",
-            }}
-          >
-            Complete Your{" "}
-            <span
-              style={{
-                background: "linear-gradient(135deg, #B4232C, #D4354A)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-              }}
-            >
-              Order
-            </span>
+          <h1 style={{ fontSize: "1.5rem", fontWeight: 800, color: deep, margin: 0 }}>
+            Complete Your <span style={{ color: primary }}>Order</span>
           </h1>
         </div>
 
         <form onSubmit={handlePlaceOrder}>
-          <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
-            {/* Form Sections */}
-            <div className="lg:col-span-2 space-y-6">
+          <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: 24, alignItems: "start" }}
+            className="checkout-grid">
+
+            {/* Left: Form */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
               {/* Customer Details */}
-              <div
-                className="rounded-2xl overflow-hidden"
-                style={{
-                  background:
-                    "linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%)",
-                  border: "1px solid rgba(255,255,255,0.06)",
-                  backdropFilter: "blur(20px)",
-                  animation: "fadeSlideUp 0.5s ease 0.15s both",
-                }}
-              >
-                <div
-                  className="h-1"
-                  style={{
-                    background: "linear-gradient(90deg, #B4232C, #D4354A)",
-                  }}
-                />
-                <div className="p-5 sm:p-6">
-                  <h2
-                    className="font-extrabold text-lg flex items-center gap-3 mb-5"
-                    style={{ color: "#fff" }}
-                  >
-                    <div
-                      className="w-9 h-9 rounded-lg flex items-center justify-center"
-                      style={{ background: "rgba(180,35,44,0.12)" }}
-                    >
-                      <User size={18} style={{ color: "#B4232C" }} />
+              <div style={card}>
+                <div style={{ height: 3, background: primary }} />
+                <div style={{ padding: 20 }}>
+                  <h2 style={sectionTitle}>
+                    <div style={{ width: 28, height: 28, borderRadius: 6, background: "rgba(180,35,44,0.06)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      <User size={14} style={{ color: primary }} />
                     </div>
                     Customer Details
                   </h2>
-
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="relative md:col-span-2">
-                      <User
-                        size={16}
-                        className="absolute left-4 top-1/2 -translate-y-1/2"
-                        style={{ color: "rgba(255,255,255,0.3)" }}
-                      />
-                      <input
-                        type="text"
-                        placeholder="Full Name"
-                        required
-                        value={formData.fullName}
-                        onChange={(e) =>
-                          handleChange("fullName", e.target.value)
-                        }
-                        className="w-full rounded-xl text-sm font-medium transition-all duration-300"
-                        style={{
-                          background: "rgba(255,255,255,0.04)",
-                          border: "1px solid rgba(255,255,255,0.1)",
-                          color: "#fff",
-                          padding: "13px 16px 13px 44px",
-                          outline: "none",
-                        }}
-                        onFocus={(e) => {
-                          e.currentTarget.style.borderColor = "#B4232C";
-                          e.currentTarget.style.boxShadow =
-                            "0 0 0 3px rgba(180,35,44,0.15)";
-                        }}
-                        onBlur={(e) => {
-                          e.currentTarget.style.borderColor =
-                            "rgba(255,255,255,0.1)";
-                          e.currentTarget.style.boxShadow = "none";
-                        }}
-                      />
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                    <div style={{ position: "relative", gridColumn: "1 / -1" }}>
+                      <User size={14} style={inputIcon} />
+                      <input type="text" placeholder="Full Name" required value={formData.fullName} onChange={(e) => handleChange("fullName", e.target.value)} style={{ ...input, paddingLeft: 40 }} />
                     </div>
-
-                    <div className="relative">
-                      <Phone
-                        size={16}
-                        className="absolute left-4 top-1/2 -translate-y-1/2"
-                        style={{ color: "rgba(255,255,255,0.3)" }}
-                      />
-                      <input
-                        type="tel"
-                        placeholder="Phone Number"
-                        required
-                        value={formData.phone}
-                        onChange={(e) => handleChange("phone", e.target.value)}
-                        className="w-full rounded-xl text-sm font-medium transition-all duration-300"
-                        style={{
-                          background: "rgba(255,255,255,0.04)",
-                          border: "1px solid rgba(255,255,255,0.1)",
-                          color: "#fff",
-                          padding: "13px 16px 13px 44px",
-                          outline: "none",
-                        }}
-                        onFocus={(e) => {
-                          e.currentTarget.style.borderColor = "#B4232C";
-                          e.currentTarget.style.boxShadow =
-                            "0 0 0 3px rgba(180,35,44,0.15)";
-                        }}
-                        onBlur={(e) => {
-                          e.currentTarget.style.borderColor =
-                            "rgba(255,255,255,0.1)";
-                          e.currentTarget.style.boxShadow = "none";
-                        }}
-                      />
+                    <div style={{ position: "relative" }}>
+                      <Phone size={14} style={inputIcon} />
+                      <input type="tel" placeholder="Phone Number" required value={formData.phone} onChange={(e) => handleChange("phone", e.target.value)} style={{ ...input, paddingLeft: 40 }} />
                     </div>
-
-                    <div className="relative">
-                      <Mail
-                        size={16}
-                        className="absolute left-4 top-1/2 -translate-y-1/2"
-                        style={{ color: "rgba(255,255,255,0.3)" }}
-                      />
-                      <input
-                        type="email"
-                        placeholder="Email Address"
-                        value={formData.email}
-                        onChange={(e) => handleChange("email", e.target.value)}
-                        className="w-full rounded-xl text-sm font-medium transition-all duration-300"
-                        style={{
-                          background: "rgba(255,255,255,0.04)",
-                          border: "1px solid rgba(255,255,255,0.1)",
-                          color: "#fff",
-                          padding: "13px 16px 13px 44px",
-                          outline: "none",
-                        }}
-                        onFocus={(e) => {
-                          e.currentTarget.style.borderColor = "#B4232C";
-                          e.currentTarget.style.boxShadow =
-                            "0 0 0 3px rgba(180,35,44,0.15)";
-                        }}
-                        onBlur={(e) => {
-                          e.currentTarget.style.borderColor =
-                            "rgba(255,255,255,0.1)";
-                          e.currentTarget.style.boxShadow = "none";
-                        }}
-                      />
+                    <div style={{ position: "relative" }}>
+                      <Mail size={14} style={inputIcon} />
+                      <input type="email" placeholder="Email" value={formData.email} onChange={(e) => handleChange("email", e.target.value)} style={{ ...input, paddingLeft: 40 }} />
                     </div>
                   </div>
                 </div>
               </div>
 
               {/* Delivery Address */}
-              <div
-                className="rounded-2xl overflow-hidden"
-                style={{
-                  background:
-                    "linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%)",
-                  border: "1px solid rgba(255,255,255,0.06)",
-                  backdropFilter: "blur(20px)",
-                  animation: "fadeSlideUp 0.5s ease 0.25s both",
-                }}
-              >
-                <div
-                  className="h-1"
-                  style={{
-                    background: "linear-gradient(90deg, #C9A227, #f6e3a1)",
-                  }}
-                />
-                <div className="p-5 sm:p-6">
-                  <h2
-                    className="font-extrabold text-lg flex items-center gap-3 mb-5"
-                    style={{ color: "#fff" }}
-                  >
-                    <div
-                      className="w-9 h-9 rounded-lg flex items-center justify-center"
-                      style={{ background: "rgba(201,162,39,0.12)" }}
-                    >
-                      <MapPin size={18} style={{ color: "#C9A227" }} />
+              <div style={card}>
+                <div style={{ height: 3, background: gold }} />
+                <div style={{ padding: 20 }}>
+                  <h2 style={sectionTitle}>
+                    <div style={{ width: 28, height: 28, borderRadius: 6, background: "rgba(201,162,39,0.08)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      <MapPin size={14} style={{ color: gold }} />
                     </div>
                     Delivery Address
                   </h2>
-
-                  <div className="relative mb-4">
-                    <MapPin
-                      size={16}
-                      className="absolute left-4 top-4"
-                      style={{ color: "rgba(255,255,255,0.3)" }}
-                    />
-                    <textarea
-                      rows={4}
-                      placeholder="Enter your complete address with landmark..."
-                      required
-                      value={formData.address}
-                      onChange={(e) => handleChange("address", e.target.value)}
-                      className="w-full rounded-xl text-sm font-medium transition-all duration-300"
-                      style={{
-                        background: "rgba(255,255,255,0.04)",
-                        border: "1px solid rgba(255,255,255,0.1)",
-                        color: "#fff",
-                        padding: "13px 16px 13px 44px",
-                        outline: "none",
-                        resize: "none",
-                      }}
-                      onFocus={(e) => {
-                        e.currentTarget.style.borderColor = "#C9A227";
-                        e.currentTarget.style.boxShadow =
-                          "0 0 0 3px rgba(201,162,39,0.15)";
-                      }}
-                      onBlur={(e) => {
-                        e.currentTarget.style.borderColor =
-                          "rgba(255,255,255,0.1)";
-                        e.currentTarget.style.boxShadow = "none";
-                      }}
-                    />
-                  </div>
-
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <input
-                      type="text"
-                      placeholder="City / Town"
-                      required
-                      value={formData.city}
-                      onChange={(e) => handleChange("city", e.target.value)}
-                      className="w-full rounded-xl text-sm font-medium transition-all duration-300"
-                      style={{
-                        background: "rgba(255,255,255,0.04)",
-                        border: "1px solid rgba(255,255,255,0.1)",
-                        color: "#fff",
-                        padding: "13px 16px",
-                        outline: "none",
-                      }}
-                      onFocus={(e) => {
-                        e.currentTarget.style.borderColor = "#C9A227";
-                        e.currentTarget.style.boxShadow =
-                          "0 0 0 3px rgba(201,162,39,0.15)";
-                      }}
-                      onBlur={(e) => {
-                        e.currentTarget.style.borderColor =
-                          "rgba(255,255,255,0.1)";
-                        e.currentTarget.style.boxShadow = "none";
-                      }}
-                    />
-                    <input
-                      type="text"
-                      placeholder="PIN Code"
-                      required
-                      value={formData.pincode}
-                      onChange={(e) => handleChange("pincode", e.target.value)}
-                      className="w-full rounded-xl text-sm font-medium transition-all duration-300"
-                      style={{
-                        background: "rgba(255,255,255,0.04)",
-                        border: "1px solid rgba(255,255,255,0.1)",
-                        color: "#fff",
-                        padding: "13px 16px",
-                        outline: "none",
-                      }}
-                      onFocus={(e) => {
-                        e.currentTarget.style.borderColor = "#C9A227";
-                        e.currentTarget.style.boxShadow =
-                          "0 0 0 3px rgba(201,162,39,0.15)";
-                      }}
-                      onBlur={(e) => {
-                        e.currentTarget.style.borderColor =
-                          "rgba(255,255,255,0.1)";
-                        e.currentTarget.style.boxShadow = "none";
-                      }}
-                    />
+                  <textarea rows={3} placeholder="Complete address with landmark..." required value={formData.address} onChange={(e) => handleChange("address", e.target.value)} style={{ ...input, resize: "none", marginBottom: 12 }} />
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                    <input type="text" placeholder="City" required value={formData.city} onChange={(e) => handleChange("city", e.target.value)} style={input} />
+                    <input type="text" placeholder="PIN Code" required value={formData.pincode} onChange={(e) => handleChange("pincode", e.target.value)} style={input} />
                   </div>
                 </div>
               </div>
 
-              <button
-  type="button"
-  onClick={getCurrentLocation}
-  className="bg-green-600 text-white px-4 py-2 rounded mb-4"
->
-  📍 Use My Current Location
-</button>
-              <h3 className="text-lg font-semibold mt-6 mb-2">
-  Select Delivery Location
-</h3>
+              {/* Location */}
+              <div style={{ ...card, padding: 20 }}>
+                <button type="button" onClick={() => {
+                  if (!navigator.geolocation) { alert("Not supported"); return; }
+                  navigator.geolocation.getCurrentPosition((p) => { setLocation({ latitude: p.coords.latitude, longitude: p.coords.longitude }); alert("Location selected!"); }, () => alert("Unable to fetch"));
+                }} style={{ padding: "8px 16px", borderRadius: 8, background: "#16A34A", color: "white", border: "none", fontSize: "0.82rem", fontWeight: 600, cursor: "pointer", marginBottom: 12 }}>
+                  📍 Use Current Location
+                </button>
+                <LocationPicker onLocationSelect={(loc) => setLocation(loc)} />
+              </div>
 
-
-<div className="mt-3">
-  <p>
-    <strong>Latitude:</strong> {location.latitude}
-  </p>
-
-  <p>
-    <strong>Longitude:</strong> {location.longitude}
-  </p>
-</div>
-
-<LocationPicker
-  onLocationSelect={(loc) => setLocation(loc)}
-/>
-
-              {/* Payment Method */}
-              <div
-                className="rounded-2xl overflow-hidden"
-                style={{
-                  background:
-                    "linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%)",
-                  border: "1px solid rgba(255,255,255,0.06)",
-                  backdropFilter: "blur(20px)",
-                  animation: "fadeSlideUp 0.5s ease 0.35s both",
-                }}
-              >
-                <div
-                  className="h-1"
-                  style={{
-                    background: "linear-gradient(90deg, #8b5cf6, #a78bfa)",
-                  }}
-                />
-                <div className="p-5 sm:p-6">
-                  <h2
-                    className="font-extrabold text-lg flex items-center gap-3 mb-5"
-                    style={{ color: "#fff" }}
-                  >
-                    <div
-                      className="w-9 h-9 rounded-lg flex items-center justify-center"
-                      style={{ background: "rgba(139,92,246,0.12)" }}
-                    >
-                      <CreditCard size={18} style={{ color: "#8b5cf6" }} />
+              {/* Payment */}
+              <div style={card}>
+                <div style={{ height: 3, background: "#7C3AED" }} />
+                <div style={{ padding: 20 }}>
+                  <h2 style={sectionTitle}>
+                    <div style={{ width: 28, height: 28, borderRadius: 6, background: "rgba(124,58,237,0.06)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      <CreditCard size={14} style={{ color: "#7C3AED" }} />
                     </div>
                     Payment Method
                   </h2>
-
-                  <div className="space-y-3">
-                    {paymentOptions.map((option) => (
-                      <label
-                        key={option.value}
-                        className="flex items-center gap-4 p-4 rounded-xl cursor-pointer transition-all duration-300"
-                        style={{
-                          background:
-                            paymentMethod === option.value
-                              ? `${option.color}12`
-                              : "rgba(255,255,255,0.02)",
-                          border:
-                            paymentMethod === option.value
-                              ? `1px solid ${option.color}40`
-                              : "1px solid rgba(255,255,255,0.06)",
-                          boxShadow:
-                            paymentMethod === option.value
-                              ? `0 0 20px ${option.color}15`
-                              : "none",
-                        }}
-                      >
-                        <input
-                          type="radio"
-                          name="payment"
-                          value={option.value}
-                          checked={paymentMethod === option.value}
-                          onChange={(e) => setPaymentMethod(e.target.value)}
-                          className="sr-only"
-                        />
-                        <div
-                          className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                          style={{
-                            background: `${option.color}15`,
-                          }}
-                        >
-                          <option.icon
-                            size={20}
-                            style={{ color: option.color }}
-                          />
-                        </div>
-                        <span
-                          className="font-semibold text-sm"
-                          style={{ color: "#fff" }}
-                        >
-                          {option.label}
-                        </span>
-                        {paymentMethod === option.value && (
-                          <div
-                            className="ml-auto w-6 h-6 rounded-full flex items-center justify-center"
-                            style={{
-                              background: option.color,
-                              boxShadow: `0 0 12px ${option.color}60`,
-                            }}
-                          >
-                            <Check size={14} color="white" strokeWidth={3} />
-                          </div>
-                        )}
+                  <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                    {[
+                      { value: "COD", label: "Cash on Delivery", icon: Banknote, color: "#16A34A" },
+                      { value: "ONLINE", label: "Online Payment (UPI / Card)", icon: Smartphone, color: "#7C3AED" },
+                    ].map((opt) => (
+                      <label key={opt.value} style={{
+                        display: "flex", alignItems: "center", gap: 12, padding: "12px 14px", borderRadius: 10, cursor: "pointer",
+                        background: paymentMethod === opt.value ? `${opt.color}08` : "#FAF7F2",
+                        border: `1px solid ${paymentMethod === opt.value ? `${opt.color}30` : "#E2E8F0"}`,
+                        transition: "all 0.2s",
+                      }}>
+                        <input type="radio" name="payment" value={opt.value} checked={paymentMethod === opt.value} onChange={(e) => setPaymentMethod(e.target.value)} style={{ accentColor: primary }} />
+                        <opt.icon size={18} style={{ color: opt.color }} />
+                        <span style={{ fontSize: "0.85rem", fontWeight: 600, color: text }}>{opt.label}</span>
+                        {paymentMethod === opt.value && <Check size={16} style={{ color: opt.color, marginLeft: "auto" }} />}
                       </label>
                     ))}
                   </div>
@@ -654,296 +179,98 @@ console.log(cartItems);
               </div>
             </div>
 
-            {/* Order Summary */}
-            <div className="lg:col-span-1">
-              <div
-                className="rounded-2xl overflow-hidden sticky top-24"
-                style={{
-                  background:
-                    "linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%)",
-                  border: "1px solid rgba(255,255,255,0.06)",
-                  backdropFilter: "blur(20px)",
-                  animation: "fadeSlideUp 0.6s ease 0.3s both",
-                }}
-              >
-                <div
-                  className="h-1"
-                  style={{
-                    background:
-                      "linear-gradient(90deg, #B4232C, #D4354A, #C9A227)",
-                  }}
-                />
-                <div className="p-5 sm:p-6">
-                  <div className="flex items-center gap-3 mb-5">
-                    <div
-                      className="w-10 h-10 rounded-xl flex items-center justify-center"
-                      style={{
-                        background: "linear-gradient(135deg, #B4232C, #D4354A)",
-                        boxShadow: "0 4px 15px rgba(180,35,44,0.4)",
-                      }}
-                    >
-                      <IndianRupee size={20} color="white" />
+            {/* Right: Order Summary */}
+            <div style={{ ...card, position: "sticky", top: 88 }}>
+              <div style={{ height: 3, background: `linear-gradient(90deg, ${primary}, ${gold})` }} />
+              <div style={{ padding: 20 }}>
+                <h2 style={{ fontSize: "1rem", fontWeight: 700, color: deep, marginBottom: 4 }}>Order Summary</h2>
+                <p style={{ fontSize: "0.72rem", color: "#94A3B8", margin: "0 0 16px" }}>{cartItems.length} items</p>
+
+                {/* Items */}
+                <div style={{ maxHeight: 160, overflowY: "auto", marginBottom: 12 }}>
+                  {cartItems.map((item) => (
+                    <div key={item.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "6px 0", borderBottom: "1px solid #F1F5F9" }}>
+                      <span style={{ fontSize: "0.82rem", color: text, fontWeight: 500 }}>{item.name} <span style={{ color: "#94A3B8", fontSize: "0.72rem" }}>× {item.quantity}</span></span>
+                      <span style={{ fontSize: "0.82rem", fontWeight: 700, color: text }}>₹{item.price * item.quantity}</span>
                     </div>
-                    <div>
-                      <h2
-                        className="font-extrabold text-lg"
-                        style={{ color: "#fff" }}
-                      >
-                        Order Summary
-                      </h2>
-                      <p
-                        className="text-[10px] font-bold uppercase tracking-wider"
-                        style={{ color: "#C9A227" }}
-                      >
-                        {cartItems.length} items
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Items list */}
-                  <div className="space-y-3 max-h-48 overflow-y-auto pr-2 mb-4">
-                    {cartItems.map((item) => (
-                      <div
-                        key={item.id}
-                        className="flex justify-between items-center text-sm"
-                        style={{ color: "rgba(255,255,255,0.6)" }}
-                      >
-                        <span className="truncate mr-2">
-                          {item.name}{" "}
-                          <span style={{ color: "rgba(255,255,255,0.3)" }}>
-                            × {item.quantity}
-                          </span>
-                        </span>
-                        <span
-                          className="font-bold whitespace-nowrap"
-                          style={{ color: "#fff" }}
-                        >
-                          ₹{item.price * item.quantity}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div
-                    className="my-4 h-px"
-                    style={{
-                      background:
-                        "linear-gradient(90deg, transparent, rgba(201,162,39,0.3), transparent)",
-                    }}
-                  />
-
-                  {/* Coupon Section */}
-                  <div style={{ marginBottom: 16 }}>
-                    {couponApplied ? (
-                      <div
-                        className="flex items-center justify-between p-3 rounded-xl"
-                        style={{
-                          background: "rgba(16,185,129,0.08)",
-                          border: "1px solid rgba(16,185,129,0.2)",
-                        }}
-                      >
-                        <div className="flex items-center gap-2">
-                          <Tag size={14} style={{ color: "#10b981" }} />
-                          <div>
-                            <span className="text-xs font-bold" style={{ color: "#10b981" }}>
-                              {couponApplied}
-                            </span>
-                            <p className="text-[10px]" style={{ color: "rgba(255,255,255,0.4)" }}>
-                              You save ₹{couponDiscount}
-                            </p>
-                          </div>
-                        </div>
-                        <button
-                          type="button"
-                          onClick={handleRemoveCoupon}
-                          style={{
-                            background: "none", border: "none", cursor: "pointer",
-                            color: "#ef4444", padding: 4,
-                          }}
-                        >
-                          <X size={16} />
-                        </button>
-                      </div>
-                    ) : (
-                      <div>
-                        <div className="flex gap-2">
-                          <input
-                            type="text"
-                            placeholder="Enter coupon code"
-                            value={couponCode}
-                            onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
-                            className="flex-1 rounded-xl text-sm font-medium transition-all duration-300"
-                            style={{
-                              background: "rgba(255,255,255,0.04)",
-                              border: "1px solid rgba(255,255,255,0.1)",
-                              color: "#fff",
-                              padding: "10px 12px",
-                              outline: "none",
-                            }}
-                            onFocus={(e) => {
-                              e.currentTarget.style.borderColor = "#B4232C";
-                            }}
-                            onBlur={(e) => {
-                              e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
-                            }}
-                          />
-                          <button
-                            type="button"
-                            onClick={handleApplyCoupon}
-                            disabled={couponLoading}
-                            className="rounded-xl text-xs font-bold px-4 cursor-pointer transition-all duration-300"
-                            style={{
-                              background: "linear-gradient(135deg, #B4232C, #D4354A)",
-                              color: "white",
-                              border: "none",
-                              boxShadow: "0 2px 10px rgba(180,35,44,0.3)",
-                            }}
-                          >
-                            {couponLoading ? "..." : "Apply"}
-                          </button>
-                        </div>
-                        {couponMessage && (
-                          <p
-                            className="text-[11px] mt-1.5 font-semibold"
-                            style={{
-                              color: couponDiscount > 0 ? "#10b981" : "#ef4444",
-                            }}
-                          >
-                            {couponMessage}
-                          </p>
-                        )}
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Totals */}
-                  <div className="space-y-3">
-                    <div className="flex justify-between text-sm">
-                      <span style={{ color: "rgba(255,255,255,0.5)" }}>
-                        Subtotal
-                      </span>
-                      <span
-                        className="font-bold"
-                        style={{ color: "rgba(255,255,255,0.8)" }}
-                      >
-                        ₹{totalPrice}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center text-sm">
-                      <div
-                        className="flex items-center gap-2"
-                        style={{ color: "rgba(255,255,255,0.5)" }}
-                      >
-                        Delivery
-                        <Truck
-                          size={13}
-                          style={{ color: "rgba(255,255,255,0.3)" }}
-                        />
-                      </div>
-                      {deliveryCharge === 0 ? (
-                        <span
-                          className="text-xs font-bold px-2.5 py-1 rounded-full"
-                          style={{
-                            background: "rgba(16,185,129,0.15)",
-                            color: "#10b981",
-                            border: "1px solid rgba(16,185,129,0.3)",
-                          }}
-                        >
-                          FREE
-                        </span>
-                      ) : (
-                        <span
-                          className="font-bold"
-                          style={{ color: "rgba(255,255,255,0.8)" }}
-                        >
-                          ₹{deliveryCharge}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Coupon Discount */}
-                  {couponDiscount > 0 && (
-                    <div className="flex justify-between items-center text-sm" style={{ marginTop: 12 }}>
-                      <div className="flex items-center gap-1.5" style={{ color: "#10b981" }}>
-                        <Tag size={13} />
-                        Coupon ({couponApplied})
-                      </div>
-                      <span className="font-bold" style={{ color: "#10b981" }}>
-                        -₹{couponDiscount}
-                      </span>
-                    </div>
-                  )}
-
-                  <div
-                    className="my-5 h-px"
-                    style={{
-                      background:
-                        "linear-gradient(90deg, transparent, rgba(201,162,39,0.3), transparent)",
-                    }}
-                  />
-
-                  {/* Grand Total */}
-                  <div className="flex justify-between items-center">
-                    <span
-                      className="text-base font-bold"
-                      style={{ color: "#fff" }}
-                    >
-                      Grand Total
-                    </span>
-                    <div className="text-right">
-                      <p
-                        className="font-extrabold text-2xl"
-                        style={{ color: "#C9A227" }}
-                      >
-                        ₹{grandTotal}
-                      </p>
-                      <p
-                        className="text-[10px]"
-                        style={{ color: "rgba(255,255,255,0.3)" }}
-                      >
-                        incl. all taxes
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Submit Button */}
-                  <button
-                    type="submit"
-                    className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl text-sm font-bold mt-6 transition-all duration-300 cursor-pointer"
-                    style={{
-                      background:
-                        "linear-gradient(135deg, #B4232C 0%, #D4354A 100%)",
-                      color: "white",
-                      boxShadow: "0 4px 20px rgba(180,35,44,0.4)",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = "translateY(-2px)";
-                      e.currentTarget.style.boxShadow =
-                        "0 8px 30px rgba(180,35,44,0.6)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = "translateY(0)";
-                      e.currentTarget.style.boxShadow =
-                        "0 4px 20px rgba(180,35,44,0.4)";
-                    }}
-                  >
-                    <Shield size={18} />
-                    Place Order — ₹{grandTotal}
-                  </button>
-
-                  <p
-                    className="text-center text-xs mt-4 flex items-center justify-center gap-1.5"
-                    style={{ color: "rgba(255,255,255,0.3)" }}
-                  >
-                    <Shield size={11} />
-                    100% secure & encrypted checkout
-                  </p>
+                  ))}
                 </div>
+
+                <div style={{ height: 1, background: "#F1F5F9", margin: "12px 0" }} />
+
+                {/* Coupon */}
+                {couponApplied ? (
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "8px 12px", borderRadius: 8, background: "rgba(22,163,74,0.06)", border: "1px solid rgba(22,163,74,0.15)", marginBottom: 12 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                      <Tag size={13} style={{ color: "#16A34A" }} />
+                      <div>
+                        <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "#16A34A" }}>{couponApplied}</span>
+                        <p style={{ fontSize: "0.68rem", color: "#94A3B8", margin: 0 }}>Save ₹{couponDiscount}</p>
+                      </div>
+                    </div>
+                    <button type="button" onClick={handleRemoveCoupon} style={{ background: "none", border: "none", cursor: "pointer", color: "#EF4444", padding: 2 }}><X size={14} /></button>
+                  </div>
+                ) : (
+                  <div style={{ marginBottom: 12 }}>
+                    <div style={{ display: "flex", gap: 6 }}>
+                      <input type="text" placeholder="Coupon code" value={couponCode} onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                        style={{ ...input, padding: "8px 10px", fontSize: "0.82rem", flex: 1 }} />
+                      <button type="button" onClick={handleApplyCoupon} disabled={couponLoading} style={{
+                        padding: "8px 14px", borderRadius: 8, background: primary, color: "white", border: "none",
+                        fontSize: "0.78rem", fontWeight: 700, cursor: "pointer",
+                      }}>{couponLoading ? "..." : "Apply"}</button>
+                    </div>
+                    {couponMessage && <p style={{ fontSize: "0.72rem", marginTop: 4, color: couponDiscount > 0 ? "#16A34A" : "#EF4444", fontWeight: 600 }}>{couponMessage}</p>}
+                  </div>
+                )}
+
+                {/* Totals */}
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
+                  <span style={{ fontSize: "0.82rem", color: "#64748B" }}>Subtotal</span>
+                  <span style={{ fontSize: "0.82rem", fontWeight: 600, color: text }}>₹{totalPrice}</span>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
+                  <span style={{ fontSize: "0.82rem", color: "#64748B" }}>Delivery</span>
+                  <span style={{ fontSize: "0.82rem", fontWeight: 600, color: text }}>₹{deliveryCharge}</span>
+                </div>
+                {couponDiscount > 0 && (
+                  <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
+                    <span style={{ fontSize: "0.82rem", color: "#16A34A", fontWeight: 600 }}>Coupon ({couponApplied})</span>
+                    <span style={{ fontSize: "0.82rem", fontWeight: 700, color: "#16A34A" }}>-₹{couponDiscount}</span>
+                  </div>
+                )}
+
+                <div style={{ height: 1, background: "#F1F5F9", margin: "12px 0" }} />
+
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+                  <span style={{ fontSize: "0.95rem", fontWeight: 700, color: deep }}>Grand Total</span>
+                  <span style={{ fontSize: "1.5rem", fontWeight: 800, color: primary }}>₹{grandTotal}</span>
+                </div>
+
+                <button type="submit" style={{
+                  width: "100%", padding: "13px", borderRadius: 10, border: "none",
+                  background: primary, color: "white", fontWeight: 700, fontSize: "0.9rem",
+                  cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+                  boxShadow: "0 2px 8px rgba(180,35,44,0.25)", transition: "all 0.2s",
+                }}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = "#9A1D25"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = primary; }}
+                >
+                  <Shield size={16} />
+                  Place Order — ₹{grandTotal}
+                </button>
+
+                <p style={{ textAlign: "center", fontSize: "0.7rem", color: "#94A3B8", marginTop: 10 }}>
+                  🔒 100% secure & encrypted checkout
+                </p>
               </div>
             </div>
           </div>
         </form>
+
+        <style>{`
+          @media (max-width: 768px) { .checkout-grid { grid-template-columns: 1fr !important; } }
+        `}</style>
       </div>
     </section>
   );

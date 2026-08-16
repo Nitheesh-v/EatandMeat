@@ -88,7 +88,7 @@ const myOrdersStyles = `
 }
 .mo-subtitle {
   margin-top: 10px; font-size: 0.95rem;
-  color: rgba(255,255,255,0.4);
+  color: #94A3B8;
   max-width: 28rem;
 }
 
@@ -122,7 +122,7 @@ const myOrdersStyles = `
 .mo-stat-label {
   margin-top: 6px; font-size: 0.7rem; font-weight: 600;
   text-transform: uppercase; letter-spacing: 0.05em;
-  color: rgba(255,255,255,0.4);
+  color: #94A3B8;
 }
 
 /* Filter Bar */
@@ -141,11 +141,11 @@ const myOrdersStyles = `
   font-size: 0.8rem; font-weight: 600;
   cursor: pointer; transition: all 0.3s ease;
   background: transparent;
-  color: rgba(255,255,255,0.5);
+  color: #64748B;
   border: none;
   position: relative;
 }
-.mo-filter-pill:hover { color: #fff; }
+.mo-filter-pill:hover { color: #30231E; }
 .mo-filter-pill.active {
   background: linear-gradient(135deg, #B4232C, #D4354A);
   color: white;
@@ -154,7 +154,7 @@ const myOrdersStyles = `
 
 .mo-result-count {
   font-size: 0.75rem; font-weight: 600;
-  color: rgba(255,255,255,0.4);
+  color: #94A3B8;
   padding: 0 12px;
 }
 
@@ -251,13 +251,13 @@ const myOrdersStyles = `
 }
 .mo-node-id {
   font-weight: 800; font-size: 1rem;
-  color: #fff;
+  color: #30231E;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .mo-node-date {
   display: flex; align-items: center; gap: 5px;
   font-size: 0.7rem; margin-top: 3px;
-  color: rgba(255,255,255,0.4);
+  color: #94A3B8;
 }
 
 .mo-node-status-pill {
@@ -291,13 +291,13 @@ const myOrdersStyles = `
   padding: 10px 14px; border-radius: 10px;
   background: rgba(255,255,255,0.03);
   border: 1px solid rgba(255,255,255,0.06);
-  color: rgba(255,255,255,0.6);
+  color: #64748B;
   font-size: 0.8rem; font-weight: 600;
   cursor: pointer; transition: all 0.3s ease;
 }
 .mo-node-items-toggle:hover {
   background: rgba(255,255,255,0.06);
-  color: #fff;
+  color: #30231E;
 }
 
 .mo-node-items {
@@ -329,12 +329,12 @@ const myOrdersStyles = `
 .mo-item-info { flex: 1; min-width: 0; }
 .mo-item-name {
   font-weight: 600; font-size: 0.85rem;
-  color: #fff;
+  color: #30231E;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   margin: 0;
 }
 .mo-item-qty {
-  font-size: 0.7rem; color: rgba(255,255,255,0.4);
+  font-size: 0.7rem; color: #94A3B8;
   margin: 2px 0 0 0;
 }
 .mo-item-price {
@@ -403,7 +403,7 @@ const myOrdersStyles = `
   margin-bottom: 10px;
 }
 .mo-empty-subtitle {
-  font-size: 0.9rem; color: rgba(255,255,255,0.4);
+  font-size: 0.9rem; color: #94A3B8;
   margin-bottom: 28px;
 }
 
@@ -413,7 +413,7 @@ const myOrdersStyles = `
   display: flex; flex-direction: column;
   align-items: center; justify-content: center; gap: 16px;
   background: linear-gradient(180deg, #FAF7F2 0%, #FAF7F2 40%, #FAF7F2 100%);
-  color: rgba(255,255,255,0.6);
+  color: #64748B;
   font-size: 0.95rem; font-weight: 600;
 }
 .mo-loader {
