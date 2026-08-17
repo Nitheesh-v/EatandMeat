@@ -47,3 +47,15 @@ export const deliveredOrder = async (id) => {
   const { data } = await API.put(`/orders/delivery/delivered/${id}`);
   return data;
 };
+
+// Get single order detail (delivery partner)
+export const getDeliveryOrderDetail = async (id) => {
+  const { data } = await API.get(`/orders/delivery/order/${id}`);
+  return data;
+};
+
+// Get delivery history with filters
+export const getDeliveryHistory = async (params = {}) => {
+  const { data } = await API.get("/orders/delivery/history", { params });
+  return data;
+};

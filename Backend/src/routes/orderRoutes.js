@@ -16,6 +16,9 @@ import {
   outForDelivery,
   getDeliveryStats,
   getDeliveryEarnings,
+  getDeliveryOrderDetail,
+  getDeliveryHistory,
+  getDeliveryOrderById,
 } from "../controllers/orderController.js";
 import protect from "../middleware/protect.js";
 import { authorize } from "../middleware/roleModdleware.js";
@@ -130,6 +133,22 @@ router.get(
   protect,
   authorize("delivery"),
   getDeliveryEarnings
+);
+
+// Delivery: Get single order detail
+router.get(
+  "/delivery/order/:id",
+  protect,
+  authorize("delivery"),
+  getDeliveryOrderById
+);
+
+// Delivery: Get delivery history
+router.get(
+  "/delivery/history",
+  protect,
+  authorize("delivery"),
+  getDeliveryHistory
 );
 
 export default router;

@@ -9,6 +9,9 @@ import orderRoutes from "./src/routes/orderRoutes.js";
 import adminRoutes from "./src/routes/adminRoutes.js";
 import withdrawalRoutes from "./src/routes/withdrawalRoutes.js";
 import couponRoutes from "./src/routes/couponRoutes.js";
+import notificationRoutes from "./src/routes/notificationRoutes.js";
+import supportRoutes from "./src/routes/supportRoutes.js";
+import settingsRoutes from "./src/routes/settingsRoutes.js";
 import express from "express";
 import cookieParser from "cookie-parser";
 import User from "./src/models/User.js";
@@ -31,6 +34,9 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/withdrawals", withdrawalRoutes);
 app.use("/api/coupons", couponRoutes);
+app.use("/api/notifications", notificationRoutes);
+app.use("/api/support", supportRoutes);
+app.use("/api/settings", settingsRoutes);
 
 // ──────────────────────────────────────────────
 // Seed endpoint — call once to populate DB
