@@ -1,7 +1,11 @@
 import express from "express";
 import {
   registerUser,
-  loginUser,logoutUser,getCurrentUser,
+  loginUser,
+  logoutUser,
+  getCurrentUser,
+  forgotPassword,
+  resetPassword,
 } from "../controllers/authcontroller.js"
 import protect from "../middleware/protect.js";
 
@@ -17,5 +21,7 @@ router.get(
   protect,
   getCurrentUser
 );
+router.post("/forgot-password", forgotPassword);
+router.post("/reset-password", resetPassword);
 
 export default router;

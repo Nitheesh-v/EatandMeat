@@ -45,6 +45,13 @@ import { MyDeliveries } from "./pages/Delivery/MyDeliveries";
 import { Earnings } from "./pages/Delivery/Earnings";
 import { Profile } from "./pages/Delivery/Profile";
 import Withdraw from "./pages/Delivery/Withdraw";
+import { Notifications } from "./pages/Delivery/Notifications.jsx";
+import { Support } from "./pages/Delivery/Support.jsx";
+import { Settings } from "./pages/Delivery/Settings.jsx";
+import { OrderDetail } from "./pages/Delivery/OrderDetail.jsx";
+import { Wallet } from "./pages/Delivery/Wallet.jsx";
+import { DeliveryHistory } from "./pages/Delivery/DeliveryHistory.jsx";
+import ForgotPassword from "./pages/ForgotPassword/ForgotPassword.jsx";
 
 // Admin Pages
 import AdminLayout from "./pages/Admin/AdminLayout";
@@ -89,6 +96,10 @@ const router = createBrowserRouter([
       {
         path: "register",
         element: <Register />,
+      },
+      {
+        path: "forgot-password",
+        element: <ForgotPassword />,
       },
       {
         path: "contact",
@@ -189,16 +200,44 @@ const router = createBrowserRouter([
                 element: <MyDeliveries />,
               },
               {
+                path: "order-details",
+                element: <MyDeliveries />,
+              },
+              {
+                path: "order/:id",
+                element: <OrderDetail />,
+              },
+              {
                 path: "earnings",
                 element: <Earnings />,
+              },
+              {
+                path: "wallet",
+                element: <Wallet />,
               },
               {
                 path: "withdraw",
                 element: <Withdraw />,
               },
               {
+                path: "history",
+                element: <DeliveryHistory />,
+              },
+              {
+                path: "notifications",
+                element: <Notifications />,
+              },
+              {
+                path: "support",
+                element: <Support />,
+              },
+              {
                 path: "profile",
                 element: <Profile />,
+              },
+              {
+                path: "settings",
+                element: <Settings />,
               },
             ],
           },

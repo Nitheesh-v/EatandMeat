@@ -1,4 +1,5 @@
 import Order from "../models/Order.js";
+import User from "../models/User.js";
 
 // Create Order
 export const createOrder = async (req, res) => {
@@ -587,5 +588,114 @@ export const getCompanyOrders = async (req, res) => {
       success: false,
       message: "Server Error",
     });
+  }
+};
+
+// ──────────────────────────────────────────────
+// Delivery: Get single order detail
+// ──────────────────────────────────────────────
+export const getDeliveryOrderDetail = async (req, res) => {
+  try {
+    const order = await Order.findOne({
+      _id: req.params.id,
+      deliveryPartner: req.user._id,
+    })
+      .populate("customer", "fullName phone email")
+      .populate("company", "fullName phone");
+
+    if (!order) {
+      return res.status(404).json({ success: false, message: "Order not found" });
+    }
+
+    res.status(200).json({ success: true, order });
+  } catch (error) {
+    console.error("Delivery Order Detail Error:", error);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
+
+// ──────────────────────────────────────────────
+// Delivery: Get delivery history (with pagination & filters)
+// ──────────────────────────────────────────────
+export const getDeliveryHistory = async (req, res) => {
+  try {
+    const { page = 1, limit = 20, status, from, to } = req.query;
+
+    const filter = {
+      deliveryPartner: req.user._id,
+    };
+
+    if (status) {
+      filter.orderStatus = status;
+    }
+
+    if (from || to) {
+      filter.deliveredAt = {};
+      if (from) filter.deliveredAt.$gte = new Date(from);
+      if (to) filter.deliveredAt.$lte = new Date(to);
+    }
+
+    const total = await Order.countDocuments(filter);
+    const orders = await Order.find(filter)
+      .populate("customer", "fullName phone")
+      .sort({ deliveredAt: -1 })
+      .limit(Number(limit))
+      .skip((Number(page) - 1) * Number(limit));
+
+    // Summary stats for the filtered period
+    const summaryResult = await Order.aggregate([
+      { $match: filter },
+      {
+        $group: {
+          _id: null,
+          totalOrders: { $sum: 1 },
+          totalEarnings: { $sum: "$totalAmount" },
+          avgOrderValue: { $avg: "$totalAmount" },
+        },
+      },
+    ]);
+
+    const summary =
+      summaryResult.length > 0
+        ? summaryResult[0]
+        : { totalOrders: 0, totalEarnings: 0, avgOrderValue: 0 };
+
+    // Remove the _id from summary
+    delete summary._id;
+
+    res.status(200).json({
+      success: true,
+      orders,
+      summary,
+      totalPages: Math.ceil(total / Number(limit)),
+      currentPage: Number(page),
+      total,
+    });
+  } catch (error) {
+    console.error("Delivery History Error:", error);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
+
+// ──────────────────────────────────────────────
+// Delivery: Get single order detail for delivery
+// ──────────────────────────────────────────────
+export const getDeliveryOrderById = async (req, res) => {
+  try {
+    const order = await Order.findOne({
+      _id: req.params.id,
+      deliveryPartner: req.user._id,
+    })
+      .populate("customer", "fullName phone email")
+      .populate("company", "fullName phone");
+
+    if (!order) {
+      return res.status(404).json({ success: false, message: "Order not found" });
+    }
+
+    res.status(200).json({ success: true, order });
+  } catch (error) {
+    console.error("Delivery Order Detail Error:", error);
+    res.status(500).json({ success: false, message: "Server Error" });
   }
 };
